@@ -239,7 +239,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="Vt3-ns-tnS" kind="presentation" modalPresentationStyle="fullScreen" id="VGa-8e-T3l"/>
+                        <segue destination="Vt3-ns-tnS" kind="presentation" identifier="toShare" modalPresentationStyle="fullScreen" id="VGa-8e-T3l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Jv-t7-bst" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

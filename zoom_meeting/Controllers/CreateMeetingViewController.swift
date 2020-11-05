@@ -30,6 +30,9 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     var preMeetingService: MobileRTCPremeetingService?
     var userInfo: MobileRTCAccountInfo?
     
+    var meetingTitle = ""
+    var meetingTime = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,8 +88,14 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         let titleRow = form.rowBy(tag: "title") as! TextRow
         let startingDateRow = form.rowBy(tag: "date") as! DateTimeInlineRow
         let beforeHostRow = form.rowBy(tag: "beforeHost") as! SwitchRow
-        meeting.setMeetingTopic(titleRow.value ?? "Untitled")
-        meeting.setStartTime(startingDateRow.value ?? Date())
+        meetingTitle = titleRow.value ?? "Untitled"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy年MM月dd日HH:mm~"
+        let date = startingDateRow.value ?? Date()
+        meetingTime = dateFormatter.string(from: date)
+        
+        meeting.setMeetingTopic(meetingTitle)
+        meeting.setStartTime(date)
         meeting.setDurationInMinutes(UInt(TimeInterval(totalTime)))
         meeting.setAllowJoinBeforeHost(beforeHostRow.value ?? false)
 
@@ -117,6 +126,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             let jsonData = try encoder.encode(meetingInfo)
             let jsonString = String(data: jsonData, encoding: .utf8)
             print(jsonString)
+            self.performSegue(withIdentifier: "toShare", sender: self)
         } catch {
             print(error.localizedDescription)
         }
@@ -136,6 +146,14 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         section.append(titleRow)
         section.append(timeRow)
         form.append(section)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toShare" {
+            let nextVC = segue.destination as! ShareViewController
+            nextVC.meetingTitle = self.meetingTitle
+            nextVC.meetingTime = self.meetingTime
+        }
     }
 }
 
