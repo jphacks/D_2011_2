@@ -8,7 +8,7 @@
 import UIKit
 import MobileRTC
 import MobileCoreServices
-import SwiftOverlays
+import PKHUD
 
 class LoginViewController: UIViewController, MobileRTCAuthDelegate {
     var sharedAuthRTC: MobileRTCAuthService?
@@ -33,20 +33,21 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
         // TextField
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        self.showWaitOverlay()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        HUD.show(.progress)
         if sharedAuthRTC?.isLoggedIn() ?? false {
+            HUD.hide()
             self.performSegue(withIdentifier: "success", sender: self)
         } else {
-            self.removeAllOverlays()
+            HUD.hide()
         }
     }
     
     @IBAction func login() {
-        self.showWaitOverlay()
+        HUD.show(.progress)
         sharedAuthRTC?.login(withEmail: emailTextField.text ?? "", password: passwordTextField.text ?? "", rememberMe: rememberMeSwitch.isOn)
     }
     
@@ -63,10 +64,11 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
     func onMobileRTCLoginReturn(_ returnValue: Int) {
         print(returnValue)
         if returnValue == 0 {
-            self.removeAllOverlays()
+            HUD.hide()
             passwordTextField.text = ""
             self.performSegue(withIdentifier: "success", sender: self)
         } else {
+            HUD.flash(.error, delay: 1.0)
             let alert: UIAlertController = UIAlertController(title: "ログイン失敗", message: "メールアドレスとパスワードが正しいかご確認ください", preferredStyle: .alert)
             let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)

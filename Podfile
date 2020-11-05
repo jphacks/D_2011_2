@@ -7,6 +7,6 @@ target 'zoom_meeting' do
   # Pods for zoom_meeting
   pod 'Eureka'
   pod 'Floaty'
-  pod 'SwiftOverlays'
+  pod 'PKHUD'
 
 end

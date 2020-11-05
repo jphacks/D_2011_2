@@ -10,6 +10,7 @@ import Eureka
 import Floaty
 import MobileRTC
 import MobileCoreServices
+import PKHUD
 
 class CreateMeetingViewController: FormViewController, FloatyDelegate {
     
@@ -78,7 +79,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     }
     
     @IBAction func create() {
-        self.showWaitOverlay()
+        HUD.show(.progress)
         var totalTime = 0
         for i in 1...index {
             let timeRow = form.rowBy(tag: "time\(i)") as! IntRow
@@ -128,10 +129,11 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             let jsonData = try encoder.encode(meetingInfo)
             let jsonString = String(data: jsonData, encoding: .utf8)
             print(jsonString)
-            self.removeAllOverlays()
+            HUD.flash(.success, delay: 1.0)
             self.performSegue(withIdentifier: "toShare", sender: self)
         } catch {
             print(error.localizedDescription)
+            HUD.flash(.error, delay: 1.0)
         }
     }
     
@@ -164,13 +166,17 @@ extension CreateMeetingViewController: MobileRTCPremeetingDelegate {
     func sinkSchedultMeeting(_ result: PreMeetingError, meetingUniquedID uniquedID: UInt64) {
         guard result.rawValue == 0 else {
             print("Zoom (User): Schedule meeting task failed, error code: \(result)")
+            HUD.flash(.error, delay: 1.0)
             return
         }
         
         print("Zoom (User): Schedule meeting task completed.")
         let meeting = preMeetingService?.getMeetingItem(byUniquedID: uniquedID)
         guard let id = meeting?.getMeetingNumber(),
-              let pass = meeting?.getMeetingPassword() else { return }
+              let pass = meeting?.getMeetingPassword() else {
+            HUD.flash(.error, delay: 1.0)
+            return
+        }
         
         createMeetingInfo(
             title: meeting?.getMeetingTopic() ?? "Untitled",
