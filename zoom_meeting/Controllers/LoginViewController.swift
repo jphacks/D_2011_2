@@ -15,10 +15,17 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var rememberMeSwitch: UISwitch!
+    @IBOutlet var loginButton:  UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        emailTextField.layer.borderColor = UIColor.hex(string: "00013F", alpha: 1).cgColor
+        emailTextField.layer.borderWidth = 2
+        passwordTextField.layer.borderColor = UIColor.hex(string: "00013F", alpha: 1).cgColor
+        passwordTextField.layer.borderWidth = 2
+        loginButton.layer.cornerRadius = 10
+        
         sharedAuthRTC = MobileRTC.shared().getAuthService()
         sharedAuthRTC?.delegate = self
     }
@@ -32,6 +39,12 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
     
     @IBAction func login() {
         sharedAuthRTC?.login(withEmail: emailTextField.text ?? "", password: passwordTextField.text ?? "", rememberMe: rememberMeSwitch.isOn)
+    }
+    
+    @IBAction func signup() {
+        if let url = URL(string: "https://zoom.us/signup") {
+            UIApplication.shared.open(url)
+        }
     }
     
     func onMobileRTCAuthReturn(_ returnValue: MobileRTCAuthError) {

@@ -15,11 +15,13 @@ class MainViewController: UIViewController {
     var userInfo: MobileRTCAccountInfo?
     
     @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var createMeetingButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         sharedAuthService = MobileRTC.shared().getAuthService()
+        createMeetingButton.layer.cornerRadius = 10
     }
     
     override func viewWillAppear(_ animated: Bool) {
