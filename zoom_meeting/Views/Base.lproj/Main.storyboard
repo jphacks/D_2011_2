@@ -116,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="656.79999999999995" y="87.706146926536732"/>
+            <point key="canvasLocation" x="847" y="88"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="pk1-AC-S7a">
@@ -136,13 +136,13 @@
                                 <rect key="frame" x="0.0" y="431.5" width="375" height="235.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyA-gf-NbL">
-                                        <rect key="frame" x="70.5" y="88.5" width="234" height="58.5"/>
+                                        <rect key="frame" x="66.5" y="87.5" width="242" height="60.5"/>
                                         <color key="backgroundColor" name="zoomColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="eyA-gf-NbL" secondAttribute="height" multiplier="246:61" id="4LG-vQ-CDN"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <state key="normal" title=" ミーティングを作成する ">
+                                        <state key="normal" title="  ミーティングを作成する  ">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -263,7 +263,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="meeting" width="1028" height="613"/>
+        <image name="meeting" width="788" height="454"/>
         <image name="zoom_logo" width="1000" height="227"/>
         <namedColor name="zoomColor">
             <color red="0.17647058823529413" green="0.5490196078431373" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
