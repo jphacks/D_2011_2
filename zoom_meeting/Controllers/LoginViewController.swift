@@ -9,7 +9,7 @@ import UIKit
 import MobileRTC
 import MobileCoreServices
 
-class LoginViewController: UIViewController, MobileRTCAuthDelegate {
+class LoginViewController: TextFieldViewController, MobileRTCAuthDelegate {
     var sharedAuthRTC: MobileRTCAuthService?
     
     @IBOutlet var emailTextField: UITextField!
@@ -28,6 +28,10 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
         
         sharedAuthRTC = MobileRTC.shared().getAuthService()
         sharedAuthRTC?.delegate = self
+        
+        // TextField
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -35,6 +39,11 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
         if sharedAuthRTC?.isLoggedIn() ?? false {
             self.performSegue(withIdentifier: "success", sender: self)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setUpNotificationForTextField()
     }
     
     @IBAction func login() {
@@ -64,4 +73,3 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
         }
     }
 }
-

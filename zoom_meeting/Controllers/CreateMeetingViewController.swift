@@ -102,7 +102,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             let title = titleRow.value ?? "Untitled"
             let timeRow = form.rowBy(tag: "time\(i)") as! IntRow
             let time = timeRow.value ?? 0
-            agendas.append(Agenda(title: title, duration: time))
+            agendas.append(Agenda(title: title, duration: time * 60))
         }
         
         let timeInUnix = startingDate.timeIntervalSince1970
