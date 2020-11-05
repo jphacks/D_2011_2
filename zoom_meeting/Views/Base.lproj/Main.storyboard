@@ -69,7 +69,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="ミーティングを作成する"/>
                                 <connections>
-                                    <action selector="createMeeting" destination="Pv0-Ds-fZ6" eventType="touchUpInside" id="2DJ-OH-Kq5"/>
                                     <segue destination="gF3-JT-4fb" kind="show" id="3kQ-el-Jd2"/>
                                 </connections>
                             </button>
