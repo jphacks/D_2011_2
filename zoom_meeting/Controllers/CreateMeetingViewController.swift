@@ -125,7 +125,6 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
                                       agenda: agendas)
         do {
             let encoder = JSONEncoder()
-//            encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
             let jsonData = try encoder.encode(meetingInfo)
             let jsonString = String(data: jsonData, encoding: .utf8)
             print(jsonString)
