@@ -17,6 +17,7 @@ class ShareViewController: UIViewController {
     
     var meetingTitle = ""
     var meetingTime = ""
+    var encodedImageData = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,12 @@ class ShareViewController: UIViewController {
         
         titleLabel.text = meetingTitle
         timeLabel.text = meetingTime
+        
+        // 画像エンコード
+        if let imageData = NSData(base64Encoded: encodedImageData, options: .ignoreUnknownCharacters) {
+            let image = UIImage(data: imageData as Data)
+            agendaImageView.image = image
+        }
     }
     
     @IBAction func share() {
@@ -40,6 +47,6 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func backToHome() {
-        navigationController?.popToRootViewController(animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }

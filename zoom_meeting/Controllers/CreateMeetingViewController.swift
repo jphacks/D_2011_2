@@ -54,6 +54,8 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             }
             <<< DateTimeInlineRow("date") { row in
                 row.title = "開始時間"
+                row.minimumDate = Date()
+                row.value = Date()
             }
             <<< SwitchRow("beforeHost") { row in
                 row.title = "ホストより前の入室を許可する"
@@ -76,6 +78,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     }
     
     @IBAction func create() {
+        self.showWaitOverlay()
         var totalTime = 0
         for i in 1...index {
             let timeRow = form.rowBy(tag: "time\(i)") as! IntRow
@@ -126,6 +129,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             let jsonData = try encoder.encode(meetingInfo)
             let jsonString = String(data: jsonData, encoding: .utf8)
             print(jsonString)
+            self.removeAllOverlays()
             self.performSegue(withIdentifier: "toShare", sender: self)
         } catch {
             print(error.localizedDescription)
