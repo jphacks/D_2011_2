@@ -12,12 +12,18 @@ class ShareViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var agendaImageView: UIImageView!
+    @IBOutlet var shareButton: UIButton!
+    @IBOutlet var backToTopButton: UIButton!
     
     var meetingTitle = ""
     var meetingTime = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 角丸
+        shareButton.layer.cornerRadius =  10
+        backToTopButton.layer.cornerRadius = 10
+        
         titleLabel.text = meetingTitle
         timeLabel.text = meetingTime
     }

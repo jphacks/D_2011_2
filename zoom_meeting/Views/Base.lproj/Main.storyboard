@@ -353,6 +353,8 @@
                     <navigationItem key="navigationItem" id="rfc-5E-XpA"/>
                     <connections>
                         <outlet property="agendaImageView" destination="5Tb-bR-HRu" id="WKY-bw-y13"/>
+                        <outlet property="backToTopButton" destination="Jm3-OU-7lt" id="SBG-yc-i9Z"/>
+                        <outlet property="shareButton" destination="HIQ-pW-YRv" id="jQn-FM-7FY"/>
                         <outlet property="timeLabel" destination="6dY-zR-R5F" id="zR1-g8-H3z"/>
                         <outlet property="titleLabel" destination="yYM-xy-FIv" id="ch5-ap-RiJ"/>
                     </connections>
