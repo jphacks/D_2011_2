@@ -125,7 +125,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             agendaInfos.append(AgendaInfo(title: agendaTitle, duration: time * 60))
             let newAgenda = Agenda()
             newAgenda.title = agendaTitle
-            newAgenda.duration = time
+            newAgenda.duration = time * 60
         }
         
         let timeInUnix = startingDate.timeIntervalSince1970
