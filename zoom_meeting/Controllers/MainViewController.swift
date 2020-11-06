@@ -28,6 +28,8 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         let userDefaults = UserDefaults.standard
         if !userDefaults.bool(forKey: "first") {
             userDefaults.setValue(true, forKey: "first")

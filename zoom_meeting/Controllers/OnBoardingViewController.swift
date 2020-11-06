@@ -50,7 +50,8 @@ class OnBoardingViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         setupPaperOnboardingView()
         skipButton.layer.cornerRadius = 25
         startButton.layer.cornerRadius = 20
