@@ -118,6 +118,46 @@
             </objects>
             <point key="canvasLocation" x="847" y="88"/>
         </scene>
+        <!--On Bording View Controller-->
+        <scene sceneID="Ovr-pH-pbS">
+            <objects>
+                <viewController id="LbF-lj-kgh" customClass="OnBordingViewController" customModule="zoom_meeting" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="R4d-Gv-nrh">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jsh-hX-RvE">
+                                <rect key="frame" x="320" y="730" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.68808275916007866" green="0.71182033306793779" blue="1" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="B5C-LL-790"/>
+                                    <constraint firstAttribute="height" constant="50" id="XCl-25-rz4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="スキップ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="skip" destination="LbF-lj-kgh" eventType="touchUpInside" id="9wh-Hm-BLe"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Dbh-VU-cm7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Dbh-VU-cm7" firstAttribute="trailing" secondItem="Jsh-hX-RvE" secondAttribute="trailing" constant="20" id="6wT-yX-sGs"/>
+                            <constraint firstItem="Dbh-VU-cm7" firstAttribute="bottom" secondItem="Jsh-hX-RvE" secondAttribute="bottom" constant="30" id="eIE-ej-4af"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Wc7-rt-14H"/>
+                    <connections>
+                        <outlet property="skipButton" destination="Jsh-hX-RvE" id="F3u-TK-Cpr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8GZ-Uj-iTy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2741.5384615384614" y="-686.01895734597156"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="pk1-AC-S7a">
             <objects>
@@ -454,11 +494,17 @@
                                 <action selector="logout" destination="Pv0-Ds-fZ6" id="hrj-He-jXO"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="info.circle" catalog="system" style="plain" id="VJg-Si-A2X">
+                            <connections>
+                                <action selector="moveToTutorial" destination="Pv0-Ds-fZ6" id="EDH-DX-1N7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="createMeetingButton" destination="eyA-gf-NbL" id="FHK-8i-X49"/>
                         <outlet property="meetingListButton" destination="YuI-sl-9el" id="Nt6-sg-znk"/>
                         <outlet property="userNameLabel" destination="qqE-ka-ulX" id="Ori-dh-hFr"/>
+                        <segue destination="LbF-lj-kgh" kind="show" identifier="toTutorial" id="f94-8m-6Z4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5D-hp-L5b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -617,7 +663,7 @@
                                 </variation>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="82F-bt-M9A">
-                                <rect key="frame" x="55.666666666666629" y="397" width="279" height="50"/>
+                                <rect key="frame" x="55.666666666666657" y="397" width="279" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pSF-eS-ays">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -680,7 +726,7 @@
                                 <rect key="frame" x="0.0" y="44" width="390" height="353"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="dvB-HK-Nh9">
-                                        <rect key="frame" x="30" y="84.666666666666629" width="330" height="183.99999999999997"/>
+                                        <rect key="frame" x="30" y="84.666666666666657" width="330" height="183.99999999999997"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pIL-bh-Mdr">
                                                 <rect key="frame" x="0.0" y="0.0" width="330" height="48"/>
@@ -943,7 +989,7 @@
                                 <rect key="frame" x="0.0" y="43.999999999999986" width="390" height="191.66666666666663"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="96c-P7-EOa">
-                                        <rect key="frame" x="10" y="61.666666666666686" width="370" height="68.000000000000014"/>
+                                        <rect key="frame" x="10" y="61.666666666666671" width="370" height="68.000000000000014"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yYM-xy-FIv">
                                                 <rect key="frame" x="0.0" y="0.0" width="370" height="30"/>
@@ -1312,6 +1358,7 @@
     </scenes>
     <resources>
         <image name="agenda" width="1920" height="1080"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="meeting" width="788" height="454"/>
         <image name="zoom_logo" width="1000" height="227"/>
         <namedColor name="TextColor">

@@ -34,6 +34,10 @@ class MainViewController: UIViewController {
         }
     }
     
+    @IBAction func moveToTutorial() {
+        self.performSegue(withIdentifier: "toTutorial", sender: self)
+    }
+    
     @IBAction func logout() {
         sharedAuthService?.logoutRTC()
         self.dismiss(animated: true, completion: nil)

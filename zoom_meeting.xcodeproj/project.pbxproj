@@ -25,6 +25,7 @@
 		65D1C72225504DC600CE9242 /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65D1C72125504DC600CE9242 /* keys.plist */; };
 		65D1C72425504DDD00CE9242 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1C72325504DDD00CE9242 /* KeyManager.swift */; };
 		65D1C7642550530400CE9242 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1C7632550530400CE9242 /* MainViewController.swift */; };
+		65FAC07A255524930073252D /* OnBordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FAC079255524930073252D /* OnBordingViewController.swift */; };
 		9A4F1BC75FD69F7F10240BD8 /* Pods_zoom_meeting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 852B37C79C63C32C011560B9 /* Pods_zoom_meeting.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		65D1C72125504DC600CE9242 /* keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
 		65D1C72325504DDD00CE9242 /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		65D1C7632550530400CE9242 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		65FAC079255524930073252D /* OnBordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBordingViewController.swift; sourceTree = "<group>"; };
 		7F4FA9B497046805D02C5962 /* Pods-zoom_meeting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zoom_meeting.debug.xcconfig"; path = "Target Support Files/Pods-zoom_meeting/Pods-zoom_meeting.debug.xcconfig"; sourceTree = "<group>"; };
 		852B37C79C63C32C011560B9 /* Pods_zoom_meeting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zoom_meeting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E918529B935100C7F848BDC9 /* Pods-zoom_meeting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zoom_meeting.release.xcconfig"; path = "Target Support Files/Pods-zoom_meeting/Pods-zoom_meeting.release.xcconfig"; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				65A4DF77255406B7008CCD83 /* ShareViewController.swift */,
 				65607FC02554F32B00CF4B49 /* MeetingListViewController.swift */,
 				65607FC22554F84B00CF4B49 /* MeetingControllerViewController.swift */,
+				65FAC079255524930073252D /* OnBordingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				650441F0254D5BBC006A26AD /* LoginViewController.swift in Sources */,
+				65FAC07A255524930073252D /* OnBordingViewController.swift in Sources */,
 				65607FC32554F84B00CF4B49 /* MeetingControllerViewController.swift in Sources */,
 				65607FBF2554EA6300CF4B49 /* Meeting.swift in Sources */,
 				650441EC254D5BBC006A26AD /* AppDelegate.swift in Sources */,
