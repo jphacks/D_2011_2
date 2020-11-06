@@ -86,7 +86,7 @@ class MeetingControllerViewController: UIViewController {
         
         alert.addTextField { (text:UITextField!) in
             text.placeholder = "追加する時間 (分)"
-            text.keyboardType = .numberPad
+            text.keyboardType = .decimalPad
             text.tag = 1
         }
         present(alert, animated: true, completion: nil)
