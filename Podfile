@@ -9,5 +9,6 @@ target 'zoom_meeting' do
   pod 'Floaty'
   pod 'PKHUD'
   pod 'RealmSwift'
+  pod 'paper-onboarding'
 
 end
