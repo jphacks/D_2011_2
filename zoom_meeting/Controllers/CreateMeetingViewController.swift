@@ -124,7 +124,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             let agendaTitle = titleRow.value ?? "Untitled"
             let timeRow = form.rowBy(tag: "time\(i)") as! IntRow
             let time = timeRow.value ?? 0
-            agendaInfos.append(AgendaInfo(title: agendaTitle, duration: time * 60))
+            agendaInfos.append(AgendaInfo(title: agendaTitle, duration: time))
             let newAgenda = Agenda()
             newAgenda.title = agendaTitle
             newAgenda.duration = time * 60
