@@ -493,7 +493,7 @@
         <!--ミーティング一覧-->
         <scene sceneID="RgF-Gz-odF">
             <objects>
-                <viewController id="NrM-34-3kZ" sceneMemberID="viewController">
+                <viewController id="NrM-34-3kZ" customClass="MeetingListViewController" customModule="zoom_meeting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4VR-mX-qmR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -515,6 +515,9 @@
                     <navigationItem key="navigationItem" title="ミーティング一覧" id="UOi-S6-gw7">
                         <barButtonItem key="backBarButtonItem" title=" " id="ivP-pD-Rm7"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="table" destination="j0p-N9-a0R" id="ho4-4u-xby"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGI-HI-D5R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

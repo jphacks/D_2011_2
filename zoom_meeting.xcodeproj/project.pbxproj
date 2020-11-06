@@ -15,6 +15,7 @@
 		650441F8254D5BBC006A26AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 650441F6254D5BBC006A26AD /* LaunchScreen.storyboard */; };
 		654BCE1925523DE4002AE7D9 /* CreateMeetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654BCE1825523DE4002AE7D9 /* CreateMeetingViewController.swift */; };
 		65607FBF2554EA6300CF4B49 /* Meeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65607FBE2554EA6300CF4B49 /* Meeting.swift */; };
+		65607FC12554F32B00CF4B49 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65607FC02554F32B00CF4B49 /* MeetingListViewController.swift */; };
 		65A4DF78255406B7008CCD83 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4DF77255406B7008CCD83 /* ShareViewController.swift */; };
 		65B727C72553B8AB005361D9 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B727C62553B8AB005361D9 /* UIColor+.swift */; };
 		65D1C719255041ED00CE9242 /* MobileRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D1C718255041ED00CE9242 /* MobileRTC.framework */; };
@@ -51,6 +52,7 @@
 		650441F9254D5BBC006A26AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		654BCE1825523DE4002AE7D9 /* CreateMeetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMeetingViewController.swift; sourceTree = "<group>"; };
 		65607FBE2554EA6300CF4B49 /* Meeting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meeting.swift; sourceTree = "<group>"; };
+		65607FC02554F32B00CF4B49 /* MeetingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
 		65A4DF77255406B7008CCD83 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		65B727C62553B8AB005361D9 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		65D1C718255041ED00CE9242 /* MobileRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MobileRTC.framework; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				65D1C7632550530400CE9242 /* MainViewController.swift */,
 				654BCE1825523DE4002AE7D9 /* CreateMeetingViewController.swift */,
 				65A4DF77255406B7008CCD83 /* ShareViewController.swift */,
+				65607FC02554F32B00CF4B49 /* MeetingListViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				65D1C72425504DDD00CE9242 /* KeyManager.swift in Sources */,
 				65A4DF78255406B7008CCD83 /* ShareViewController.swift in Sources */,
 				65D1C7642550530400CE9242 /* MainViewController.swift in Sources */,
+				65607FC12554F32B00CF4B49 /* MeetingListViewController.swift in Sources */,
 				65B727C72553B8AB005361D9 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
