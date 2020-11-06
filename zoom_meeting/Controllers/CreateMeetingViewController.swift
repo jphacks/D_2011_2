@@ -146,7 +146,9 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             meeting.title = title
             meeting.link = ""
             meeting.start = startingDate
-            meeting.agenda = agendas
+            for agenda in agendas {
+                meeting.agenda.append(agenda)
+            }
             try! realm.write {
                 realm.add(meeting)
             }

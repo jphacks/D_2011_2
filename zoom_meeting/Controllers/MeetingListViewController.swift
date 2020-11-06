@@ -12,7 +12,7 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet var table: UITableView!
     var realm: Realm!
-    var meetings: [Meeting]!
+    var meetings: [Meeting] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,14 +20,15 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
         // Do any additional setup after loading the view.
         table.delegate = self
         table.dataSource = self
-        
-        // Realm
-        realm = try! Realm()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        meetings = Array(realm.objects(Meeting.self)).filter { $0.start >= Date() }
+        // Realm
+        realm = try! Realm()
+        let realmData = realm.objects(Meeting.self)
+        print(realmData.count)
+        meetings = Array(realmData).filter { $0.start >= Date() }
         table.reloadData()
     }
     
@@ -40,7 +41,7 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
         cell.textLabel?.text = meetings[indexPath.row].title
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
+        dateFormatter.timeStyle = .short
 
         let dateString = dateFormatter.string(from: meetings[indexPath.row].start)
         cell.detailTextLabel?.text = dateString
