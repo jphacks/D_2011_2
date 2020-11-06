@@ -1,0 +1,50 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Release"
+  lane :release do
+    cocoapods
+    increment_build_number
+    gym(scheme: "MichiNoEki", xcargs: "-allowProvisioningUpdates")
+    deliver(
+      submit_for_review: true,
+      force: true,
+      submission_information: {
+        add_id_info_uses_idfa: true,
+        add_id_info_limits_tracking: true,
+        add_id_info_serves_ads: true,
+        add_id_info_tracks_action: false,
+        add_id_info_tracks_install: false,
+      }
+    )
+    git_commit(path: ".", message: "Update version")
+    push_to_git_remote(
+      remote: "origin",
+      local_branch: "master",
+      remote_branch: "master",
+      force: true,
+      tags: false
+    )
+  end
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    cocoapods
+    build_app(workspace: "zoom_meeting.xcworkspace", scheme: "zoom_meeting")
+    upload_to_testflight
+  end
+end

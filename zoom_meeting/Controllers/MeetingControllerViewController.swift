@@ -154,7 +154,20 @@ class MeetingControllerViewController: UIViewController {
         count -= 1
         timerLabel.text = "\(Int(count / 60)):\(Int(count % 60))"
         if count <= 0 {
-            next()
+            let parameters = [
+                "request": "mute",
+                "id": meeting.uuid,
+            ] as [String : Any]
+            
+            Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+                              method: .post,
+                              parameters: parameters,
+                              encoding: JSONEncoding.default, headers: nil)
+                .responseJSON { response in
+                    if let result = response.result.value as? [String: Any] {
+                        print(result)
+                    }
+                }
         }
     }
 }
