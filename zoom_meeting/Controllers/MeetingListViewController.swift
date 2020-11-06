@@ -12,8 +12,7 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet var table: UITableView!
     var realm: Realm!
-    
-    var meetings: Results<Meeting>!
+    var meetings: [Meeting]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +27,7 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        meetings = realm.objects(Meeting.self)
+        meetings = Array(realm.objects(Meeting.self)).filter { $0.start >= Date() }
         table.reloadData()
     }
     
