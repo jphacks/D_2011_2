@@ -29,7 +29,7 @@ class MeetingControllerViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy年MM月dd日HH:mm~"
         dateLabel.text = dateFormatter.string(from: meeting.start)
         topicLabel.text = meeting.agenda[0].title
-        count = meeting.agenda[0].duration
+        count = meeting.agenda[0].duration * 60
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tik), userInfo: nil, repeats: true)
     }
     
