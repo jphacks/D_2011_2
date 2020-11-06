@@ -43,6 +43,8 @@ class ShareViewController: UIViewController {
             activityItems.append(agendaImageView.image!)
         }
         let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        activityVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2, y: self.view.bounds.size.height / 2, width: 1, height: 1)
         self.present(activityVC, animated: true, completion: nil)
     }
     
