@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class MeetingControllerViewController: UIViewController {
     
@@ -91,10 +92,27 @@ class MeetingControllerViewController: UIViewController {
         if index == meeting.agenda.count {
             timer.invalidate()
             finish()
+        } else {
+            let parameters = [
+                "request": "next",
+                "id": meeting.uuid,
+                "duration": meeting.agenda[index].duration * 60,
+                "title": meeting.agenda[index].title
+            ]
+            
+            Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+                              method: .post,
+                              parameters: parameters,
+                              encoding: JSONEncoding.default, headers: nil)
+                .responseJSON { response in
+                    if let result = response.result.value as? [String: Any] {
+                        print(result)
+                    }
+                }
+            count = meeting.agenda[index].duration
+            timerLabel.text = "\(Int(count / 60)):\(Int(count % 60))"
+            topicLabel.text = meeting.agenda[index].title
         }
-        count = meeting.agenda[index].duration
-        timerLabel.text = "\(Int(count / 60)):\(Int(count % 60))"
-        topicLabel.text = meeting.agenda[index].title
     }
     
     @objc func tik() {
