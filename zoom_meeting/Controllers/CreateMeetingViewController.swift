@@ -11,6 +11,7 @@ import Floaty
 import MobileRTC
 import MobileCoreServices
 import PKHUD
+import RealmSwift
 
 class CreateMeetingViewController: FormViewController, FloatyDelegate {
     
@@ -18,10 +19,10 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         let title: String
         let start: Int
         let link: String
-        let agenda: [Agenda]
+        let agenda: [AgendaInfo]
     }
     
-    struct Agenda: Codable {
+    struct AgendaInfo: Codable {
         let title: String
         let duration: Int
     }
@@ -33,6 +34,8 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     
     var meetingTitle = ""
     var meetingTime = ""
+    
+    var realm: Realm!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +79,9 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         floaty.fabDelegate = self
         floaty.plusColor = .white
         self.view.addSubview(floaty)
+        
+        // Realm
+        realm = try! Realm()
     }
     
     @IBAction func create() {
@@ -102,20 +108,24 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         meeting.setStartTime(date)
         meeting.setDurationInMinutes(UInt(TimeInterval(totalTime)))
         meeting.setAllowJoinBeforeHost(beforeHostRow.value ?? false)
-
+        
         meetingService.scheduleMeeting(meeting, withScheduleFor: userInfo?.getEmailAddress())
         meetingService.destroy(meeting)
     }
     
     func createMeetingInfo(title: String, startingDate: Date, link: String) {
+        var agendaInfos: [AgendaInfo] = []
         var agendas: [Agenda] = []
         
         for i in 1...index {
             let titleRow = form.rowBy(tag: "title\(i)") as! TextRow
-            let title = titleRow.value ?? "Untitled"
+            let agendaTitle = titleRow.value ?? "Untitled"
             let timeRow = form.rowBy(tag: "time\(i)") as! IntRow
             let time = timeRow.value ?? 0
-            agendas.append(Agenda(title: title, duration: time * 60))
+            agendaInfos.append(AgendaInfo(title: agendaTitle, duration: time * 60))
+            let newAgenda = Agenda()
+            newAgenda.title = agendaTitle
+            newAgenda.duration = time
         }
         
         let timeInUnix = startingDate.timeIntervalSince1970
@@ -123,12 +133,21 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         let meetingInfo = MeetingInfo(title: title,
                                       start: Int(timeInUnix),
                                       link: link,
-                                      agenda: agendas)
+                                      agenda: agendaInfos)
         do {
             let encoder = JSONEncoder()
             let jsonData = try encoder.encode(meetingInfo)
             let jsonString = String(data: jsonData, encoding: .utf8)
+            // TODO: JSONのPOST
             print(jsonString)
+            let meeting = Meeting()
+            meeting.title = title
+            meeting.link = ""
+            meeting.start = startingDate
+            meeting.agenda = agendas
+            try! realm.write {
+                realm.add(meeting)
+            }
             HUD.flash(.success, delay: 1.0)
             self.performSegue(withIdentifier: "toShare", sender: self)
         } catch {
