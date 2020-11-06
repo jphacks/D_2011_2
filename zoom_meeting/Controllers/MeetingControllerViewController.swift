@@ -33,6 +33,27 @@ class MeetingControllerViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tik), userInfo: nil, repeats: true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let parameters = [
+            "request": "start",
+            "id": meeting.uuid,
+            "duration": meeting.agenda[index].duration * 60,
+            "title": meeting.agenda[index].title
+        ] as [String : Any]
+        
+        Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+                          method: .post,
+                          parameters: parameters,
+                          encoding: JSONEncoding.default, headers: nil)
+            .responseJSON { response in
+                if let result = response.result.value as? [String: Any] {
+                    print(result)
+                    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                }
+            }
+    }
+    
     @IBAction func plusFive() {
         count += 300
     }
@@ -81,7 +102,21 @@ class MeetingControllerViewController: UIViewController {
     func finish() {
         let alert: UIAlertController = UIAlertController(title: "すべての議題が終了しました。", message: nil, preferredStyle: .alert)
         let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default) { (_) in
-            self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            let parameters = [
+                "request": "finish",
+                "id": self.meeting.uuid,
+            ] as [String : Any]
+            
+            Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+                              method: .post,
+                              parameters: parameters,
+                              encoding: JSONEncoding.default, headers: nil)
+                .responseJSON { response in
+                    if let result = response.result.value as? [String: Any] {
+                        print(result)
+                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    }
+                }
         }
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)

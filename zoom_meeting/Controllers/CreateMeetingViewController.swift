@@ -186,7 +186,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     func makeParameters(info: MeetingInfo) -> Parameters {
         var agendas: [[String:Any]] = []
         for agenda in info.agenda {
-            agendas.append(["title": agenda.title, "duration": agenda.duration])
+            agendas.append(["title": agenda.title, "duration": agenda.duration * 60])
         }
         let params = [
             "title": info.title,
