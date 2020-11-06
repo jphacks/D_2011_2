@@ -14,6 +14,7 @@
 		650441F5254D5BBC006A26AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 650441F4254D5BBC006A26AD /* Assets.xcassets */; };
 		650441F8254D5BBC006A26AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 650441F6254D5BBC006A26AD /* LaunchScreen.storyboard */; };
 		654BCE1925523DE4002AE7D9 /* CreateMeetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654BCE1825523DE4002AE7D9 /* CreateMeetingViewController.swift */; };
+		65607FBF2554EA6300CF4B49 /* Meeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65607FBE2554EA6300CF4B49 /* Meeting.swift */; };
 		65A4DF78255406B7008CCD83 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4DF77255406B7008CCD83 /* ShareViewController.swift */; };
 		65B727C72553B8AB005361D9 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B727C62553B8AB005361D9 /* UIColor+.swift */; };
 		65D1C719255041ED00CE9242 /* MobileRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D1C718255041ED00CE9242 /* MobileRTC.framework */; };
@@ -49,6 +50,7 @@
 		650441F7254D5BBC006A26AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		650441F9254D5BBC006A26AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		654BCE1825523DE4002AE7D9 /* CreateMeetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMeetingViewController.swift; sourceTree = "<group>"; };
+		65607FBE2554EA6300CF4B49 /* Meeting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meeting.swift; sourceTree = "<group>"; };
 		65A4DF77255406B7008CCD83 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		65B727C62553B8AB005361D9 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		65D1C718255041ED00CE9242 /* MobileRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MobileRTC.framework; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				650441F4254D5BBC006A26AD /* Assets.xcassets */,
+				65607FBE2554EA6300CF4B49 /* Meeting.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				650441F0254D5BBC006A26AD /* LoginViewController.swift in Sources */,
+				65607FBF2554EA6300CF4B49 /* Meeting.swift in Sources */,
 				650441EC254D5BBC006A26AD /* AppDelegate.swift in Sources */,
 				654BCE1925523DE4002AE7D9 /* CreateMeetingViewController.swift in Sources */,
 				650441EE254D5BBC006A26AD /* SceneDelegate.swift in Sources */,

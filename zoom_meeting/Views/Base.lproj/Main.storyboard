@@ -269,8 +269,8 @@
                                                 </state>
                                                 <variation key="default">
                                                     <mask key="constraints">
-                                                        <exclude reference="dBK-7i-fMn"/>
                                                         <exclude reference="Xuq-lm-OUK"/>
+                                                        <exclude reference="dBK-7i-fMn"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=compact">
@@ -281,8 +281,8 @@
                                                 <variation key="widthClass=regular">
                                                     <mask key="constraints">
                                                         <exclude reference="BeA-GH-zJu"/>
-                                                        <include reference="dBK-7i-fMn"/>
                                                         <include reference="Xuq-lm-OUK"/>
+                                                        <include reference="dBK-7i-fMn"/>
                                                     </mask>
                                                 </variation>
                                                 <connections>

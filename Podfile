@@ -8,5 +8,6 @@ target 'zoom_meeting' do
   pod 'Eureka'
   pod 'Floaty'
   pod 'PKHUD'
+  pod 'RealmSwift'
 
 end
