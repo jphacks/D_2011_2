@@ -35,6 +35,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     
     var meetingTitle = ""
     var meetingTime = ""
+    var images: [String] = []
     
     var realm: Realm!
     
@@ -116,7 +117,6 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     
     func createMeetingInfo(title: String, startingDate: Date, link: String) {
         var agendaInfos: [AgendaInfo] = []
-        var agendas: [Agenda] = []
         
         for i in 1...index {
             let titleRow = form.rowBy(tag: "title\(i)") as! TextRow
@@ -135,7 +135,6 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
                                       start: Int(timeInUnix),
                                       link: link,
                                       agenda: agendaInfos)
-        // TODO: URL変更
         Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
                           method: .post,
                           parameters: makeParameters(info: meetingInfo),
@@ -143,11 +142,16 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             .responseJSON { response in
                 if let result = response.result.value as? [String: Any] {
                     print(result)
+                    let imgs = result["agenda"] as! [[String: String]]
+                    for img in imgs {
+                        if let imgString = img["photo"] {
+                            self.images.append(imgString)
+                        }
+                    }
                     let meeting = Meeting()
-                    // TODO: サーバーから来たUUIDとURLを登録
-                    meeting.uuid = ""
+                    meeting.uuid = result["id"] as! String
                     meeting.title = title
-                    meeting.link = ""
+                    meeting.link = result["url"] as! String
                     meeting.start = startingDate
                     for agendaInfo in meetingInfo.agenda {
                         print(agendaInfo)
@@ -186,7 +190,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     func makeParameters(info: MeetingInfo) -> Parameters {
         var agendas: [[String:Any]] = []
         for agenda in info.agenda {
-            agendas.append(["title": agenda.title, "duration": agenda.duration * 60])
+            agendas.append(["request": "create", "title": agenda.title, "duration": agenda.duration * 60])
         }
         let params = [
             "title": info.title,
@@ -202,6 +206,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             let nextVC = segue.destination as! ShareViewController
             nextVC.meetingTitle = self.meetingTitle
             nextVC.meetingTime = self.meetingTime
+            nextVC.imgStrings = self.images
         }
     }
 }

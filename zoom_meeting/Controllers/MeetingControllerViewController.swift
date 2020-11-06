@@ -48,8 +48,9 @@ class MeetingControllerViewController: UIViewController {
                           encoding: JSONEncoding.default, headers: nil)
             .responseJSON { response in
                 if let result = response.result.value as? [String: Any] {
-                    print(result)
-                    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    if result["status"] as! String == "error" {
+                        self.showError()
+                    }
                 }
             }
     }
@@ -114,7 +115,11 @@ class MeetingControllerViewController: UIViewController {
                 .responseJSON { response in
                     if let result = response.result.value as? [String: Any] {
                         print(result)
-                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                        if result["status"] as! String == "success" {
+                            self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                        } else {
+                            self.showError()
+                        }
                     }
                 }
         }
@@ -141,13 +146,22 @@ class MeetingControllerViewController: UIViewController {
                               encoding: JSONEncoding.default, headers: nil)
                 .responseJSON { response in
                     if let result = response.result.value as? [String: Any] {
-                        print(result)
+                        if result["status"] as! String == "error" {
+                            self.showError()
+                        }
                     }
                 }
             count = meeting.agenda[index].duration
             timerLabel.text = "\(Int(count / 60)):\(Int(count % 60))"
             topicLabel.text = meeting.agenda[index].title
         }
+    }
+    
+    func showError() {
+        let alert: UIAlertController = UIAlertController(title: "エラー", message: "エラーが発生しました", preferredStyle: .alert)
+        let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func tik() {
@@ -165,7 +179,9 @@ class MeetingControllerViewController: UIViewController {
                               encoding: JSONEncoding.default, headers: nil)
                 .responseJSON { response in
                     if let result = response.result.value as? [String: Any] {
-                        print(result)
+                        if result["status"] as! String == "error" {
+                            self.showError()
+                        }
                     }
                 }
         }

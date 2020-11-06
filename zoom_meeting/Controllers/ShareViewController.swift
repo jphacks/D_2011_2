@@ -18,6 +18,8 @@ class ShareViewController: UIViewController {
     var meetingTitle = ""
     var meetingTime = ""
     var encodedImageData = ""
+    var imgStrings: [String] = []
+    var images: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +31,12 @@ class ShareViewController: UIViewController {
         timeLabel.text = meetingTime
         
         // 画像エンコード
-        if let imageData = NSData(base64Encoded: encodedImageData, options: .ignoreUnknownCharacters) {
-            let image = UIImage(data: imageData as Data)
-            agendaImageView.image = image
+        for imgString in imgStrings {
+            if let imageData = NSData(base64Encoded: imgString, options: .ignoreUnknownCharacters), let image = UIImage(data: imageData as Data) {
+                images.append(image)
+            }
         }
+        agendaImageView.image = images.first
     }
     
     @IBAction func share() {
