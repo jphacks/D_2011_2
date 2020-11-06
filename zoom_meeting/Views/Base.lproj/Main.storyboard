@@ -546,6 +546,9 @@
                                         <state key="normal" title="-5分">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="minusFive" destination="Vq1-Ip-zJO" eventType="touchUpInside" id="Bgp-Jl-b9e"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3q-zV-9dy">
                                         <rect key="frame" x="77" y="0.0" width="125" height="50"/>
@@ -558,6 +561,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
+                                            <action selector="editDetail" destination="Vq1-Ip-zJO" eventType="touchUpInside" id="1LL-fl-BWY"/>
                                             <action selector="login" destination="BYZ-38-t0r" eventType="touchUpInside" id="u4T-de-jtM"/>
                                         </connections>
                                     </button>
@@ -572,6 +576,9 @@
                                         <state key="normal" title="+5分">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="plusFive" destination="Vq1-Ip-zJO" eventType="touchUpInside" id="o5O-65-4lD"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -638,6 +645,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="login" destination="BYZ-38-t0r" eventType="touchUpInside" id="UqZ-Xh-gMW"/>
+                                                    <action selector="nextTopic" destination="Vq1-Ip-zJO" eventType="touchUpInside" id="BcS-Ed-ydr"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAy-Y7-UkT">
@@ -652,6 +660,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="finish" destination="Vq1-Ip-zJO" eventType="touchUpInside" id="dAw-9B-4c5"/>
                                                     <action selector="login" destination="BYZ-38-t0r" eventType="touchUpInside" id="MQ9-wv-Nec"/>
                                                 </connections>
                                             </button>
@@ -679,6 +688,12 @@
                             <constraint firstItem="Zdm-Ar-m2O" firstAttribute="leading" secondItem="5vD-23-Kv0" secondAttribute="leading" id="kJv-c8-kjv"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="dateLabel" destination="bMt-sm-QhN" id="RXa-bc-XVv"/>
+                        <outlet property="timerLabel" destination="pIL-bh-Mdr" id="H9P-qa-ZxO"/>
+                        <outlet property="titleLabel" destination="RRY-Rd-fIQ" id="eRe-ay-KJW"/>
+                        <outlet property="topicLabel" destination="nTj-k0-JRQ" id="Nyn-h5-S9x"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GpR-Z8-OcP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
