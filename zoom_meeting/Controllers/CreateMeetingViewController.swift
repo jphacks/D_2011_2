@@ -35,6 +35,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     
     var meetingTitle = ""
     var meetingTime = ""
+    var meetingUrl = ""
     var images: [String] = []
     
     var realm: Realm!
@@ -157,7 +158,8 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
                     let meeting = Meeting()
                     meeting.uuid = result["id"] as! String
                     meeting.title = title
-                    meeting.link = result["url"] as! String
+                    self.meetingUrl = result["url"] as! String
+                    meeting.link = self.meetingUrl
                     meeting.start = startingDate
                     for agendaInfo in meetingInfo.agenda {
                         let agenda = Agenda()
@@ -213,6 +215,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             nextVC.meetingTitle = self.meetingTitle
             nextVC.meetingTime = self.meetingTime
             nextVC.imgStrings = self.images
+            nextVC.meetingUrl = self.meetingUrl
         }
     }
 }

@@ -17,7 +17,7 @@ class ShareViewController: UIViewController {
     
     var meetingTitle = ""
     var meetingTime = ""
-    var encodedImageData = ""
+    var meetingUrl = ""
     var imgStrings: [String] = []
     var images: [UIImage] = []
     
@@ -41,7 +41,7 @@ class ShareViewController: UIViewController {
     
     @IBAction func share() {
         let shareText = meetingTitle
-        let shareWebsite = NSURL(string: "https://life-is-tech.com/")!
+        let shareWebsite = NSURL(string: meetingUrl)!
         var activityItems = [shareText, shareWebsite] as [Any]
         for img in images {
             activityItems.append(img)
