@@ -13,11 +13,17 @@ class MeetingControllerViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var topicLabel: UILabel!
+    
+    var meeting: Meeting!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        titleLabel.text = meeting.title
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy年MM月dd日HH:mm~"
+        dateLabel.text = dateFormatter.string(from: meeting.start)
+        topicLabel.text = meeting.agenda[0].title
     }
     
     @IBAction func plusFive() {
