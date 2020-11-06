@@ -118,10 +118,10 @@
             </objects>
             <point key="canvasLocation" x="847" y="88"/>
         </scene>
-        <!--On Bording View Controller-->
+        <!--On Boarding View Controller-->
         <scene sceneID="Ovr-pH-pbS">
             <objects>
-                <viewController id="LbF-lj-kgh" customClass="OnBordingViewController" customModule="zoom_meeting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="LbF-lj-kgh" customClass="OnBoardingViewController" customModule="zoom_meeting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R4d-Gv-nrh">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -141,17 +141,35 @@
                                     <action selector="skip" destination="LbF-lj-kgh" eventType="touchUpInside" id="9wh-Hm-BLe"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="okm-JP-GHO">
+                                <rect key="frame" x="107.66666666666669" y="620" width="175" height="50"/>
+                                <color key="backgroundColor" red="1" green="0.72789496705215961" blue="0.46278065888821662" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="6H4-zX-8Ws"/>
+                                    <constraint firstAttribute="width" constant="175" id="puJ-F6-eQc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="さぁ始めよう">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="skip" destination="LbF-lj-kgh" eventType="touchUpInside" id="vYj-PX-lCt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Dbh-VU-cm7"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Dbh-VU-cm7" firstAttribute="trailing" secondItem="Jsh-hX-RvE" secondAttribute="trailing" constant="20" id="6wT-yX-sGs"/>
+                            <constraint firstItem="okm-JP-GHO" firstAttribute="centerX" secondItem="R4d-Gv-nrh" secondAttribute="centerX" id="9Ul-Rk-7k4"/>
+                            <constraint firstItem="Dbh-VU-cm7" firstAttribute="bottom" secondItem="okm-JP-GHO" secondAttribute="bottom" constant="140" id="ZqT-C6-vyV"/>
                             <constraint firstItem="Dbh-VU-cm7" firstAttribute="bottom" secondItem="Jsh-hX-RvE" secondAttribute="bottom" constant="30" id="eIE-ej-4af"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Wc7-rt-14H"/>
                     <connections>
                         <outlet property="skipButton" destination="Jsh-hX-RvE" id="F3u-TK-Cpr"/>
+                        <outlet property="startButton" destination="okm-JP-GHO" id="ivR-sE-2FM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8GZ-Uj-iTy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
