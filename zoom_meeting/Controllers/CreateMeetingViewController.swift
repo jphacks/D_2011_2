@@ -141,12 +141,18 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
                           encoding: JSONEncoding.default, headers: nil)
             .responseJSON { response in
                 if let result = response.result.value as? [String: Any] {
-                    print(result)
-                    let imgs = result["agenda"] as! [[String: String]]
-                    for img in imgs {
-                        if let imgString = img["photo"] {
-                            self.images.append(imgString)
+                    do {
+                        let stringVal = result["agenda"] as! String
+                        let json = stringVal.data(using: .utf8)!
+                        let decoder = JSONDecoder()
+                        let objs = try decoder.decode([[String:String]].self, from: json)
+                        for img in objs {
+                            if let imgString = img["photo"] {
+                                self.images.append(imgString)
+                            }
                         }
+                    } catch {
+                        HUD.flash(.error, delay: 1.0)
                     }
                     let meeting = Meeting()
                     meeting.uuid = result["id"] as! String
@@ -154,7 +160,6 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
                     meeting.link = result["url"] as! String
                     meeting.start = startingDate
                     for agendaInfo in meetingInfo.agenda {
-                        print(agendaInfo)
                         let agenda = Agenda()
                         agenda.title = agendaInfo.title
                         agenda.duration = agendaInfo.duration
@@ -190,9 +195,10 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     func makeParameters(info: MeetingInfo) -> Parameters {
         var agendas: [[String:Any]] = []
         for agenda in info.agenda {
-            agendas.append(["request": "create", "title": agenda.title, "duration": agenda.duration * 60])
+            agendas.append(["title": agenda.title, "duration": agenda.duration * 60])
         }
         let params = [
+            "request": "create",
             "title": info.title,
             "start": info.start,
             "link": info.link,
