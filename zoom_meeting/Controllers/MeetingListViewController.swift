@@ -28,7 +28,6 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
         // Realm
         realm = try! Realm()
         let realmData = realm.objects(Meeting.self)
-        print(realmData.count)
         meetings = Array(realmData).filter { $0.start >= Date() }
         table.reloadData()
     }
@@ -51,8 +50,15 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         table.deselectRow(at: indexPath, animated: true)
-        selectedMeeting = meetings[indexPath.row]
-        self.performSegue(withIdentifier: "toStart", sender: self)
+        let alert: UIAlertController = UIAlertController(title: "ミーティングを開始してもよろしいですか？", message: nil, preferredStyle: .alert)
+        let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default) { (_) in
+            self.selectedMeeting = self.meetings[indexPath.row]
+            self.performSegue(withIdentifier: "toStart", sender: self)
+        }
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
