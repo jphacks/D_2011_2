@@ -12,6 +12,7 @@ import MobileRTC
 import MobileCoreServices
 import PKHUD
 import RealmSwift
+import Alamofire
 
 class CreateMeetingViewController: FormViewController, FloatyDelegate {
     
@@ -134,34 +135,36 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
                                       start: Int(timeInUnix),
                                       link: link,
                                       agenda: agendaInfos)
-        do {
-            let encoder = JSONEncoder()
-            let jsonData = try encoder.encode(meetingInfo)
-            let jsonString = String(data: jsonData, encoding: .utf8)
-            // TODO: JSONのPOST
-            print(jsonString)
-            let meeting = Meeting()
-            // TODO: サーバーから来たUUIDとURLを登録
-            meeting.uuid = ""
-            meeting.title = title
-            meeting.link = ""
-            meeting.start = startingDate
-            for agendaInfo in meetingInfo.agenda {
-                print(agendaInfo)
-                let agenda = Agenda()
-                agenda.title = agendaInfo.title
-                agenda.duration = agendaInfo.duration
-                meeting.agenda.append(agenda)
+        // TODO: URL変更
+        Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+                          method: .post,
+                          parameters: makeParameters(info: meetingInfo),
+                          encoding: JSONEncoding.default, headers: nil)
+            .responseJSON { response in
+                if let result = response.result.value as? [String: Any] {
+                    print(result)
+                    let meeting = Meeting()
+                    // TODO: サーバーから来たUUIDとURLを登録
+                    meeting.uuid = ""
+                    meeting.title = title
+                    meeting.link = ""
+                    meeting.start = startingDate
+                    for agendaInfo in meetingInfo.agenda {
+                        print(agendaInfo)
+                        let agenda = Agenda()
+                        agenda.title = agendaInfo.title
+                        agenda.duration = agendaInfo.duration
+                        meeting.agenda.append(agenda)
+                    }
+                    try! self.realm.write {
+                        self.realm.add(meeting)
+                    }
+                    HUD.flash(.success, delay: 1.0)
+                    self.performSegue(withIdentifier: "toShare", sender: self)
+                } else {
+                    HUD.flash(.error, delay: 1.0)
+                }
             }
-            try! realm.write {
-                realm.add(meeting)
-            }
-            HUD.flash(.success, delay: 1.0)
-            self.performSegue(withIdentifier: "toShare", sender: self)
-        } catch {
-            print(error.localizedDescription)
-            HUD.flash(.error, delay: 1.0)
-        }
     }
     
     func emptyFloatySelected(_ floaty: Floaty) {
@@ -178,6 +181,20 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         section.append(titleRow)
         section.append(timeRow)
         form.append(section)
+    }
+    
+    func makeParameters(info: MeetingInfo) -> Parameters {
+        var agendas: [[String:Any]] = []
+        for agenda in info.agenda {
+            agendas.append(["title": agenda.title, "duration": agenda.duration])
+        }
+        let params = [
+            "title": info.title,
+            "start": info.start,
+            "link": info.link,
+            "agenda": agendas
+        ] as [String : Any]
+        return params
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

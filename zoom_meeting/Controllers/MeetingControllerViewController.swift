@@ -98,7 +98,7 @@ class MeetingControllerViewController: UIViewController {
                 "id": meeting.uuid,
                 "duration": meeting.agenda[index].duration * 60,
                 "title": meeting.agenda[index].title
-            ]
+            ] as [String : Any]
             
             Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
                               method: .post,
