@@ -14,9 +14,10 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
     var realm: Realm!
     var meetings: [Meeting] = []
     
+    var selectedMeeting: Meeting?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
         table.delegate = self
         table.dataSource = self
@@ -42,9 +43,22 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
-
+        
         let dateString = dateFormatter.string(from: meetings[indexPath.row].start)
         cell.detailTextLabel?.text = dateString
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        table.deselectRow(at: indexPath, animated: true)
+        selectedMeeting = meetings[indexPath.row]
+        self.performSegue(withIdentifier: "toStart", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toStart", let targetMeeting = selectedMeeting {
+            let nextVC = segue.destination as! MeetingControllerViewController
+            nextVC.meeting = targetMeeting
+        }
     }
 }

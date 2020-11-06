@@ -544,7 +544,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="table" destination="j0p-N9-a0R" id="ho4-4u-xby"/>
-                        <segue destination="Vq1-Ip-zJO" kind="presentation" modalPresentationStyle="fullScreen" id="kW7-4B-MxA"/>
+                        <segue destination="Vq1-Ip-zJO" kind="presentation" identifier="toStart" modalPresentationStyle="fullScreen" id="kW7-4B-MxA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGI-HI-D5R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -612,17 +612,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zdm-Ar-m2O">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="308.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="dvB-HK-Nh9">
-                                        <rect key="frame" x="30" y="61.5" width="315" height="186"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="dvB-HK-Nh9">
+                                        <rect key="frame" x="30" y="62.5" width="315" height="184"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pIL-bh-Mdr">
-                                                <rect key="frame" x="0.0" y="0.0" width="315" height="30"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pIL-bh-Mdr">
+                                                <rect key="frame" x="0.0" y="0.0" width="315" height="48"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                                 <color key="textColor" name="TextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fhK-Fn-95q">
-                                                <rect key="frame" x="0.0" y="80" width="315" height="106"/>
+                                                <rect key="frame" x="0.0" y="78" width="315" height="106"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RRY-Rd-fIQ">
                                                         <rect key="frame" x="0.0" y="0.0" width="315" height="30"/>
