@@ -141,6 +141,8 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             // TODO: JSONのPOST
             print(jsonString)
             let meeting = Meeting()
+            // TODO: サーバーから来たUUIDとURLを登録
+            meeting.uuid = ""
             meeting.title = title
             meeting.link = ""
             meeting.start = startingDate
