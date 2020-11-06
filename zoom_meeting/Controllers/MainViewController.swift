@@ -28,6 +28,11 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let userDefaults = UserDefaults.standard
+        if !userDefaults.bool(forKey: "first") {
+            userDefaults.setValue(true, forKey: "first")
+            self.performSegue(withIdentifier: "toTutorial", sender: self)
+        }
         if sharedAuthService?.isLoggedIn() ?? false {
             userInfo = sharedAuthService?.getAccountInfo()
             userNameLabel.text = (userInfo?.getUserName() ?? "") + " さん"
