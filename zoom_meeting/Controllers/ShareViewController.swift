@@ -43,8 +43,8 @@ class ShareViewController: UIViewController {
         let shareText = meetingTitle
         let shareWebsite = NSURL(string: "https://life-is-tech.com/")!
         var activityItems = [shareText, shareWebsite] as [Any]
-        if agendaImageView.image != nil {
-            activityItems.append(agendaImageView.image!)
+        for img in images {
+            activityItems.append(img)
         }
         let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
