@@ -111,6 +111,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         meeting.setStartTime(date)
         meeting.setDurationInMinutes(UInt(TimeInterval(totalTime)))
         meeting.setAllowJoinBeforeHost(beforeHostRow.value ?? false)
+        meeting.enableWaitingRoom(true)
         
         meetingService.scheduleMeeting(meeting, withScheduleFor: userInfo?.getEmailAddress())
         meetingService.destroy(meeting)
