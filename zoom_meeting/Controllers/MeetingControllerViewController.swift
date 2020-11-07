@@ -55,7 +55,7 @@ class MeetingControllerViewController: UIViewController {
             .responseJSON { response in
                 if let result = response.result.value as? [String: Any] {
                     if result["status"] as! String == "error" {
-                        self.showError(message: response.result.value as! String)
+                        self.showError()
                     }
                 }
             }
@@ -129,7 +129,7 @@ class MeetingControllerViewController: UIViewController {
                         if result["status"] as! String == "success" {
                             self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                         } else {
-                            self.showError(message: response.result.value as! String)
+                            self.showError()
                         }
                     }
                 }
@@ -159,7 +159,7 @@ class MeetingControllerViewController: UIViewController {
                 .responseJSON { response in
                     if let result = response.result.value as? [String: Any] {
                         if result["status"] as! String == "error" {
-                            self.showError(message: response.result.value as! String)
+                            self.showError()
                         }
                     }
                 }
@@ -185,7 +185,7 @@ class MeetingControllerViewController: UIViewController {
             .responseJSON { response in
                 if let result = response.result.value as? [String: Any] {
                     if result["status"] as! String == "error" {
-                        self.showError(message: response.result.value as! String)
+                        self.showError()
                     }
                 }
             }
@@ -195,9 +195,8 @@ class MeetingControllerViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showError(message: String) {
-        //        "エラーが発生しました",
-        let alert: UIAlertController = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
+    func showError() {
+        let alert: UIAlertController = UIAlertController(title: "エラー", message: "エラーが発生しました", preferredStyle: .alert)
         let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
