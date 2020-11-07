@@ -242,7 +242,7 @@ extension CreateMeetingViewController: MobileRTCPremeetingDelegate {
             title: meeting?.getMeetingTopic() ?? "Untitled",
             startingDate: meeting?.getStartTime() ?? Date(),
             link: "zoommtg://zoom.us/join?confno=\(id)&pwd=\(pass)",
-            meetingId: meeting?.getMeetingID() ?? "",
+            meetingId: String(meeting?.getMeetingNumber() ?? 0),
             meetingPass: meeting?.getMeetingPassword() ?? "")
     }
     

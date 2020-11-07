@@ -50,7 +50,7 @@ class MeetingListViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         table.deselectRow(at: indexPath, animated: true)
-        let alert: UIAlertController = UIAlertController(title: "ミーティングを開始してもよろしいですか？", message: nil, preferredStyle: .alert)
+        let alert: UIAlertController = UIAlertController(title: "ミーティングを開始してもよろしいですか？", message: "アプリを開始する前にミーティングさせてください", preferredStyle: .alert)
         let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default) { (_) in
             self.selectedMeeting = self.meetings[indexPath.row]
             self.performSegue(withIdentifier: "toStart", sender: self)

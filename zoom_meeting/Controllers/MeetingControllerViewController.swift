@@ -195,11 +195,9 @@ class MeetingControllerViewController: UIViewController {
     @objc func tik() {
         count -= 1
         timerLabel.text = "\(Int(count / 60)):\(String(format: "%02d", Int(count % 60)))"
-        timerLabel.textColor = UIColor(named: "TextColor")
         if count <= 0 {
             mute()
             timerLabel.text = "時間になりました"
-            timerLabel.textColor = .red
         }
     }
 }
