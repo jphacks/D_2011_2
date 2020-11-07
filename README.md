@@ -8,3 +8,5 @@
 ### Zoom SDKのインストール
 Zoom SDKの容量が大きく、Githubの制限容量を超過したため`git clone`をしたのちにZoom SDKをインストールしてください。
 [こちら](https://marketplace.zoom.us/docs/sdk/native-sdks/iOS/getting-started/install-sdk)からZoom SDKをダウンロードして、`MobileRTCResources.bundle`と`MobileRTC.framework`と`MobileRTCScreenShare.framework`をインポートしてください。
+### Zoom APIキーの登録
+SupportingFile/に`keys.plist`を作成し、`cliantKey`と`cliantSecret`を作成してください。
