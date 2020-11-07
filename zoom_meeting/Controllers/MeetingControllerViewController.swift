@@ -38,8 +38,10 @@ class MeetingControllerViewController: UIViewController {
         let parameters = [
             "request": "start",
             "id": meeting.uuid,
+            "meetingid": meeting.meetingId,
+            "meetingpass": meeting.meetingPass,
+            "title": meeting.agenda[0].title,
             "duration": meeting.agenda[0].duration * 60,
-            "title": meeting.agenda[0].title
         ] as [String : Any]
         
         Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",

@@ -116,7 +116,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         meetingService.destroy(meeting)
     }
     
-    func createMeetingInfo(title: String, startingDate: Date, link: String) {
+    func createMeetingInfo(title: String, startingDate: Date, link: String, meetingId: String, meetingPass: String) {
         var agendaInfos: [AgendaInfo] = []
         
         for i in 1...index {
@@ -161,6 +161,8 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
                     self.meetingUrl = result["url"] as! String
                     meeting.link = self.meetingUrl
                     meeting.start = startingDate
+                    meeting.meetingId = meetingId
+                    meeting.meetingPass = meetingPass
                     for agendaInfo in meetingInfo.agenda {
                         let agenda = Agenda()
                         agenda.title = agendaInfo.title
@@ -239,7 +241,9 @@ extension CreateMeetingViewController: MobileRTCPremeetingDelegate {
         createMeetingInfo(
             title: meeting?.getMeetingTopic() ?? "Untitled",
             startingDate: meeting?.getStartTime() ?? Date(),
-            link: "zoommtg://zoom.us/join?confno=\(id)&pwd=\(pass)")
+            link: "zoommtg://zoom.us/join?confno=\(id)&pwd=\(pass)",
+            meetingId: meeting?.getMeetingID() ?? "",
+            meetingPass: meeting?.getMeetingPassword() ?? "")
     }
     
     func sinkEditMeeting(_ result: PreMeetingError, meetingUniquedID uniquedID: UInt64) {

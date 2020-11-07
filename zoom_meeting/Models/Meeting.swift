@@ -13,6 +13,8 @@ class Meeting: Object {
     @objc dynamic var title = ""
     @objc dynamic var start: Date = Date()
     @objc dynamic var link = ""
+    @objc dynamic var meetingId = ""
+    @objc dynamic var meetingPass = ""
     let agenda = List<Agenda>()
 }
 
