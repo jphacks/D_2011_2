@@ -38,8 +38,8 @@ class MeetingControllerViewController: UIViewController {
         let parameters = [
             "request": "start",
             "id": meeting.uuid,
-            "duration": meeting.agenda[index].duration * 60,
-            "title": meeting.agenda[index].title
+            "duration": meeting.agenda[0].duration * 60,
+            "title": meeting.agenda[0].title
         ] as [String : Any]
         
         Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
@@ -128,6 +128,7 @@ class MeetingControllerViewController: UIViewController {
     }
     
     func next() {
+        timer.invalidate()
         index += 1
         if index == meeting.agenda.count {
             timer.invalidate()
@@ -154,10 +155,12 @@ class MeetingControllerViewController: UIViewController {
             count = meeting.agenda[index].duration * 60
             timerLabel.text = "\(Int(count / 60)):\(Int(count % 60))"
             topicLabel.text = meeting.agenda[index].title
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tik), userInfo: nil, repeats: true)
         }
     }
     
     func mute() {
+        timer.invalidate()
         let parameters = [
             "request": "mute",
             "id": meeting.uuid,
@@ -190,8 +193,11 @@ class MeetingControllerViewController: UIViewController {
     @objc func tik() {
         count -= 1
         timerLabel.text = "\(Int(count / 60)):\(String(format: "%02d", Int(count % 60)))"
+        timerLabel.textColor = UIColor(named: "TextColor")
         if count <= 0 {
             mute()
+            timerLabel.text = "時間になりました"
+            timerLabel.textColor = .red
         }
     }
 }
