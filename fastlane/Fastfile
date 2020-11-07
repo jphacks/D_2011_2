@@ -20,7 +20,7 @@ platform :ios do
   lane :release do
     cocoapods
     increment_build_number
-    gym(scheme: "MichiNoEki", xcargs: "-allowProvisioningUpdates")
+    gym(scheme: "YutoTomita", xcargs: "-allowProvisioningUpdates")
     deliver(
       submit_for_review: true,
       force: true,
@@ -35,9 +35,9 @@ platform :ios do
     git_commit(path: ".", message: "Update version")
     push_to_git_remote(
       remote: "origin",
-      local_branch: "master",
-      remote_branch: "master",
-      force: true,
+      local_branch: "main",
+      remote_branch: "main",
+      force: false,
       tags: false
     )
   end
