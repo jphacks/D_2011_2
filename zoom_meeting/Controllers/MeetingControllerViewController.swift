@@ -21,6 +21,8 @@ class MeetingControllerViewController: UIViewController {
     var count = 0
     var index = 0
     
+    var currentTextField: UITextField?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -67,7 +69,7 @@ class MeetingControllerViewController: UIViewController {
     
     @IBAction func editDetail() {
         //アラートコントローラー
-        let alert = UIAlertController(title: "時間を追加/減らす", message: "例: 5分減らす場合: -5\n5分増やす場合: 5", preferredStyle: .alert)
+        let alert = UIAlertController(title: "時間を追加/減らす", message: "時間を減らす場合はマイナスボタンをタップ", preferredStyle: .alert)
         
         //OKボタンを生成
         let okAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
@@ -77,7 +79,7 @@ class MeetingControllerViewController: UIViewController {
             for textField in textFields {
                 if textField.tag == 1 {
                     if let min = Int(textField.text ?? "") {
-                        self.count -= min  * 60
+                        self.count += min  * 60
                     }
                 }
             }
@@ -86,9 +88,14 @@ class MeetingControllerViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         
-        alert.addTextField { (text:UITextField!) in
+        alert.addTextField { (text: UITextField!) in
+            self.currentTextField = text
+            let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 44))
+            let minusButton = UIBarButtonItem(title: "マイナス", style: .plain, target: self, action: #selector(self.toggleMinus))
+            toolbar.items = [minusButton]
+            text.inputAccessoryView = toolbar
             text.placeholder = "追加する時間 (分)"
-            text.keyboardType = .decimalPad
+            text.keyboardType = .numberPad
             text.tag = 1
         }
         present(alert, animated: true, completion: nil)
@@ -185,7 +192,7 @@ class MeetingControllerViewController: UIViewController {
     }
     
     func showError(message: String) {
-//        "エラーが発生しました",
+        //        "エラーが発生しました",
         let alert: UIAlertController = UIAlertController(title: "エラー", message: message, preferredStyle: .alert)
         let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
@@ -201,5 +208,18 @@ class MeetingControllerViewController: UIViewController {
             timerLabel.text = "時間になりました"
             timerLabel.font = .boldSystemFont(ofSize: 30)
         }
+    }
+    
+    @objc func toggleMinus() {
+        if let text = currentTextField {
+            text.toggleMinus()
+        }
+    }
+}
+
+extension UITextField {
+    func toggleMinus() {
+        guard let text = self.text, !text.isEmpty else { return }
+        self.text = String(text.hasPrefix("-") ? text.dropFirst() : "-\(text)")
     }
 }
