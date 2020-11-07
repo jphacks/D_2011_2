@@ -23,6 +23,8 @@ class MeetingControllerViewController: UIViewController {
     
     var currentTextField: UITextField?
     
+    var isMuted = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -30,8 +32,8 @@ class MeetingControllerViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy年MM月dd日HH:mm~"
         dateLabel.text = dateFormatter.string(from: meeting.start)
-        topicLabel.text = meeting.agenda[0].title
-        count = meeting.agenda[0].duration * 60
+        topicLabel.text = meeting.agenda[index].title
+        count = meeting.agenda[index].duration * 60
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tik), userInfo: nil, repeats: true)
     }
     
@@ -42,8 +44,8 @@ class MeetingControllerViewController: UIViewController {
             "id": meeting.uuid,
             "meetingid": meeting.meetingId,
             "meetingpass": meeting.meetingPass,
-            "title": meeting.agenda[0].title,
-            "duration": meeting.agenda[0].duration * 60,
+            "title": meeting.agenda[index].title,
+            "duration": meeting.agenda[index].duration * 60,
         ] as [String : Any]
         
         Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
@@ -102,6 +104,7 @@ class MeetingControllerViewController: UIViewController {
     }
     
     @IBAction func nextTopic() {
+        index += 1
         next()
     }
     
@@ -137,7 +140,7 @@ class MeetingControllerViewController: UIViewController {
     
     func next() {
         timer.invalidate()
-        index += 1
+        isMuted = false
         if index == meeting.agenda.count {
             timer.invalidate()
             finish()
@@ -169,6 +172,7 @@ class MeetingControllerViewController: UIViewController {
     
     func mute() {
         timer.invalidate()
+        isMuted = true
         let parameters = [
             "request": "mute",
             "id": meeting.uuid,
@@ -203,7 +207,7 @@ class MeetingControllerViewController: UIViewController {
         count -= 1
         timerLabel.text = "\(Int(count / 60)):\(String(format: "%02d", Int(count % 60)))"
         timerLabel.font = .boldSystemFont(ofSize: 40)
-        if count <= 0 {
+        if count <= 0 && !isMuted {
             mute()
             timerLabel.text = "時間になりました"
             timerLabel.font = .boldSystemFont(ofSize: 30)
