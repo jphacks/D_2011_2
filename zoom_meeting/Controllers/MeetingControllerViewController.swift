@@ -151,10 +151,33 @@ class MeetingControllerViewController: UIViewController {
                         }
                     }
                 }
-            count = meeting.agenda[index].duration
+            count = meeting.agenda[index].duration * 60
             timerLabel.text = "\(Int(count / 60)):\(Int(count % 60))"
             topicLabel.text = meeting.agenda[index].title
         }
+    }
+    
+    func mute() {
+        let parameters = [
+            "request": "mute",
+            "id": meeting.uuid,
+        ] as [String : Any]
+        
+        Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+                          method: .post,
+                          parameters: parameters,
+                          encoding: JSONEncoding.default, headers: nil)
+            .responseJSON { response in
+                if let result = response.result.value as? [String: Any] {
+                    if result["status"] as! String == "error" {
+                        self.showError()
+                    }
+                }
+            }
+        let alert: UIAlertController = UIAlertController(title: "時間になりました。", message: "次の議題に移るには「次の議題」を押してください。", preferredStyle: .alert)
+        let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func showError() {
@@ -166,24 +189,9 @@ class MeetingControllerViewController: UIViewController {
     
     @objc func tik() {
         count -= 1
-        timerLabel.text = "\(Int(count / 60)):\(Int(count % 60))"
+        timerLabel.text = "\(Int(count / 60)):\(String(format: "%02d", Int(count % 60)))"
         if count <= 0 {
-            let parameters = [
-                "request": "mute",
-                "id": meeting.uuid,
-            ] as [String : Any]
-            
-            Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
-                              method: .post,
-                              parameters: parameters,
-                              encoding: JSONEncoding.default, headers: nil)
-                .responseJSON { response in
-                    if let result = response.result.value as? [String: Any] {
-                        if result["status"] as! String == "error" {
-                            self.showError()
-                        }
-                    }
-                }
+            mute()
         }
     }
 }
