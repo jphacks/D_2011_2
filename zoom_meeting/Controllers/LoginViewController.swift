@@ -17,6 +17,8 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var rememberMeSwitch: UISwitch!
     
+    var isKeyboardShown = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -33,6 +35,11 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
         passwordTextField.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configureObserver()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         HUD.show(.progress)
@@ -42,6 +49,11 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
         } else {
             HUD.hide()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeObserver()
     }
     
     @IBAction func login() {
@@ -72,6 +84,38 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func configureObserver() {
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func removeObserver() {
+        let notification = NotificationCenter.default
+        notification.removeObserver(self)
+    }
+    
+    @objc func keyboardWillShow(notification: Notification?) {
+        guard !isKeyboardShown else {
+            return
+        }
+        isKeyboardShown = true
+        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+            self.view.transform = transform
+        })
+    }
+    
+    @objc func keyboardWillHide(notification: Notification?) {
+        isKeyboardShown = false
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            self.view.transform = CGAffineTransform.identity
+        })
     }
 }
 
