@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,11 @@
 		65607FBF2554EA6300CF4B49 /* Meeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65607FBE2554EA6300CF4B49 /* Meeting.swift */; };
 		65607FC12554F32B00CF4B49 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65607FC02554F32B00CF4B49 /* MeetingListViewController.swift */; };
 		65607FC32554F84B00CF4B49 /* MeetingControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65607FC22554F84B00CF4B49 /* MeetingControllerViewController.swift */; };
+		6584D45A25581FDD00901A6A /* Eureka in Frameworks */ = {isa = PBXBuildFile; productRef = 6584D45925581FDD00901A6A /* Eureka */; };
+		6584D45D2558200200901A6A /* PKHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 6584D45C2558200200901A6A /* PKHUD */; };
+		6584D460255820E000901A6A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6584D45F255820E000901A6A /* RealmSwift */; };
+		6584D4632558211500901A6A /* PaperOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 6584D4622558211500901A6A /* PaperOnboarding */; };
+		6584D4662558215100901A6A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6584D4652558215100901A6A /* Alamofire */; };
 		65A4DF78255406B7008CCD83 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A4DF77255406B7008CCD83 /* ShareViewController.swift */; };
 		65B727C72553B8AB005361D9 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B727C62553B8AB005361D9 /* UIColor+.swift */; };
 		65D1C719255041ED00CE9242 /* MobileRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D1C718255041ED00CE9242 /* MobileRTC.framework */; };
@@ -26,7 +31,6 @@
 		65D1C72425504DDD00CE9242 /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1C72325504DDD00CE9242 /* KeyManager.swift */; };
 		65D1C7642550530400CE9242 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1C7632550530400CE9242 /* MainViewController.swift */; };
 		65FAC07A255524930073252D /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FAC079255524930073252D /* OnBoardingViewController.swift */; };
-		9A4F1BC75FD69F7F10240BD8 /* Pods_zoom_meeting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 852B37C79C63C32C011560B9 /* Pods_zoom_meeting.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -65,9 +69,6 @@
 		65D1C72325504DDD00CE9242 /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
 		65D1C7632550530400CE9242 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		65FAC079255524930073252D /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
-		7F4FA9B497046805D02C5962 /* Pods-zoom_meeting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zoom_meeting.debug.xcconfig"; path = "Target Support Files/Pods-zoom_meeting/Pods-zoom_meeting.debug.xcconfig"; sourceTree = "<group>"; };
-		852B37C79C63C32C011560B9 /* Pods_zoom_meeting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zoom_meeting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E918529B935100C7F848BDC9 /* Pods-zoom_meeting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zoom_meeting.release.xcconfig"; path = "Target Support Files/Pods-zoom_meeting/Pods-zoom_meeting.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,23 +76,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6584D460255820E000901A6A /* RealmSwift in Frameworks */,
+				6584D45D2558200200901A6A /* PKHUD in Frameworks */,
 				65D1C719255041ED00CE9242 /* MobileRTC.framework in Frameworks */,
-				9A4F1BC75FD69F7F10240BD8 /* Pods_zoom_meeting.framework in Frameworks */,
+				6584D4662558215100901A6A /* Alamofire in Frameworks */,
+				6584D45A25581FDD00901A6A /* Eureka in Frameworks */,
+				6584D4632558211500901A6A /* PaperOnboarding in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2A09F8AF7B25B77C35BF8C24 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				7F4FA9B497046805D02C5962 /* Pods-zoom_meeting.debug.xcconfig */,
-				E918529B935100C7F848BDC9 /* Pods-zoom_meeting.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		650441DF254D5BBC006A26AD = {
 			isa = PBXGroup;
 			children = (
@@ -99,7 +95,6 @@
 				650441EA254D5BBC006A26AD /* zoom_meeting */,
 				650441E9254D5BBC006A26AD /* Products */,
 				65D1C717255041ED00CE9242 /* Frameworks */,
-				2A09F8AF7B25B77C35BF8C24 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,7 +122,6 @@
 			children = (
 				65D1C71C255041F800CE9242 /* MobileRTCScreenShare.framework */,
 				65D1C718255041ED00CE9242 /* MobileRTC.framework */,
-				852B37C79C63C32C011560B9 /* Pods_zoom_meeting.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -184,12 +178,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 650441FC254D5BBC006A26AD /* Build configuration list for PBXNativeTarget "zoom_meeting" */;
 			buildPhases = (
-				860C873819A7AF5565E82580 /* [CP] Check Pods Manifest.lock */,
 				650441E4254D5BBC006A26AD /* Sources */,
 				650441E5254D5BBC006A26AD /* Frameworks */,
 				650441E6254D5BBC006A26AD /* Resources */,
 				65D1C71B255041ED00CE9242 /* Embed Frameworks */,
-				036FA641B7C0ACB87BED54F0 /* [CP] Embed Pods Frameworks */,
 				657B98B425558D0400F6DD76 /* ShellScript */,
 			);
 			buildRules = (
@@ -197,6 +189,13 @@
 			dependencies = (
 			);
 			name = zoom_meeting;
+			packageProductDependencies = (
+				6584D45925581FDD00901A6A /* Eureka */,
+				6584D45C2558200200901A6A /* PKHUD */,
+				6584D45F255820E000901A6A /* RealmSwift */,
+				6584D4622558211500901A6A /* PaperOnboarding */,
+				6584D4652558215100901A6A /* Alamofire */,
+			);
 			productName = zoom_meeting;
 			productReference = 650441E8254D5BBC006A26AD /* zoom_meeting.app */;
 			productType = "com.apple.product-type.application";
@@ -224,6 +223,13 @@
 				Base,
 			);
 			mainGroup = 650441DF254D5BBC006A26AD;
+			packageReferences = (
+				6584D45825581FDD00901A6A /* XCRemoteSwiftPackageReference "Eureka" */,
+				6584D45B2558200200901A6A /* XCRemoteSwiftPackageReference "PKHUD" */,
+				6584D45E255820E000901A6A /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				6584D4612558211500901A6A /* XCRemoteSwiftPackageReference "paper-onboarding" */,
+				6584D4642558215100901A6A /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 650441E9254D5BBC006A26AD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -249,23 +255,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		036FA641B7C0ACB87BED54F0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-zoom_meeting/Pods-zoom_meeting-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-zoom_meeting/Pods-zoom_meeting-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-zoom_meeting/Pods-zoom_meeting-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		657B98B425558D0400F6DD76 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -282,28 +271,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = " APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\necho $(lipo -info \"$FRAMEWORK_EXECUTABLE_PATH\")\n\nFRAMEWORK_TMP_PATH=\"$FRAMEWORK_EXECUTABLE_PATH-tmp\"\n\ncase \"${TARGET_BUILD_DIR}\" in\n*\"iphonesimulator\")\n    echo \"No need to remove archs\"\n    ;;\n*)\n    if $(lipo \"$FRAMEWORK_EXECUTABLE_PATH\" -verify_arch \"i386\") ; then\n    lipo -output \"$FRAMEWORK_TMP_PATH\" -remove \"i386\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n    echo \"i386 architecture removed\"\n    rm \"$FRAMEWORK_EXECUTABLE_PATH\"\n    mv \"$FRAMEWORK_TMP_PATH\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n    fi\n    if $(lipo \"$FRAMEWORK_EXECUTABLE_PATH\" -verify_arch \"x86_64\") ; then\n    lipo -output \"$FRAMEWORK_TMP_PATH\" -remove \"x86_64\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n    echo \"x86_64 architecture removed\"\n    rm \"$FRAMEWORK_EXECUTABLE_PATH\"\n    mv \"$FRAMEWORK_TMP_PATH\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n    fi\n    ;;\nesac\n\necho \"Completed for executable $FRAMEWORK_EXECUTABLE_PATH\"\necho $(lipo -info \"$FRAMEWORK_EXECUTABLE_PATH\")\n\ndone\n";
-		};
-		860C873819A7AF5565E82580 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-zoom_meeting-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -469,7 +436,6 @@
 		};
 		650441FD254D5BBC006A26AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F4FA9B497046805D02C5962 /* Pods-zoom_meeting.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -495,7 +461,6 @@
 		};
 		650441FE254D5BBC006A26AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E918529B935100C7F848BDC9 /* Pods-zoom_meeting.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -541,6 +506,77 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6584D45825581FDD00901A6A /* XCRemoteSwiftPackageReference "Eureka" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/xmartlabs/Eureka.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.2;
+			};
+		};
+		6584D45B2558200200901A6A /* XCRemoteSwiftPackageReference "PKHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pkluz/PKHUD.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.0;
+			};
+		};
+		6584D45E255820E000901A6A /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.1.2;
+			};
+		};
+		6584D4612558211500901A6A /* XCRemoteSwiftPackageReference "paper-onboarding" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Ramotion/paper-onboarding.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.1.5;
+			};
+		};
+		6584D4642558215100901A6A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6584D45925581FDD00901A6A /* Eureka */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6584D45825581FDD00901A6A /* XCRemoteSwiftPackageReference "Eureka" */;
+			productName = Eureka;
+		};
+		6584D45C2558200200901A6A /* PKHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6584D45B2558200200901A6A /* XCRemoteSwiftPackageReference "PKHUD" */;
+			productName = PKHUD;
+		};
+		6584D45F255820E000901A6A /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6584D45E255820E000901A6A /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+		6584D4622558211500901A6A /* PaperOnboarding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6584D4612558211500901A6A /* XCRemoteSwiftPackageReference "paper-onboarding" */;
+			productName = PaperOnboarding;
+		};
+		6584D4652558215100901A6A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6584D4642558215100901A6A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 650441E0254D5BBC006A26AD /* Project object */;
 }

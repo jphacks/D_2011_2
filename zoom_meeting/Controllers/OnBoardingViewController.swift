@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import paper_onboarding
+import PaperOnboarding
 
 class OnBoardingViewController: UIViewController {
     
@@ -18,7 +18,7 @@ class OnBoardingViewController: UIViewController {
                            title: "aikaへようこそ",
                            description: "aikaはzoomでの会議をより円滑に進めるお手伝いをします。",
                            pageIcon: UIImage(named: "dummy")!,
-                           color: UIColor.backgroundColor,
+                           color: UIColor(named: "OnBoardingBackground")!,
                            titleColor: UIColor.white,
                            descriptionColor: UIColor.white, titleFont: .boldSystemFont(ofSize: 20), descriptionFont: .systemFont(ofSize: 15)),
         
@@ -26,7 +26,7 @@ class OnBoardingViewController: UIViewController {
                            title: "まずはミーティングを作成しましょう",
                            description: "アプリから簡単にZoomミーティングを作成することができます",
                            pageIcon: UIImage(named: "dummy")!,
-                           color: UIColor.backgroundColor,
+                           color: UIColor(named: "OnBoardingBackground")!,
                            titleColor: UIColor.white,
                            descriptionColor: UIColor.white, titleFont: .boldSystemFont(ofSize: 20), descriptionFont: .systemFont(ofSize: 15)),
         
@@ -34,14 +34,14 @@ class OnBoardingViewController: UIViewController {
                            title: "会議の議題を登録しましょう",
                            description: "事前に登録された議題に沿ってaikaが会議を円滑に進めるお手伝いをします。",
                            pageIcon: UIImage(named: "dummy")!,
-                           color: UIColor.backgroundColor,
+                           color: UIColor(named: "OnBoardingBackground")!,
                            titleColor: UIColor.white,
                            descriptionColor: UIColor.white, titleFont: .boldSystemFont(ofSize: 20), descriptionFont: .systemFont(ofSize: 15)),
         OnboardingItemInfo(informationImage: UIImage(named: "share")!,
                            title: "会議をシェアしましょう",
                            description: "aikaから作成された会議は議題と一緒にシェアすることができます。",
                            pageIcon: UIImage(named: "dummy")!,
-                           color: UIColor.backgroundColor,
+                           color: UIColor(named: "OnBoardingBackground")!,
                            titleColor: UIColor.white,
                            descriptionColor: UIColor.white, titleFont: .boldSystemFont(ofSize: 20), descriptionFont: .systemFont(ofSize: 15)),
     ]

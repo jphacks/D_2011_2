@@ -7,14 +7,13 @@
 
 import UIKit
 import Eureka
-import Floaty
 import MobileRTC
 import MobileCoreServices
 import PKHUD
 import RealmSwift
 import Alamofire
 
-class CreateMeetingViewController: FormViewController, FloatyDelegate {
+class CreateMeetingViewController: FormViewController {
     
     struct MeetingInfo: Codable {
         let title: String
@@ -39,6 +38,8 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
     var images: [String] = []
     
     var realm: Realm!
+    
+    @IBOutlet var floatingActionButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,15 +82,12 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             }
         
         // FAB
-        let floaty = Floaty()
-        floaty.fabDelegate = self
-        floaty.plusColor = .white
-        self.view.addSubview(floaty)
+        view.bringSubviewToFront(floatingActionButton)
         
         // Realm
         realm = try! Realm()
     }
-    
+       
     @IBAction func create() {
         HUD.show(.progress)
         var totalTime = 0
@@ -141,12 +139,12 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
                                       start: Int(timeInUnix),
                                       link: link,
                                       agenda: agendaInfos)
-        Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+        AF.request("https://aika.lit-kansai-mentors.com/meetingaction",
                           method: .post,
                           parameters: makeParameters(info: meetingInfo),
                           encoding: JSONEncoding.default, headers: nil)
             .responseJSON { response in
-                if let result = response.result.value as? [String: Any] {
+                if let result = response.value as? [String: Any] {
                     do {
                         let stringVal = result["agenda"] as! String
                         let json = stringVal.data(using: .utf8)!
@@ -185,22 +183,6 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             }
     }
     
-    func emptyFloatySelected(_ floaty: Floaty) {
-        index += 1
-        let titleRow = TextRow("title\(index)") {
-            $0.title = "議題"
-            $0.placeholder = "議題を入力"
-        }
-        let timeRow = IntRow("time\(index)") {
-            $0.title = "時間(分)"
-            $0.placeholder = "(分)"
-        }
-        let section = Section()
-        section.append(titleRow)
-        section.append(timeRow)
-        form.append(section)
-    }
-    
     func makeParameters(info: MeetingInfo) -> Parameters {
         var agendas: [[String:Any]] = []
         for agenda in info.agenda {
@@ -214,6 +196,22 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             "agenda": agendas
         ] as [String : Any]
         return params
+    }
+    
+    @IBAction func add() {
+        index += 1
+        let titleRow = TextRow("title\(index)") {
+            $0.title = "議題"
+            $0.placeholder = "議題を入力"
+        }
+        let timeRow = IntRow("time\(index)") {
+            $0.title = "時間(分)"
+            $0.placeholder = "(分)"
+        }
+        let section = Section()
+        section.append(titleRow)
+        section.append(timeRow)
+        form.append(section)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -756,8 +756,34 @@
                     <view key="view" contentMode="scaleToFill" id="7aE-hQ-5AJ">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hr3-RK-GHf">
+                                <rect key="frame" x="315" y="735" width="60" height="60"/>
+                                <color key="backgroundColor" name="zoomColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="0fS-l6-Fdz"/>
+                                    <constraint firstAttribute="height" constant="60" id="Mwp-t3-Ukq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="add" destination="gF3-JT-4fb" eventType="touchUpInside" id="v3y-lN-ZAv"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="5k2-Bd-G4o"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="5k2-Bd-G4o" firstAttribute="trailing" secondItem="Hr3-RK-GHf" secondAttribute="trailing" constant="15" id="sPI-j1-2WM"/>
+                            <constraint firstItem="5k2-Bd-G4o" firstAttribute="bottom" secondItem="Hr3-RK-GHf" secondAttribute="bottom" constant="15" id="wAx-EA-Qua"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ミーティングの作成" id="Kkv-gU-K0a">
                         <barButtonItem key="backBarButtonItem" title=" " id="An9-zS-GjW"/>
@@ -768,6 +794,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="floatingActionButton" destination="Hr3-RK-GHf" id="BI7-f5-NUU"/>
                         <segue destination="Vt3-ns-tnS" kind="presentation" identifier="toShare" modalPresentationStyle="fullScreen" id="VGa-8e-T3l"/>
                     </connections>
                 </viewController>

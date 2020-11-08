@@ -43,7 +43,6 @@ platform :ios do
   end
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    cocoapods
     build_app(workspace: "zoom_meeting.xcworkspace", scheme: "zoom_meeting")
     upload_to_testflight
   end

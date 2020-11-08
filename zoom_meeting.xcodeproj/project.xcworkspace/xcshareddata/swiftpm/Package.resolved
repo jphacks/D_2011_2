@@ -1,0 +1,61 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "9e0328127dfb801cefe8ac53a13c0c90a7770448",
+          "version": "5.4.0"
+        }
+      },
+      {
+        "package": "Eureka",
+        "repositoryURL": "https://github.com/xmartlabs/Eureka.git",
+        "state": {
+          "branch": null,
+          "revision": "81f3ea3d69dc99f8684b8bce1224908e101c679f",
+          "version": "5.3.2"
+        }
+      },
+      {
+        "package": "PaperOnboarding",
+        "repositoryURL": "https://github.com/Ramotion/paper-onboarding.git",
+        "state": {
+          "branch": null,
+          "revision": "c36df080b1001c385cc14c85f3b1c5ea36531fd0",
+          "version": "6.1.5"
+        }
+      },
+      {
+        "package": "PKHUD",
+        "repositoryURL": "https://github.com/pkluz/PKHUD.git",
+        "state": {
+          "branch": null,
+          "revision": "8fd26f23057c6bebd6695524b1c3e05e93aba571",
+          "version": "5.4.0"
+        }
+      },
+      {
+        "package": "Realm",
+        "repositoryURL": "https://github.com/realm/realm-cocoa",
+        "state": {
+          "branch": null,
+          "revision": "efaf9c31dd042274a8b38f021ab19c33047a8a6a",
+          "version": "10.1.2"
+        }
+      },
+      {
+        "package": "RealmCore",
+        "repositoryURL": "https://github.com/realm/realm-core",
+        "state": {
+          "branch": null,
+          "revision": "63b42fc6835efdd27b706a6a6b629edc36018d43",
+          "version": "10.1.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

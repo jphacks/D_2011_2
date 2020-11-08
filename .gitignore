@@ -1,7 +1,5 @@
 zoom_meeting/SupportingFiles/keys.plist
 .DS_Store
-Pods/
-Podfile.lock
 MobileRTC.framework/
 MobileRTCResources.bundle/
 MobileRTCScreenShare.framework/
@@ -34,3 +32,6 @@ zoom_meeting.xcworkspace/xcuserdata/
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+zoom_meeting.xcodeproj/project.xcworkspace/xcuserdata/
+zoom_meeting.xcodeproj/xcuserdata

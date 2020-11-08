@@ -46,12 +46,9 @@ class MeetingControllerViewController: UIViewController {
             "duration": meeting.agenda[index].duration * 60,
         ] as [String : Any]
         
-        Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
-                          method: .post,
-                          parameters: parameters,
-                          encoding: JSONEncoding.default, headers: nil)
-            .responseJSON { response in
-                if let result = response.result.value as? [String: Any] {
+        AF.request("https://aika.lit-kansai-mentors.com/meetingaction", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil)
+            .responseJSON { (response) in
+                if let result = response.value as? [String: Any] {
                     if result["status"] as! String == "error" {
                         self.showError()
                     }
@@ -143,12 +140,12 @@ class MeetingControllerViewController: UIViewController {
                 "id": self.meeting.uuid,
             ] as [String : Any]
             
-            Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+            AF.request("https://aika.lit-kansai-mentors.com/meetingaction",
                               method: .post,
                               parameters: parameters,
                               encoding: JSONEncoding.default, headers: nil)
                 .responseJSON { response in
-                    if let result = response.result.value as? [String: Any] {
+                    if let result = response.value as? [String: Any] {
                         if result["status"] as! String == "success" {
                             self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                         } else {
@@ -175,12 +172,12 @@ class MeetingControllerViewController: UIViewController {
                 "title": meeting.agenda[index].title
             ] as [String : Any]
             
-            Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+            AF.request("https://aika.lit-kansai-mentors.com/meetingaction",
                               method: .post,
                               parameters: parameters,
                               encoding: JSONEncoding.default, headers: nil)
                 .responseJSON { response in
-                    if let result = response.result.value as? [String: Any] {
+                    if let result = response.value as? [String: Any] {
                         if result["status"] as! String == "error" {
                             self.showError()
                         }
@@ -201,12 +198,12 @@ class MeetingControllerViewController: UIViewController {
             "id": meeting.uuid,
         ] as [String : Any]
         
-        Alamofire.request("https://aika.lit-kansai-mentors.com/meetingaction",
+        AF.request("https://aika.lit-kansai-mentors.com/meetingaction",
                           method: .post,
                           parameters: parameters,
                           encoding: JSONEncoding.default, headers: nil)
             .responseJSON { response in
-                if let result = response.result.value as? [String: Any] {
+                if let result = response.value as? [String: Any] {
                     if result["status"] as! String == "error" {
                         self.showError()
                     }
