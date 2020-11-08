@@ -88,7 +88,7 @@ class MeetingControllerViewController: UIViewController {
             }
         }
         alert.addAction(okAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         
         alert.addTextField { (text: UITextField!) in
@@ -121,7 +121,7 @@ class MeetingControllerViewController: UIViewController {
         }
         alert.addAction(customButton)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }

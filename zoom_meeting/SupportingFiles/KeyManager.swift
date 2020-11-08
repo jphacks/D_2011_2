@@ -8,7 +8,6 @@
 import Foundation
 
 struct KeyManager {
-
     private let keyFilePath = Bundle.main.path(forResource: "keys", ofType: "plist")
 
     func getKeys() -> NSDictionary? {

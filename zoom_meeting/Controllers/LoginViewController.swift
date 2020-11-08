@@ -38,16 +38,8 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.configureObserver()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        HUD.show(.progress)
         if sharedAuthRTC?.isLoggedIn() ?? false {
-            HUD.hide()
             self.performSegue(withIdentifier: "success", sender: self)
-        } else {
-            HUD.hide()
         }
     }
     

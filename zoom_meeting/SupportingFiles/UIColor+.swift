@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIColor {
+    static let backgroundColor = UIColor(red: 0.40, green: 0.56, blue: 0.71, alpha: 1.00)
     class func hex ( string : String, alpha : CGFloat) -> UIColor {
         let string_ = string.replacingOccurrences(of: "#", with: "")
         let scanner = Scanner(string: string_ as String)
