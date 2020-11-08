@@ -67,6 +67,9 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
             <<< SwitchRow("beforeHost") { row in
                 row.title = "ホストより前の入室を許可する"
             }
+            <<< SwitchRow("waitingRoom") { row in
+                row.title = "待機室を有効にする"
+            }
             +++ Section("アジェンダ")
             <<< TextRow("title\(index)") { row in
                 row.title = "議題"
@@ -101,6 +104,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         let titleRow = form.rowBy(tag: "title") as! TextRow
         let startingDateRow = form.rowBy(tag: "date") as! DateTimeInlineRow
         let beforeHostRow = form.rowBy(tag: "beforeHost") as! SwitchRow
+        let waitingRoomRow = form.rowBy(tag: "waitingRoom") as! SwitchRow
         meetingTitle = titleRow.value ?? "Untitled"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy年MM月dd日HH:mm~"
@@ -111,7 +115,7 @@ class CreateMeetingViewController: FormViewController, FloatyDelegate {
         meeting.setStartTime(date)
         meeting.setDurationInMinutes(UInt(TimeInterval(totalTime)))
         meeting.setAllowJoinBeforeHost(beforeHostRow.value ?? false)
-        meeting.enableWaitingRoom(true)
+        meeting.enableWaitingRoom(waitingRoomRow.value ?? true)
         
         meetingService.scheduleMeeting(meeting, withScheduleFor: userInfo?.getEmailAddress())
         meetingService.destroy(meeting)
