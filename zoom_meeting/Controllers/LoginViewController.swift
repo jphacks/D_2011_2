@@ -16,7 +16,6 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var rememberMeSwitch: UISwitch!
-    @IBOutlet var loginButton:  UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +24,6 @@ class LoginViewController: UIViewController, MobileRTCAuthDelegate {
         emailTextField.layer.borderWidth = 2
         passwordTextField.layer.borderColor = UIColor.hex(string: "00013F", alpha: 1).cgColor
         passwordTextField.layer.borderWidth = 2
-        loginButton.layer.cornerRadius = 10
         
         sharedAuthRTC = MobileRTC.shared().getAuthService()
         sharedAuthRTC?.delegate = self

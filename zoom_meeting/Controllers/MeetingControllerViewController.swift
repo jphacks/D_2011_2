@@ -21,8 +21,6 @@ class MeetingControllerViewController: UIViewController {
     var count = 0
     var index = 0
     
-    var currentTextField: UITextField?
-    
     var isMuted = false
     
     override func viewDidLoad() {
@@ -61,27 +59,30 @@ class MeetingControllerViewController: UIViewController {
             }
     }
     
-    @IBAction func plusFive() {
-        count += 300
+    @IBAction func plus() {
+        showActionSheet(isPositive: true)
     }
     
-    @IBAction func minusFive() {
-        count -= 300
+    @IBAction func minus() {
+        showActionSheet(isPositive: false)
     }
     
-    @IBAction func editDetail() {
-        //アラートコントローラー
-        let alert = UIAlertController(title: "時間を追加/減らす", message: "時間を減らす場合はマイナスボタンをタップ", preferredStyle: .alert)
+    func customEdit(isPositive: Bool) {
+        let alert = UIAlertController(
+            title: isPositive ? "何分追加しますか？" : "何分減らしますか？",
+            message: nil,
+            preferredStyle: .alert)
         
-        //OKボタンを生成
         let okAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
-            //複数のtextFieldのテキストを格納
             guard let textFields:[UITextField] = alert.textFields else {return}
-            //textからテキストを取り出していく
             for textField in textFields {
                 if textField.tag == 1 {
                     if let min = Int(textField.text ?? "") {
-                        self.count += min  * 60
+                        if isPositive {
+                            self.count += min  * 60
+                        } else {
+                            self.count -= min  * 60
+                        }
                     }
                 }
             }
@@ -91,15 +92,37 @@ class MeetingControllerViewController: UIViewController {
         alert.addAction(cancelAction)
         
         alert.addTextField { (text: UITextField!) in
-            self.currentTextField = text
-            let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 44))
-            let minusButton = UIBarButtonItem(title: "マイナス", style: .plain, target: self, action: #selector(self.toggleMinus))
-            toolbar.items = [minusButton]
-            text.inputAccessoryView = toolbar
-            text.placeholder = "追加する時間 (分)"
+            text.placeholder = "(分)"
             text.keyboardType = .numberPad
             text.tag = 1
         }
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showActionSheet(isPositive: Bool) {
+        let title = isPositive ? "時間を追加する" : "時間を減らす"
+        let prefix = isPositive ? "+" : "-"
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        
+        let fiveButton = UIAlertAction(title: "\(prefix)5分", style: .default) { (action:UIAlertAction) in
+            let additional = isPositive ? 5 : -5
+            self.count += additional * 60
+        }
+        alert.addAction(fiveButton)
+        
+        let oneButton = UIAlertAction(title: "\(prefix)1分", style: .default) { (action:UIAlertAction) in
+            let additional = isPositive ? 1 : -1
+            self.count += additional  * 60
+        }
+        alert.addAction(oneButton)
+        
+        let customButton = UIAlertAction(title: "カスタム", style: .default) { (action:UIAlertAction) in
+            self.customEdit(isPositive: isPositive)
+        }
+        alert.addAction(customButton)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
     
@@ -211,18 +234,5 @@ class MeetingControllerViewController: UIViewController {
             timerLabel.text = "時間になりました"
             timerLabel.font = .boldSystemFont(ofSize: 30)
         }
-    }
-    
-    @objc func toggleMinus() {
-        if let text = currentTextField {
-            text.toggleMinus()
-        }
-    }
-}
-
-extension UITextField {
-    func toggleMinus() {
-        guard let text = self.text, !text.isEmpty else { return }
-        self.text = String(text.hasPrefix("-") ? text.dropFirst() : "-\(text)")
     }
 }

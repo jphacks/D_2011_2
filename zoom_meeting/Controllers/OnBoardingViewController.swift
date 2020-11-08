@@ -53,8 +53,6 @@ class OnBoardingViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         setupPaperOnboardingView()
-        skipButton.layer.cornerRadius = 25
-        startButton.layer.cornerRadius = 20
         startButton.isHidden = true
         view.bringSubviewToFront(skipButton)
         view.bringSubviewToFront(startButton)
