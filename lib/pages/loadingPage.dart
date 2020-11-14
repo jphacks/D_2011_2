@@ -41,12 +41,18 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(
+                'assets/images/bannar-light.png',
+                width: size.width / 1.5,
+              ),
+              SizedBox(height: 20),
               Text("Loading"),
               SizedBox(height: 15.0),
               CircularProgressIndicator(),

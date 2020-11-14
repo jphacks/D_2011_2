@@ -2,6 +2,7 @@ import 'package:aika_flutter/supportingFile/zoomSdk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'welcomePage.dart';
+import '../widget/customButton.dart';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -75,7 +76,8 @@ class _LoginpageState extends State<Loginpage> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  FlatButton(
+                  customButton(
+                    title: "ログイン",
                     onPressed: () async {
                       final result = await FlutterZoomSdk.login(
                         email: email,
@@ -92,23 +94,6 @@ class _LoginpageState extends State<Loginpage> {
                         );
                       }
                     },
-                    child: Container(
-                      child: Center(
-                          child: Text(
-                        "ログイン",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17.5,
-                        ),
-                      )),
-                      width: 150,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.lightBlue,
-                      ),
-                    ),
                   ),
                   SizedBox(height: 10.0),
                   FlatButton(

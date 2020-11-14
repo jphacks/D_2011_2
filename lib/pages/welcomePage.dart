@@ -10,11 +10,28 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.all(25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Hello! $userName"),
+            Row(
+              children: [
+                Text(
+                  "こんにちは",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+            Center(
+              child: Text(
+                "$userName さん",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             FlatButton(
               onPressed: () {
                 FlutterZoomSdk.logout();
