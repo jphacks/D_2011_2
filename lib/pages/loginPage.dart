@@ -25,11 +25,8 @@ class _LoginpageState extends State<Loginpage> {
       child: Scaffold(
         body: Center(
           child: Padding(
-            padding: EdgeInsets.only(
-                left: size.width / 7,
-                right: size.width / 7,
-                top: size.height / 5,
-                bottom: size.height / 5),
+            padding: EdgeInsets.symmetric(
+                vertical: size.height / 7, horizontal: size.width / 7),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

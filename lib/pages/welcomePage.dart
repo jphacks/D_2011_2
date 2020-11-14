@@ -2,6 +2,8 @@ import 'package:aika_flutter/supportingFile/zoomSdk.dart';
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
 import '../widget/customButton.dart';
+import 'createMeetingPage.dart';
+import 'onBoardingPage.dart';
 
 class WelcomePage extends StatelessWidget {
   final String userName;
@@ -42,7 +44,14 @@ class WelcomePage extends StatelessWidget {
               Icons.info_outline,
               color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OnBoardingPage(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -78,7 +87,14 @@ class WelcomePage extends StatelessWidget {
               height: size.width * 0.125,
               child: customButton(
                 title: "ミーティングを作成する",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateMeetingPage(),
+                    ),
+                  );
+                },
               ),
             ),
             SizedBox(height: 20),
