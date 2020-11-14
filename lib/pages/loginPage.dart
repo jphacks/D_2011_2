@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'welcomePage.dart';
 import '../widget/customButton.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -13,103 +14,115 @@ class _LoginpageState extends State<Loginpage> {
   String email = "";
   String pass = "";
   bool remember = false;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: size.width / 7,
-              right: size.width / 7,
-              top: size.height / 5,
-              bottom: size.height / 5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset(
-                'assets/images/bannar-light.png',
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Sign in with "),
-                      Image.asset(
-                        'assets/images/zoom_logo.png',
-                        height: size.height / 60,
-                      ),
-                    ],
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: "Email", hintText: "example@example.com"),
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (text) {
-                      email = text;
-                    },
-                  ),
-                  TextField(
-                    decoration: InputDecoration(labelText: "Password"),
-                    obscureText: true,
-                    autocorrect: false,
-                    onChanged: (text) {
-                      pass = text;
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("ログイン情報を記録する"),
-                      Switch(
-                          value: remember,
-                          onChanged: (val) {
-                            setState(() {
-                              remember = val;
-                            });
-                          }),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  SizedBox(
-                    width: size.width * 0.5,
-                    height: size.width * 0.125,
-                    child: customButton(
-                      title: "ログイン",
-                      onPressed: () async {
-                        final result = await FlutterZoomSdk.login(
-                          email: email,
-                          password: pass,
-                          remember: remember,
-                        );
-                        if (result) {
-                          final userName = await FlutterZoomSdk.userName();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WelcomePage(userName),
-                            ),
-                          );
-                        }
+    return ModalProgressHUD(
+      inAsyncCall: loading,
+      child: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: size.width / 7,
+                right: size.width / 7,
+                top: size.height / 5,
+                bottom: size.height / 5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  'assets/images/bannar-light.png',
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Sign in with "),
+                        Image.asset(
+                          'assets/images/zoom_logo.png',
+                          height: size.height / 60,
+                        ),
+                      ],
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: "Email", hintText: "example@example.com"),
+                      autocorrect: false,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (text) {
+                        email = text;
                       },
                     ),
-                  ),
-                  SizedBox(height: 10.0),
-                  FlatButton(
-                    onPressed: () {},
-                    child: Text(
-                      "アカウントをお持ちでない場合",
-                      style: TextStyle(fontSize: 10.0),
+                    TextField(
+                      decoration: InputDecoration(labelText: "Password"),
+                      obscureText: true,
+                      autocorrect: false,
+                      onChanged: (text) {
+                        pass = text;
+                      },
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("ログイン情報を記録する"),
+                        Switch(
+                            value: remember,
+                            onChanged: (val) {
+                              setState(() {
+                                remember = val;
+                              });
+                            }),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: size.width * 0.5,
+                      height: size.width * 0.125,
+                      child: customButton(
+                        title: "ログイン",
+                        onPressed: () async {
+                          setState(() {
+                            loading = true;
+                          });
+                          final result = await FlutterZoomSdk.login(
+                            email: email,
+                            password: pass,
+                            remember: remember,
+                          );
+                          setState(() {
+                            loading = false;
+                          });
+                          if (result) {
+                            final userName = await FlutterZoomSdk.userName();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => WelcomePage(userName),
+                              ),
+                            );
+                          } else {
+                            //  TODO: エラーマネジメント
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        "アカウントをお持ちでない場合",
+                        style: TextStyle(fontSize: 10.0),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
