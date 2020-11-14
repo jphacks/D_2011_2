@@ -76,24 +76,28 @@ class _LoginpageState extends State<Loginpage> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  customButton(
-                    title: "ログイン",
-                    onPressed: () async {
-                      final result = await FlutterZoomSdk.login(
-                        email: email,
-                        password: pass,
-                        remember: remember,
-                      );
-                      if (result) {
-                        final userName = await FlutterZoomSdk.userName();
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WelcomePage(userName),
-                          ),
+                  SizedBox(
+                    width: size.width * 0.5,
+                    height: size.width * 0.125,
+                    child: customButton(
+                      title: "ログイン",
+                      onPressed: () async {
+                        final result = await FlutterZoomSdk.login(
+                          email: email,
+                          password: pass,
+                          remember: remember,
                         );
-                      }
-                    },
+                        if (result) {
+                          final userName = await FlutterZoomSdk.userName();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WelcomePage(userName),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                   SizedBox(height: 10.0),
                   FlatButton(

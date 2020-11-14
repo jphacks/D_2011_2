@@ -10,6 +10,8 @@ class customButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: onPressed,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       child: Container(
         child: Center(
             child: Text(
@@ -20,8 +22,6 @@ class customButton extends StatelessWidget {
             fontSize: 17.5,
           ),
         )),
-        width: 150,
-        height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.lightBlue,
