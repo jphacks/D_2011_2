@@ -13,7 +13,6 @@ class _LoadingPageState extends State<LoadingPage> {
   void waiting() async {
     await Future.delayed(Duration(seconds: 2)).then((_) async {
       final isLoggedIn = await FlutterZoomSdk.isLoggedIn();
-      print(isLoggedIn);
       if (isLoggedIn) {
         final userName = await FlutterZoomSdk.userName();
         Navigator.pushReplacement(
