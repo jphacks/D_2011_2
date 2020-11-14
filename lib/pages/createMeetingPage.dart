@@ -6,6 +6,9 @@ class CreateMeetingPage extends StatefulWidget {
 }
 
 class _CreateMeetingPageState extends State<CreateMeetingPage> {
+  bool beforeHost = false;
+  bool waitingRoom = true;
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -109,7 +112,13 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("ホストより前の入室を許可する"),
-                    Switch(value: true, onChanged: (val) {}),
+                    Switch(
+                        value: beforeHost,
+                        onChanged: (val) {
+                          setState(() {
+                            beforeHost = val;
+                          });
+                        }),
                   ],
                 ),
               ),
@@ -125,7 +134,13 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("待機室を有効にする"),
-                    Switch(value: true, onChanged: (val) {}),
+                    Switch(
+                        value: waitingRoom,
+                        onChanged: (val) {
+                          setState(() {
+                            waitingRoom = val;
+                          });
+                        }),
                   ],
                 ),
               ),

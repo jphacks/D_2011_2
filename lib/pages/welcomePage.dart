@@ -83,7 +83,7 @@ class WelcomePage extends StatelessWidget {
             ),
             SizedBox(height: 75),
             SizedBox(
-              width: size.width * 0.6,
+              width: size.width * 0.65,
               height: size.width * 0.125,
               child: customButton(
                 title: "ミーティングを作成する",
@@ -99,7 +99,7 @@ class WelcomePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             SizedBox(
-              width: size.width * 0.6,
+              width: size.width * 0.65,
               height: size.width * 0.125,
               child: customButton(
                 title: "ミーティング一覧",
