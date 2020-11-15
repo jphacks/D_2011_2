@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keyboard_utils/widgets.dart';
 
 class CreateMeetingPage extends StatefulWidget {
   @override
@@ -8,6 +9,109 @@ class CreateMeetingPage extends StatefulWidget {
 class _CreateMeetingPageState extends State<CreateMeetingPage> {
   bool beforeHost = false;
   bool waitingRoom = true;
+  bool isKeyBoardShown = false;
+
+  void _openModalBottomSheet(Size size) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return KeyboardAware(
+          builder: (context, keyboardConfig) {
+            return Container(
+              color: Color(0xFF737373),
+              height: keyboardConfig.isKeyboardOpen
+                  ? 350 + keyboardConfig.keyboardHeight
+                  : 350,
+              child: Container(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "議題の追加",
+                          style: TextStyle(
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Text("議題"),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                    child: TextField(
+                                      textAlign: TextAlign.end,
+                                      decoration:
+                                          InputDecoration(hintText: "ディスカッション"),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Text("時間"),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                    child: TextField(
+                                      textAlign: TextAlign.end,
+                                      decoration:
+                                          InputDecoration(hintText: "30"),
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text("分"),
+                                ],
+                              ),
+                              SizedBox(height: 50),
+                              SizedBox(
+                                width: size.width - 60,
+                                height: 50,
+                                child: FlatButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    "登録",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: keyboardConfig.isKeyboardOpen
+                              ? keyboardConfig.keyboardHeight + 50
+                              : 0,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +261,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                     Text("アジェンダ"),
                     GestureDetector(
                       onTap: () {
-                        print("Add");
+                        _openModalBottomSheet(size);
                       },
                       child: Container(
                         height: 25,
