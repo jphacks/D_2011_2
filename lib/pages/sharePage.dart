@@ -58,7 +58,7 @@ class SharePage extends StatelessWidget {
                           final RenderBox box = context.findRenderObject();
                           await Share.share(
                             "$title at $date\n$url",
-                            subject: "$title at $date",
+                            subject: "Generated with Aika",
                             sharePositionOrigin:
                                 box.localToGlobal(Offset.zero) & box.size,
                           );
