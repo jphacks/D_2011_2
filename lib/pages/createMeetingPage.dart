@@ -350,17 +350,48 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(agendas[index].title),
-                      trailing: Text("${agendas[index].min}分"),
+              child: agendas.length == 0
+                  ? Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          _openModalBottomSheet(size);
+                        },
+                        child: Container(
+                          color: Colors.white,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/add.png',
+                                  height: size.width * 0.3,
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  "議題を追加してみましょう！",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          child: ListTile(
+                            title: Text(agendas[index].title),
+                            trailing: Text("${agendas[index].min}分"),
+                          ),
+                        );
+                      },
+                      itemCount: agendas.length,
                     ),
-                  );
-                },
-                itemCount: agendas.length,
-              ),
             ),
           ],
         ),
