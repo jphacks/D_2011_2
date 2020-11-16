@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:keyboard_utils/widgets.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import '../models/agenda.dart';
 
 class CreateMeetingPage extends StatefulWidget {
@@ -389,11 +390,27 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                     )
                   : ListView.builder(
                       itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text(agendas[index].title),
-                            trailing: Text("${agendas[index].min}分"),
+                        return Slidable(
+                          actionPane: SlidableDrawerActionPane(),
+                          actionExtentRatio: 0.2,
+                          child: Card(
+                            child: ListTile(
+                              title: Text(agendas[index].title),
+                              trailing: Text("${agendas[index].min}分"),
+                            ),
                           ),
+                          secondaryActions: <Widget>[
+                            IconSlideAction(
+                              caption: '削除',
+                              color: Colors.red,
+                              icon: Icons.delete,
+                              onTap: () {
+                                setState(() {
+                                  agendas.removeAt(index);
+                                });
+                              },
+                            ),
+                          ],
                         );
                       },
                       itemCount: agendas.length,
