@@ -183,7 +183,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                     ),
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
+                    color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
@@ -375,7 +375,10 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                           _openModalBottomSheet(size: size, edit: false);
                         },
                         child: Container(
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
                           child: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
