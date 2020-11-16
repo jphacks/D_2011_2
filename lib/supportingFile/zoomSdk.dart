@@ -32,7 +32,7 @@ class FlutterZoomSdk {
     return result;
   }
 
-  static Future<Meeting> createMeeting(
+  static Future<ZoomMeeting> createMeeting(
       {@required String title,
       @required DateTime date,
       @required bool beforeHost,
@@ -54,7 +54,7 @@ class FlutterZoomSdk {
     if (meetingInfo.length != 2) {
       return null;
     }
-    return Meeting(id: meetingInfo[0], password: meetingInfo[1]);
+    return ZoomMeeting(id: meetingInfo[0], password: meetingInfo[1]);
   }
 
   static void logout() {
@@ -67,9 +67,9 @@ class FlutterZoomSdk {
   }
 }
 
-class Meeting {
+class ZoomMeeting {
   final String id;
   final String password;
 
-  Meeting({@required this.id, @required this.password});
+  ZoomMeeting({@required this.id, @required this.password});
 }

@@ -4,6 +4,8 @@ import 'loginPage.dart';
 import '../widget/customButton.dart';
 import 'createMeetingPage.dart';
 import 'onBoardingPage.dart';
+import 'meetingListPage.dart';
+import '../models/meeting.dart';
 
 class WelcomePage extends StatelessWidget {
   final String userName;
@@ -103,7 +105,18 @@ class WelcomePage extends StatelessWidget {
               height: size.width * 0.125,
               child: customButton(
                 title: "ミーティング一覧",
-                onPressed: () {},
+                onPressed: () {
+                  // TODO: APIでミーティングリストを取得
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MeetingListPage([
+                        Meeting(
+                            title: "Test", date: DateTime.now(), url: "Test")
+                      ]),
+                    ),
+                  );
+                },
               ),
             ),
           ],
