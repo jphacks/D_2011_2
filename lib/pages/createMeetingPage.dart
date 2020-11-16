@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:keyboard_utils/widgets.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -209,6 +211,65 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
     );
   }
 
+  void onDone(Function doneAction) {
+    Widget _buildSignOutDialogAndroid() {
+      return AlertDialog(
+        title: Text("確認"),
+        content: Text("ミーティングを作成してよろしいですか？"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              "キャンセル",
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          FlatButton(
+            child: Text("はい"),
+            onPressed: () {
+              Navigator.pop(context);
+              doneAction();
+            },
+          ),
+        ],
+      );
+    }
+
+    Widget _buildSignOutDialogiOS() {
+      return CupertinoAlertDialog(
+        title: Text("確認"),
+        content: Text("ミーティングを作成してよろしいですか？"),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: Text("キャンセル"),
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          CupertinoDialogAction(
+            child: Text("はい"),
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+              doneAction();
+            },
+          ),
+        ],
+      );
+    }
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Platform.isIOS
+              ? _buildSignOutDialogiOS()
+              : _buildSignOutDialogAndroid();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -225,7 +286,11 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
         ),
         actions: [
           FlatButton(
-            onPressed: meetingTitle == "" && agendas.length == 0 ? null : () {},
+            onPressed: meetingTitle == "" && agendas.length == 0
+                ? null
+                : () {
+                    onDone(() {});
+                  },
             child: Text("Done"),
           ),
         ],
