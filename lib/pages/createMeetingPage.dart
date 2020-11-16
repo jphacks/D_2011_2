@@ -1,3 +1,4 @@
+import 'package:aika_flutter/supportingFile/zoomSdk.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import "package:intl/intl.dart";
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../models/agenda.dart';
 
 class CreateMeetingPage extends StatefulWidget {
@@ -26,6 +28,8 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   var _timeFocusNode = FocusNode();
 
   List<Agenda> agendas = [];
+
+  bool isLoading = false;
 
   get formattedDate {
     initializeDateFormatting("ja_JP");
@@ -211,7 +215,12 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
     );
   }
 
-  void onDone(Function doneAction) {
+  void onDone() {
+    int duration = 0;
+    for (var i = 0; i < agendas.length; i++) {
+      duration += agendas[i].min;
+    }
+
     Widget _buildSignOutDialogAndroid() {
       return AlertDialog(
         title: Text("確認"),
@@ -228,9 +237,23 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
           ),
           FlatButton(
             child: Text("はい"),
-            onPressed: () {
+            onPressed: () async {
+              setState(() {
+                isLoading = true;
+              });
               Navigator.pop(context);
-              doneAction();
+              final result = await FlutterZoomSdk.createMeeting(
+                title: meetingTitle,
+                date: meetingDate,
+                beforeHost: beforeHost,
+                waitingRoom: waitingRoom,
+                duration: duration,
+              );
+              print(result.id);
+              print(result.password);
+              setState(() {
+                isLoading = false;
+              });
             },
           ),
         ],
@@ -252,9 +275,23 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
           CupertinoDialogAction(
             child: Text("はい"),
             isDefaultAction: true,
-            onPressed: () {
+            onPressed: () async {
+              setState(() {
+                isLoading = true;
+              });
               Navigator.pop(context);
-              doneAction();
+              final result = await FlutterZoomSdk.createMeeting(
+                title: meetingTitle,
+                date: meetingDate,
+                beforeHost: beforeHost,
+                waitingRoom: waitingRoom,
+                duration: duration,
+              );
+              print(result.id);
+              print(result.password);
+              setState(() {
+                isLoading = false;
+              });
             },
           ),
         ],
@@ -273,99 +310,50 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: Text(
-          "ミーティングを作成",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+    return ModalProgressHUD(
+      inAsyncCall: isLoading,
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          title: Text(
+            "ミーティングを作成",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          actions: [
+            FlatButton(
+              onPressed: meetingTitle == "" && agendas.length == 0
+                  ? null
+                  : () {
+                      onDone();
+                    },
+              child: Text("Done"),
+            ),
+          ],
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.black),
+          elevation: 0.0,
         ),
-        actions: [
-          FlatButton(
-            onPressed: meetingTitle == "" && agendas.length == 0
-                ? null
-                : () {
-                    onDone(() {});
-                  },
-            child: Text("Done"),
-          ),
-        ],
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: 0.0,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              height: 60,
-              width: size.width,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7.5),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text("ミーティング情報"),
-                  ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                height: 60,
+                width: size.width,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7.5),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text("ミーティング情報"),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-              height: 50,
-              width: size.width,
-              color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("タイトル"),
-                    SizedBox(width: 15),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          contentPadding:
-                              EdgeInsets.only(left: 15, bottom: 11, top: 11),
-                          hintText: "定例会議",
-                        ),
-                        textAlign: TextAlign.end,
-                        onChanged: (val) {
-                          setState(() {
-                            meetingTitle = val;
-                          });
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 1),
-            GestureDetector(
-              onTap: () {
-                DatePicker.showDateTimePicker(
-                  context,
-                  showTitleActions: true,
-                  minTime: DateTime.now(),
-                  onConfirm: (date) {
-                    setState(() {
-                      meetingDate = date;
-                    });
-                  },
-                  currentTime: DateTime.now(),
-                  locale: LocaleType.jp,
-                );
-              },
-              child: Container(
+              Container(
                 height: 50,
                 width: size.width,
                 color: Colors.white,
@@ -374,158 +362,211 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("開始時間"),
-                      Text(
-                        formattedDate.toString(),
-                        style: TextStyle(color: Colors.grey),
-                      ),
+                      Text("タイトル"),
+                      SizedBox(width: 15),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding:
+                                EdgeInsets.only(left: 15, bottom: 11, top: 11),
+                            hintText: "定例会議",
+                          ),
+                          textAlign: TextAlign.end,
+                          onChanged: (val) {
+                            setState(() {
+                              meetingTitle = val;
+                            });
+                          },
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 1),
-            Container(
-              height: 50,
-              width: size.width,
-              color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("ホストより前の入室を許可する"),
-                    Switch(
-                        value: beforeHost,
-                        onChanged: (val) {
-                          setState(() {
-                            beforeHost = val;
-                          });
-                        }),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 1),
-            Container(
-              height: 50,
-              width: size.width,
-              color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("待機室を有効にする"),
-                    Switch(
-                        value: waitingRoom,
-                        onChanged: (val) {
-                          setState(() {
-                            waitingRoom = val;
-                          });
-                        }),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: 60,
-              width: size.width,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7.5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text("アジェンダ"),
-                    GestureDetector(
-                      onTap: () {
-                        _openModalBottomSheet(size: size, edit: false);
-                      },
-                      child: Container(
-                        height: 25,
-                        width: 30,
-                        child: Icon(
-                          Icons.add_circle_outline,
-                          color: Colors.blueAccent,
+              SizedBox(height: 1),
+              GestureDetector(
+                onTap: () {
+                  DatePicker.showDateTimePicker(
+                    context,
+                    showTitleActions: true,
+                    minTime: DateTime.now(),
+                    onConfirm: (date) {
+                      setState(() {
+                        meetingDate = date;
+                      });
+                    },
+                    currentTime: DateTime.now(),
+                    locale: LocaleType.jp,
+                  );
+                },
+                child: Container(
+                  height: 50,
+                  width: size.width,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("開始時間"),
+                        Text(
+                          formattedDate.toString(),
+                          style: TextStyle(color: Colors.grey),
                         ),
-                      ),
-                    )
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: agendas.length == 0
-                  ? Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: GestureDetector(
+              SizedBox(height: 1),
+              Container(
+                height: 50,
+                width: size.width,
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("ホストより前の入室を許可する"),
+                      Switch(
+                          value: beforeHost,
+                          onChanged: (val) {
+                            setState(() {
+                              beforeHost = val;
+                            });
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 1),
+              Container(
+                height: 50,
+                width: size.width,
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("待機室を有効にする"),
+                      Switch(
+                          value: waitingRoom,
+                          onChanged: (val) {
+                            setState(() {
+                              waitingRoom = val;
+                            });
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                height: 60,
+                width: size.width,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7.5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text("アジェンダ"),
+                      GestureDetector(
                         onTap: () {
                           _openModalBottomSheet(size: size, edit: false);
                         },
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          height: 25,
+                          width: 30,
+                          child: Icon(
+                            Icons.add_circle_outline,
+                            color: Colors.blueAccent,
                           ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/add.png',
-                                  height: size.width * 0.3,
-                                ),
-                                SizedBox(height: 20),
-                                Text(
-                                  "議題を追加してみましょう！",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: agendas.length == 0
+                    ? Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            _openModalBottomSheet(size: size, edit: false);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/add.png',
+                                    height: size.width * 0.3,
                                   ),
-                                ),
-                              ],
+                                  SizedBox(height: 20),
+                                  Text(
+                                    "議題を追加してみましょう！",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+                      )
+                    : ListView.builder(
+                        itemBuilder: (BuildContext context, int index) {
+                          return Slidable(
+                            actionPane: SlidableDrawerActionPane(),
+                            actionExtentRatio: 0.2,
+                            child: Card(
+                              child: ListTile(
+                                title: Text(agendas[index].title),
+                                trailing: Text("${agendas[index].min}分"),
+                                onTap: () {
+                                  _openModalBottomSheet(
+                                    size: size,
+                                    edit: true,
+                                    index: index,
+                                  );
+                                },
+                              ),
+                            ),
+                            secondaryActions: <Widget>[
+                              IconSlideAction(
+                                caption: '削除',
+                                color: Colors.red,
+                                icon: Icons.delete,
+                                onTap: () {
+                                  setState(() {
+                                    agendas.removeAt(index);
+                                  });
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                        itemCount: agendas.length,
                       ),
-                    )
-                  : ListView.builder(
-                      itemBuilder: (BuildContext context, int index) {
-                        return Slidable(
-                          actionPane: SlidableDrawerActionPane(),
-                          actionExtentRatio: 0.2,
-                          child: Card(
-                            child: ListTile(
-                              title: Text(agendas[index].title),
-                              trailing: Text("${agendas[index].min}分"),
-                              onTap: () {
-                                _openModalBottomSheet(
-                                  size: size,
-                                  edit: true,
-                                  index: index,
-                                );
-                              },
-                            ),
-                          ),
-                          secondaryActions: <Widget>[
-                            IconSlideAction(
-                              caption: '削除',
-                              color: Colors.red,
-                              icon: Icons.delete,
-                              onTap: () {
-                                setState(() {
-                                  agendas.removeAt(index);
-                                });
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                      itemCount: agendas.length,
-                    ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

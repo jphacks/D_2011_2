@@ -31,11 +31,25 @@ class FlutterZoomSdk {
     });
     return result;
   }
-  //
-  // static Future<bool> login() async {
-  //   final bool result = await _channel.invokeMethod('login');
-  //   return result;
-  // }
+
+  static Future<Meeting> createMeeting(
+      {@required String title,
+      @required DateTime date,
+      @required bool beforeHost,
+      @required bool waitingRoom,
+      @required int duration}) async {
+    final unixTime = date.toUtc().millisecondsSinceEpoch ~/ 1000;
+    final String result =
+        await _channel.invokeMethod('createMtg', <String, dynamic>{
+      'title': title,
+      'date': unixTime,
+      'beforeHost': beforeHost,
+      'waitingRoom': waitingRoom,
+      'duration': duration,
+    });
+    final meetingInfo = result.split(",");
+    return Meeting(id: meetingInfo[0], password: meetingInfo[1]);
+  }
 
   static void logout() {
     _channel.invokeMethod('logout');
@@ -45,4 +59,11 @@ class FlutterZoomSdk {
     final String result = await _channel.invokeMethod('userName');
     return result;
   }
+}
+
+class Meeting {
+  final String id;
+  final String password;
+
+  Meeting({@required this.id, @required this.password});
 }
