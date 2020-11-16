@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:keyboard_utils/widgets.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import "package:intl/intl.dart";
+import 'package:intl/date_symbol_data_local.dart';
 import '../models/agenda.dart';
 
 class CreateMeetingPage extends StatefulWidget {
@@ -11,6 +14,7 @@ class CreateMeetingPage extends StatefulWidget {
 
 class _CreateMeetingPageState extends State<CreateMeetingPage> {
   String meetingTitle = "";
+  DateTime meetingDate = DateTime.now();
   bool beforeHost = false;
   bool waitingRoom = true;
   bool isKeyBoardShown = false;
@@ -20,6 +24,13 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   var _timeFocusNode = FocusNode();
 
   List<Agenda> agendas = [];
+
+  get formattedDate {
+    initializeDateFormatting("ja_JP");
+    var formatter = new DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
+    var formatted = formatter.format(meetingDate);
+    return formatted;
+  }
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
@@ -88,7 +99,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                       child: Column(
                         children: [
                           Text(
-                            "議題の追加",
+                            "議題の" + (edit ? "編集" : "追加"),
                             style: TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.bold,
@@ -214,7 +225,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
         ),
         actions: [
           FlatButton(
-            onPressed: () {},
+            onPressed: meetingTitle == "" && agendas.length == 0 ? null : () {},
             child: Text("Done"),
           ),
         ],
@@ -275,7 +286,20 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
             ),
             SizedBox(height: 1),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                DatePicker.showDateTimePicker(
+                  context,
+                  showTitleActions: true,
+                  minTime: DateTime.now(),
+                  onConfirm: (date) {
+                    setState(() {
+                      meetingDate = date;
+                    });
+                  },
+                  currentTime: DateTime.now(),
+                  locale: LocaleType.jp,
+                );
+              },
               child: Container(
                 height: 50,
                 width: size.width,
@@ -287,7 +311,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                     children: [
                       Text("開始時間"),
                       Text(
-                        "2020/11/14 19:00",
+                        formattedDate.toString(),
                         style: TextStyle(color: Colors.grey),
                       ),
                     ],
