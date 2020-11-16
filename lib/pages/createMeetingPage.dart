@@ -9,6 +9,7 @@ class CreateMeetingPage extends StatefulWidget {
 }
 
 class _CreateMeetingPageState extends State<CreateMeetingPage> {
+  String meetingTitle = "";
   bool beforeHost = false;
   bool waitingRoom = true;
   bool isKeyBoardShown = false;
@@ -58,8 +59,8 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   }
 
   void _openModalBottomSheet(Size size) {
-    String title = "";
-    int min = 0;
+    var _titleController = TextEditingController();
+    var _timeController = TextEditingController();
 
     showModalBottomSheet(
       context: context,
@@ -96,13 +97,11 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                     SizedBox(width: 20),
                                     Expanded(
                                       child: TextField(
+                                        controller: _titleController,
                                         focusNode: _titleFocusNode,
                                         textAlign: TextAlign.end,
                                         decoration: InputDecoration(
                                             hintText: "ディスカッション"),
-                                        onChanged: (val) {
-                                          title = val;
-                                        },
                                       ),
                                     )
                                   ],
@@ -114,18 +113,12 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                     SizedBox(width: 20),
                                     Expanded(
                                       child: TextField(
+                                        controller: _timeController,
                                         focusNode: _timeFocusNode,
                                         textAlign: TextAlign.end,
                                         decoration:
                                             InputDecoration(hintText: "30"),
                                         keyboardType: TextInputType.number,
-                                        onChanged: (val) {
-                                          try {
-                                            min = int.parse(val);
-                                          } catch (exception) {
-                                            min = 0;
-                                          }
-                                        },
                                       ),
                                     ),
                                     SizedBox(width: 5),
@@ -138,13 +131,21 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                   height: 50,
                                   child: FlatButton(
                                     onPressed: () {
-                                      if (title != "" && min > 0) {
-                                        final agenda =
-                                            Agenda(title: title, min: min);
-                                        setState(() {
-                                          agendas.add(agenda);
-                                        });
-                                        Navigator.of(context).pop();
+                                      try {
+                                        final min = int.parse(
+                                            _timeController.value.text);
+                                        final title =
+                                            _titleController.value.text;
+                                        if (title != "" && min > 0) {
+                                          final agenda =
+                                              Agenda(title: title, min: min);
+                                          setState(() {
+                                            agendas.add(agenda);
+                                          });
+                                          Navigator.of(context).pop();
+                                        }
+                                      } catch (exception) {
+                                        print(exception);
                                       }
                                     },
                                     child: Text(
@@ -250,6 +251,11 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                           hintText: "定例会議",
                         ),
                         textAlign: TextAlign.end,
+                        onChanged: (val) {
+                          setState(() {
+                            meetingTitle = val;
+                          });
+                        },
                       ),
                     )
                   ],
