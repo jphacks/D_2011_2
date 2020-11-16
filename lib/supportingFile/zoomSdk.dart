@@ -47,7 +47,13 @@ class FlutterZoomSdk {
       'waitingRoom': waitingRoom,
       'duration': duration,
     });
+    if (result == "error") {
+      return null;
+    }
     final meetingInfo = result.split(",");
+    if (meetingInfo.length != 2) {
+      return null;
+    }
     return Meeting(id: meetingInfo[0], password: meetingInfo[1]);
   }
 

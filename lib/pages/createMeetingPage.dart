@@ -249,11 +249,13 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                 waitingRoom: waitingRoom,
                 duration: duration,
               );
-              print(result.id);
-              print(result.password);
-              setState(() {
-                isLoading = false;
-              });
+              if (result != null) {
+                print(result.id);
+                print(result.password);
+                setState(() {
+                  isLoading = false;
+                });
+              }
             },
           ),
         ],
@@ -287,11 +289,13 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                 waitingRoom: waitingRoom,
                 duration: duration,
               );
-              print(result.id);
-              print(result.password);
-              setState(() {
-                isLoading = false;
-              });
+              if (result != null) {
+                print(result.id);
+                print(result.password);
+                setState(() {
+                  isLoading = false;
+                });
+              }
             },
           ),
         ],
