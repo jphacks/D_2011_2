@@ -10,6 +10,7 @@ import "package:intl/intl.dart";
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../models/agenda.dart';
+import 'sharePage.dart';
 
 class CreateMeetingPage extends StatefulWidget {
   @override
@@ -313,6 +314,18 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                             setState(() {
                               isLoading = false;
                             });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SharePage(
+                                  title: meetingTitle,
+                                  date: formattedDate.toString(),
+                                  imageUrl:
+                                      "https://1.bp.blogspot.com/-Pv3mvk2SLkU/Xy4ebH3CfvI/AAAAAAABaf0/ITFVxS62kvcKgvKHufxAmSCjhhbB_cTSACNcBGAsYHQ/s400/eto_ushi_kamifubuki.png",
+                                  url: "google.com",
+                                ),
+                              ),
+                            );
                           }
                         },
                       );
