@@ -215,12 +215,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
     );
   }
 
-  void onDone() {
-    int duration = 0;
-    for (var i = 0; i < agendas.length; i++) {
-      duration += agendas[i].min;
-    }
-
+  void showConfirm({@required Function onOk}) {
     Widget _buildSignOutDialogAndroid() {
       return AlertDialog(
         title: Text("確認"),
@@ -237,26 +232,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
           ),
           FlatButton(
             child: Text("はい"),
-            onPressed: () async {
-              setState(() {
-                isLoading = true;
-              });
-              Navigator.pop(context);
-              final result = await FlutterZoomSdk.createMeeting(
-                title: meetingTitle,
-                date: meetingDate,
-                beforeHost: beforeHost,
-                waitingRoom: waitingRoom,
-                duration: duration,
-              );
-              if (result != null) {
-                print(result.id);
-                print(result.password);
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            },
+            onPressed: onOk,
           ),
         ],
       );
@@ -277,38 +253,20 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
           CupertinoDialogAction(
             child: Text("はい"),
             isDefaultAction: true,
-            onPressed: () async {
-              setState(() {
-                isLoading = true;
-              });
-              Navigator.pop(context);
-              final result = await FlutterZoomSdk.createMeeting(
-                title: meetingTitle,
-                date: meetingDate,
-                beforeHost: beforeHost,
-                waitingRoom: waitingRoom,
-                duration: duration,
-              );
-              if (result != null) {
-                print(result.id);
-                print(result.password);
-                setState(() {
-                  isLoading = false;
-                });
-              }
-            },
+            onPressed: onOk,
           ),
         ],
       );
     }
 
     showDialog(
-        context: context,
-        builder: (context) {
-          return Platform.isIOS
-              ? _buildSignOutDialogiOS()
-              : _buildSignOutDialogAndroid();
-        });
+      context: context,
+      builder: (context) {
+        return Platform.isIOS
+            ? _buildSignOutDialogiOS()
+            : _buildSignOutDialogAndroid();
+      },
+    );
   }
 
   @override
@@ -332,7 +290,32 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
               onPressed: meetingTitle == "" && agendas.length == 0
                   ? null
                   : () {
-                      onDone();
+                      showConfirm(
+                        onOk: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          int duration = 0;
+                          for (var i = 0; i < agendas.length; i++) {
+                            duration += agendas[i].min;
+                          }
+                          Navigator.pop(context);
+                          final result = await FlutterZoomSdk.createMeeting(
+                            title: meetingTitle,
+                            date: meetingDate,
+                            beforeHost: beforeHost,
+                            waitingRoom: waitingRoom,
+                            duration: duration,
+                          );
+                          if (result != null) {
+                            print(result.id);
+                            print(result.password);
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                        },
+                      );
                     },
               child: Text("Done"),
             ),
