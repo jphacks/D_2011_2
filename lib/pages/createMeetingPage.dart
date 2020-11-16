@@ -59,9 +59,15 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
     );
   }
 
-  void _openModalBottomSheet(Size size) {
+  void _openModalBottomSheet(
+      {@required Size size, @required bool edit, int index = 0}) {
     var _titleController = TextEditingController();
     var _timeController = TextEditingController();
+
+    if (edit) {
+      _titleController.text = agendas[index].title;
+      _timeController.text = agendas[index].min.toString();
+    }
 
     showModalBottomSheet(
       context: context,
@@ -141,7 +147,11 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                           final agenda =
                                               Agenda(title: title, min: min);
                                           setState(() {
-                                            agendas.add(agenda);
+                                            if (edit) {
+                                              agendas[index] = agenda;
+                                            } else {
+                                              agendas.add(agenda);
+                                            }
                                           });
                                           Navigator.of(context).pop();
                                         }
@@ -341,7 +351,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                     Text("アジェンダ"),
                     GestureDetector(
                       onTap: () {
-                        _openModalBottomSheet(size);
+                        _openModalBottomSheet(size: size, edit: false);
                       },
                       child: Container(
                         height: 25,
@@ -362,7 +372,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                       padding: EdgeInsets.all(10.0),
                       child: GestureDetector(
                         onTap: () {
-                          _openModalBottomSheet(size);
+                          _openModalBottomSheet(size: size, edit: false);
                         },
                         child: Container(
                           color: Colors.white,
@@ -397,6 +407,13 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                             child: ListTile(
                               title: Text(agendas[index].title),
                               trailing: Text("${agendas[index].min}分"),
+                              onTap: () {
+                                _openModalBottomSheet(
+                                  size: size,
+                                  edit: true,
+                                  index: index,
+                                );
+                              },
                             ),
                           ),
                           secondaryActions: <Widget>[
