@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:keyboard_utils/widgets.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
+import '../models/agenda.dart';
 
 class CreateMeetingPage extends StatefulWidget {
   @override
@@ -15,6 +16,8 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   // Keyboard Focus Node
   var _titleFocusNode = FocusNode();
   var _timeFocusNode = FocusNode();
+
+  List<Agenda> agendas = [];
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
@@ -55,6 +58,9 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   }
 
   void _openModalBottomSheet(Size size) {
+    String title = "";
+    int min = 0;
+
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -94,6 +100,9 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                         textAlign: TextAlign.end,
                                         decoration: InputDecoration(
                                             hintText: "ディスカッション"),
+                                        onChanged: (val) {
+                                          title = val;
+                                        },
                                       ),
                                     )
                                   ],
@@ -110,6 +119,13 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                         decoration:
                                             InputDecoration(hintText: "30"),
                                         keyboardType: TextInputType.number,
+                                        onChanged: (val) {
+                                          try {
+                                            min = int.parse(val);
+                                          } catch (exception) {
+                                            min = 0;
+                                          }
+                                        },
                                       ),
                                     ),
                                     SizedBox(width: 5),
@@ -121,7 +137,16 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                   width: size.width - 60,
                                   height: 50,
                                   child: FlatButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      if (title != "" && min > 0) {
+                                        final agenda =
+                                            Agenda(title: title, min: min);
+                                        setState(() {
+                                          agendas.add(agenda);
+                                        });
+                                        Navigator.of(context).pop();
+                                      }
+                                    },
                                     child: Text(
                                       "登録",
                                       style: TextStyle(
@@ -329,12 +354,12 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: ListTile(
-                      title: Text("議題"),
-                      trailing: Text("30分"),
+                      title: Text(agendas[index].title),
+                      trailing: Text("${agendas[index].min}分"),
                     ),
                   );
                 },
-                itemCount: 10,
+                itemCount: agendas.length,
               ),
             ),
           ],
