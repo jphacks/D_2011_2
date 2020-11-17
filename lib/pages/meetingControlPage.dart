@@ -66,6 +66,71 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
     );
   }
 
+  void showTimeControlSheet(bool isPositive) {
+    TextEditingController _textFieldController = TextEditingController();
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text((isPositive ? "+" : "-") + '5分'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text((isPositive ? "+" : "-") + '1分'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('カスタム'),
+                onTap: () {
+                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(isPositive ? "時間を追加" : "時間を減らす"),
+                        content: Row(
+                          children: [
+                            Text(isPositive ? "+" : "-"),
+                            Expanded(
+                              child: TextField(
+                                controller: _textFieldController,
+                                textInputAction: TextInputAction.go,
+                                keyboardType: TextInputType.numberWithOptions(),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                            Text("分"),
+                          ],
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              print(_textFieldController.value.text);
+                            },
+                          )
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -123,7 +188,9 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                               ),
                               color: Colors.red,
                               shape: CircleBorder(),
-                              onPressed: () {},
+                              onPressed: () {
+                                showTimeControlSheet(false);
+                              },
                             ),
                           ),
                           SizedBox(width: 30),
@@ -149,7 +216,9 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                               ),
                               color: Colors.blueAccent,
                               shape: CircleBorder(),
-                              onPressed: () {},
+                              onPressed: () {
+                                showTimeControlSheet(true);
+                              },
                             ),
                           ),
                         ],
