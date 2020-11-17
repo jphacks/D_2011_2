@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
-import "package:intl/intl.dart";
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:share/share.dart';
 import '../models/meeting.dart';
+import 'meetingControlPage.dart';
 
 class MeetingListPage extends StatelessWidget {
   final List<Meeting> meetings;
 
   MeetingListPage(this.meetings);
-
-  String formatDate(DateTime date) {
-    initializeDateFormatting("ja_JP");
-    var formatter = new DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
-    var formatted = formatter.format(date);
-    return formatted;
-  }
 
   void _openModalBottomSheet({
     @required BuildContext context,
@@ -77,6 +69,13 @@ class MeetingListPage extends StatelessWidget {
                             child: FlatButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        MeetingControlPage(meetings[index]),
+                                  ),
+                                );
                               },
                               child: Text(
                                 "ミーティングの開始",
@@ -161,7 +160,7 @@ class MeetingListPage extends StatelessWidget {
                   return Card(
                     child: ListTile(
                       title: Text(meetings[index].title),
-                      trailing: Text(formatDate(meetings[index].date)),
+                      trailing: Text(meetings[index].formatDate()),
                       onTap: () {
                         _openModalBottomSheet(
                           context: context,
