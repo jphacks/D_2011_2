@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../models/meeting.dart';
 
 class MeetingControlPage extends StatefulWidget {
@@ -10,6 +12,60 @@ class MeetingControlPage extends StatefulWidget {
 }
 
 class _MeetingControlPageState extends State<MeetingControlPage> {
+  void showConfirm({@required Function onOk}) {
+    Widget _buildSignOutDialogAndroid() {
+      return AlertDialog(
+        title: Text("確認"),
+        content: Text("ミーティングを終了してよろしいですか？"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              "キャンセル",
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          FlatButton(
+            child: Text("はい"),
+            onPressed: onOk,
+          ),
+        ],
+      );
+    }
+
+    Widget _buildSignOutDialogiOS() {
+      return CupertinoAlertDialog(
+        title: Text("確認"),
+        content: Text("ミーティングを終了してよろしいですか？"),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: Text("キャンセル"),
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          CupertinoDialogAction(
+            child: Text("はい"),
+            isDefaultAction: true,
+            onPressed: onOk,
+          ),
+        ],
+      );
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Platform.isIOS
+            ? _buildSignOutDialogiOS()
+            : _buildSignOutDialogAndroid();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -139,7 +195,11 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            showConfirm(onOk: () {
+                              // TODO: 終了リクエストを送る
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            });
                           },
                         ),
                       ),
