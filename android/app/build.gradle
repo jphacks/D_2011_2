@@ -43,6 +43,8 @@ android {
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -60,4 +62,8 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation fileTree(include: '*.aar', dir: 'commonlib/')
+//    implementation fileTree(include: '*.aar', dir: 'mobilertc/')
+    implementation project(":commonlib")
+    implementation project(":mobilertc")
 }
