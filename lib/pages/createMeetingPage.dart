@@ -2,7 +2,7 @@ import 'package:aika_flutter/supportingFile/zoomSdk.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:keyboard_utils/widgets.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -22,7 +22,6 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   DateTime meetingDate = DateTime.now();
   bool beforeHost = false;
   bool waitingRoom = true;
-  bool isKeyBoardShown = false;
 
   // Keyboard Focus Node
   var _titleFocusNode = FocusNode();
@@ -90,14 +89,14 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return KeyboardAware(
-          builder: (context, keyboardConfig) {
+        return KeyboardVisibilityBuilder(
+          builder: (context, isKeyboardVisible) {
             return KeyboardActions(
               config: _buildConfig(context),
               child: Container(
                 color: Color(0xFF737373),
-                height: keyboardConfig.isKeyboardOpen
-                    ? 350 + keyboardConfig.keyboardHeight
+                height: isKeyboardVisible
+                    ? 350 + MediaQuery.of(context).viewInsets.bottom
                     : 350,
                 child: Container(
                   child: Padding(
@@ -192,8 +191,8 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                             ),
                           ),
                           SizedBox(
-                            height: keyboardConfig.isKeyboardOpen
-                                ? keyboardConfig.keyboardHeight + 50
+                            height: isKeyboardVisible
+                                ? MediaQuery.of(context).viewInsets.bottom + 50
                                 : 0,
                           ),
                         ],
