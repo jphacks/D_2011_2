@@ -1,0 +1,13 @@
+current directory: /Users/tommy/develop/flutter/projects/aika_flutter/ios/vendor/bundler/ruby/2.7.0/gems/json-2.3.1/ext/json
+/Users/tommy/.rbenv/versions/2.7.2/bin/ruby -I /Users/tommy/.rbenv/versions/2.7.2/lib/ruby/2.7.0 -r ./siteconf20201116-56233-1b8k5si.rb extconf.rb
+creating Makefile
+
+current directory: /Users/tommy/develop/flutter/projects/aika_flutter/ios/vendor/bundler/ruby/2.7.0/gems/json-2.3.1/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/tommy/develop/flutter/projects/aika_flutter/ios/vendor/bundler/ruby/2.7.0/gems/json-2.3.1/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/tommy/develop/flutter/projects/aika_flutter/ios/vendor/bundler/ruby/2.7.0/gems/json-2.3.1/ext/json
+make "DESTDIR=" install
