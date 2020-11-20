@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import '../models/meeting.dart';
 
 class MeetingControlPage extends StatefulWidget {
@@ -12,60 +13,6 @@ class MeetingControlPage extends StatefulWidget {
 }
 
 class _MeetingControlPageState extends State<MeetingControlPage> {
-  void showConfirm({@required Function onOk}) {
-    Widget _buildSignOutDialogAndroid() {
-      return AlertDialog(
-        title: Text("確認"),
-        content: Text("ミーティングを終了してよろしいですか？"),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              "キャンセル",
-              style: TextStyle(color: Colors.red),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          FlatButton(
-            child: Text("はい"),
-            onPressed: onOk,
-          ),
-        ],
-      );
-    }
-
-    Widget _buildSignOutDialogiOS() {
-      return CupertinoAlertDialog(
-        title: Text("確認"),
-        content: Text("ミーティングを終了してよろしいですか？"),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            child: Text("キャンセル"),
-            isDestructiveAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          CupertinoDialogAction(
-            child: Text("はい"),
-            isDefaultAction: true,
-            onPressed: onOk,
-          ),
-        ],
-      );
-    }
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Platform.isIOS
-            ? _buildSignOutDialogiOS()
-            : _buildSignOutDialogAndroid();
-      },
-    );
-  }
-
   void showTimeControlSheet(bool isPositive) {
     TextEditingController _textFieldController = TextEditingController();
     showModalBottomSheet(
@@ -264,16 +211,22 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
-                            showConfirm(onOk: () {
-                              // TODO: 終了リクエストを送る
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                            });
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.NO_HEADER,
+                              animType: AnimType.SCALE,
+                              title: '確認',
+                              desc: 'ミーティングを終了してよろしいですか？',
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {
+                                //TODO: 終了処理
+                              },
+                            )..show();
                           },
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

@@ -9,6 +9,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import "package:intl/intl.dart";
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import '../models/agenda.dart';
 import 'sharePage.dart';
 
@@ -215,60 +216,6 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
     );
   }
 
-  void showConfirm({@required Function onOk}) {
-    Widget _buildSignOutDialogAndroid() {
-      return AlertDialog(
-        title: Text("確認"),
-        content: Text("ミーティングを作成してよろしいですか？"),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              "キャンセル",
-              style: TextStyle(color: Colors.red),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          FlatButton(
-            child: Text("はい"),
-            onPressed: onOk,
-          ),
-        ],
-      );
-    }
-
-    Widget _buildSignOutDialogiOS() {
-      return CupertinoAlertDialog(
-        title: Text("確認"),
-        content: Text("ミーティングを作成してよろしいですか？"),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            child: Text("キャンセル"),
-            isDestructiveAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          CupertinoDialogAction(
-            child: Text("はい"),
-            isDefaultAction: true,
-            onPressed: onOk,
-          ),
-        ],
-      );
-    }
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Platform.isIOS
-            ? _buildSignOutDialogiOS()
-            : _buildSignOutDialogAndroid();
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -290,8 +237,13 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
               onPressed: meetingTitle == "" && agendas.length == 0
                   ? null
                   : () {
-                      showConfirm(
-                        onOk: () async {
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.NO_HEADER,
+                        animType: AnimType.SCALE,
+                        title: '確認',
+                        desc: 'ミーティングを作成してよろしいですか？',
+                        btnOkOnPress: () async {
                           setState(() {
                             isLoading = true;
                           });
@@ -326,9 +278,20 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                 ),
                               ),
                             );
+                          } else {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.ERROR,
+                              animType: AnimType.SCALE,
+                              headerAnimationLoop: false,
+                              title: 'エラー',
+                              desc: 'ミーティングの作成に失敗しました。時間を置いてもう一度お試しください。',
+                              btnOkOnPress: () {},
+                            )..show();
                           }
                         },
-                      );
+                        btnCancelOnPress: () {},
+                      )..show();
                     },
               child: Text("Done"),
             ),

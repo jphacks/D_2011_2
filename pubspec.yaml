@@ -20,6 +20,7 @@ dependencies:
   flutter_datetime_picker: ^1.4.0
   intl: ^0.16.1
   share: ^0.6.5+4
+  awesome_dialog: ^1.2.1
 
 dev_dependencies:
   flutter_test:

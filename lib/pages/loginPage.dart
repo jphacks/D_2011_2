@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'welcomePage.dart';
 import '../widget/customButton.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'dart:io';
 
 class Loginpage extends StatefulWidget {
@@ -106,7 +107,15 @@ class _LoginpageState extends State<Loginpage> {
                               ),
                             );
                           } else {
-                            //  TODO: エラーマネジメント
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.ERROR,
+                              animType: AnimType.SCALE,
+                              headerAnimationLoop: false,
+                              title: '認証エラー',
+                              desc: 'メールアドレス・パスワードをお確かめの上、もういちどお試しください。',
+                              btnOkOnPress: () {},
+                            )..show();
                           }
                         },
                       ),
