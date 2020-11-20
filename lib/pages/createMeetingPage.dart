@@ -250,7 +250,6 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                           for (var i = 0; i < agendas.length; i++) {
                             duration += agendas[i].min;
                           }
-                          Navigator.pop(context);
                           final result = await FlutterZoomSdk.createMeeting(
                             title: meetingTitle,
                             date: meetingDate,
