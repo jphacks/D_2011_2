@@ -84,7 +84,7 @@ class _LoginpageState extends State<Loginpage> {
                     SizedBox(
                       width: size.width * 0.5,
                       height: size.width * 0.125,
-                      child: customButton(
+                      child: CustomButton(
                         title: "ログイン",
                         onPressed: () async {
                           setState(() {

@@ -87,7 +87,7 @@ class WelcomePage extends StatelessWidget {
             SizedBox(
               width: size.width * 0.65,
               height: size.width * 0.125,
-              child: customButton(
+              child: CustomButton(
                 title: "ミーティングを作成する",
                 onPressed: () {
                   Navigator.push(
@@ -103,7 +103,7 @@ class WelcomePage extends StatelessWidget {
             SizedBox(
               width: size.width * 0.65,
               height: size.width * 0.125,
-              child: customButton(
+              child: CustomButton(
                 title: "ミーティング一覧",
                 onPressed: () {
                   // TODO: APIでミーティングリストを取得

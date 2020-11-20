@@ -52,7 +52,7 @@ class SharePage extends StatelessWidget {
                     SizedBox(
                       height: 50,
                       width: 250,
-                      child: customButton(
+                      child: CustomButton(
                         title: "共有",
                         onPressed: () async {
                           final RenderBox box = context.findRenderObject();
@@ -69,7 +69,7 @@ class SharePage extends StatelessWidget {
                     SizedBox(
                       height: 50,
                       width: 250,
-                      child: customButton(
+                      child: CustomButton(
                         title: "トップに戻る",
                         onPressed: () {
                           int count = 0;
