@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'welcomePage.dart';
 import '../widget/customButton.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'dart:io';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -63,19 +64,21 @@ class _LoginpageState extends State<Loginpage> {
                         pass = text;
                       },
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("ログイン情報を記録する"),
-                        Switch(
-                            value: remember,
-                            onChanged: (val) {
-                              setState(() {
-                                remember = val;
-                              });
-                            }),
-                      ],
-                    ),
+                    Platform.isIOS
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("ログイン情報を記録する"),
+                              Switch(
+                                  value: remember,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      remember = val;
+                                    });
+                                  }),
+                            ],
+                          )
+                        : SizedBox(height: 10),
                     SizedBox(height: 10),
                     SizedBox(
                       width: size.width * 0.5,

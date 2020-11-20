@@ -30,8 +30,10 @@ class MainActivity: FlutterActivity(), ZoomSDKInitializeListener, ZoomSDKAuthent
                 "login" -> {
                     val email = call.argument<String>("email")
                     val pass = call.argument<String>("password")
-                    val remember = call.argument<Boolean>("remember")
                     sharedSDK.loginWithZoom(email, pass)
+                }
+                "logout" -> {
+                    sharedSDK.logoutZoom()
                 }
                 "userName" -> {
                     result.success(sharedSDK.accountService?.accountName)
