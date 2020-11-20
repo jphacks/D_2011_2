@@ -1,21 +1,20 @@
 package jp.tommy.aika_flutter
 
-import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.PluginRegistry
 import us.zoom.sdk.*
 import us.zoom.sdk.ZoomError.ZOOM_ERROR_SUCCESS
+import java.util.*
 
-class MainActivity: FlutterActivity(), ZoomSDKInitializeListener, ZoomSDKAuthenticationListener {
+class MainActivity: FlutterActivity(), ZoomSDKInitializeListener, ZoomSDKAuthenticationListener, PreMeetingServiceListener {
     private val CHANNEL = "flutter_zoom_sdk"
     private val TAG  = "ZOOM_SDK_ANDROID"
     private var flutterResult: MethodChannel.Result? = null
-    private var sharedSDK: ZoomSDK = ZoomSDK.getInstance()
+    private var sharedSDK = ZoomSDK.getInstance()
+    private var preMeetingService = ZoomSDK.getInstance().preMeetingService
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -38,6 +37,23 @@ class MainActivity: FlutterActivity(), ZoomSDKInitializeListener, ZoomSDKAuthent
                 "userName" -> {
                     result.success(sharedSDK.accountService?.accountName)
                 }
+                "createMtg" -> {
+                    val title = call.argument<String>("title")
+                    val date = call.argument<Int>("date")
+                    val beforeHost = call.argument<Boolean>("beforeHost")
+                    val waitingRoom = call.argument<Boolean>("waitingRoom")
+                    val duration = call.argument<Int>("duration")
+                    val email = sharedSDK.accountService.accountEmail
+                    if (title != null &&
+                            date != null &&
+                            beforeHost != null &&
+                            waitingRoom != null &&
+                            duration != null) {
+                        createMeeting(title, date, beforeHost, waitingRoom, duration, email)
+                    } else {
+                        result.notImplemented()
+                    }
+                }
                 else -> {
                     result.notImplemented()
                 }
@@ -55,6 +71,27 @@ class MainActivity: FlutterActivity(), ZoomSDKInitializeListener, ZoomSDKAuthent
         sharedSDK.addAuthenticationListener(this)
     }
 
+    private fun createMeeting(title: String,
+                              timeInUnix: Int,
+                              beforeHost: Boolean,
+                              waitingRoom: Boolean,
+                              duration: Int,
+                              email: String) {
+        preMeetingService = sharedSDK.preMeetingService
+        preMeetingService.addListener(this)
+        val meeting = preMeetingService.createScheduleMeetingItem()
+        meeting.meetingTopic = title
+        meeting.startTime = timeInUnix.toLong() * 1000
+        meeting.durationInMinutes = duration
+        meeting.timeZoneId = TimeZone.getDefault().id
+        meeting.canJoinBeforeHost = beforeHost
+        meeting.isEnableWaitingRoom = waitingRoom
+        meeting.scheduleForHostEmail = email
+
+        val error = preMeetingService.scheduleMeeting(meeting)
+        Log.i(TAG, "$error")
+    }
+
     override fun onZoomSDKInitializeResult(p0: Int, p1: Int) {
         if (p0 == ZOOM_ERROR_SUCCESS) {
             Log.i(TAG,"SDK auth succeeded")
@@ -70,5 +107,14 @@ class MainActivity: FlutterActivity(), ZoomSDKInitializeListener, ZoomSDKAuthent
 
     override fun onZoomSDKLogoutResult(p0: Long) {}
     override fun onZoomIdentityExpired() {}
+
+    override fun onScheduleMeeting(p0: Int, p1: Long) {
+        val meeting = preMeetingService.getMeetingItemByUniqueId(p1)
+        flutterResult?.success("${meeting.meetingNumber},${meeting.password}")
+    }
+
+    override fun onListMeeting(p0: Int, p1: MutableList<Long>?) {}
+    override fun onUpdateMeeting(p0: Int, p1: Long) {}
+    override fun onDeleteMeeting(p0: Int) {}
 }
 
