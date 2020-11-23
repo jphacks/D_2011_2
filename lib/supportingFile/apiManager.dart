@@ -10,9 +10,11 @@ class ApiManager {
   // TODO: ユーザーのメアドも送る
   static Future<CreateMeetingResponse> createZoomMeeting(
       CreateMeetingParams params) async {
-    final response = await http.post(_baseUrl + "/api/meeting",
-        body: jsonEncode(params),
-        headers: {"Content-Type": "application/json"});
+    final response = await http.post(
+      _baseUrl + "/api/meeting",
+      body: jsonEncode(params),
+      headers: {"Content-Type": "application/json"},
+    );
 
     if (response.statusCode == 200) {
       return CreateMeetingResponse.fromJson(json.decode(response.body));
@@ -43,6 +45,7 @@ class ApiManager {
   }
 
   // TODO: Meeting List取得
+  // TODO: 議題の時間変更API
 }
 
 class CreateMeetingResponse {
