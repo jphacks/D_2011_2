@@ -1,16 +1,16 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import '../models/agenda.dart';
 
 class ApiManager {
-  static const String baseUrl = "https://aika.lit-kansai-mentors.com";
+  static const String _baseUrl = "https://aika.lit-kansai-mentors.com";
 
+  // TODO: ユーザーのメアドも送る
   static Future<CreateMeetingResponse> createZoomMeeting(
       CreateMeetingParams params) async {
-    final response = await http.post(baseUrl + "/api/meeting",
+    final response = await http.post(_baseUrl + "/api/meeting",
         body: jsonEncode(params),
         headers: {"Content-Type": "application/json"});
 
@@ -20,6 +20,29 @@ class ApiManager {
       throw Exception('Failed to load post');
     }
   }
+
+  // TODO: 最初のトピックの内容と時間欲しい
+  static Future<bool> startMeeting(String id) async {
+    final response = await http.post(_baseUrl + "/api/meeting/$id/start");
+    return response.statusCode == 200;
+  }
+
+  static Future<bool> finishMeeting(String id) async {
+    final response = await http.post(_baseUrl + "/api/meeting/$id/finish");
+    return response.statusCode == 200;
+  }
+
+  static String agendaImageUrl(String id) {
+    return _baseUrl + "/api/meeting/$id/ogp.png";
+  }
+
+  // TODO: 次のトピックの内容と時間欲しい
+  static Future<bool> nextTopic(String id) async {
+    final response = await http.post(_baseUrl + "/api/meeting/$id/agenda/next");
+    return response.statusCode == 200;
+  }
+
+  // TODO: Meeting List取得
 }
 
 class CreateMeetingResponse {

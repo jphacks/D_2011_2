@@ -24,12 +24,14 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
               ListTile(
                 title: Text((isPositive ? "+" : "-") + '5分'),
                 onTap: () {
+                  // TODO: 時間変更処理
                   Navigator.pop(context);
                 },
               ),
               ListTile(
                 title: Text((isPositive ? "+" : "-") + '1分'),
                 onTap: () {
+                  // TODO: 時間変更処理
                   Navigator.pop(context);
                 },
               ),
@@ -60,6 +62,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                           FlatButton(
                             child: Text('OK'),
                             onPressed: () {
+                              // TODO: 時間変更処理
                               Navigator.of(context).pop();
                               print(_textFieldController.value.text);
                             },
@@ -189,7 +192,9 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            // TODO: 次の議題リクエスト
+                          },
                         ),
                       ),
                       SizedBox(height: 25),

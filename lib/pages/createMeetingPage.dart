@@ -284,8 +284,8 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                 builder: (context) => SharePage(
                                   title: meetingTitle,
                                   date: formattedDate.toString(),
-                                  imageUrl: ApiManager.baseUrl +
-                                      "/api/meeting/${response.id}/ogp.png",
+                                  imageUrl:
+                                      ApiManager.agendaImageUrl(response.id),
                                   url: response.url,
                                 ),
                               ),

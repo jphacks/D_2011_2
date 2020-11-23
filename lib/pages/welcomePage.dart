@@ -110,10 +110,15 @@ class WelcomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MeetingListPage([
-                        Meeting(
-                            title: "Test", date: DateTime.now(), url: "Test")
-                      ]),
+                      builder: (context) => MeetingListPage(
+                        [
+                          Meeting(
+                            title: "Test",
+                            date: DateTime.now(),
+                            url: "Test",
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

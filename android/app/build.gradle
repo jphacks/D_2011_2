@@ -37,7 +37,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "jp.tommy.aika_flutter"
         minSdkVersion 29
         targetSdkVersion 29
@@ -65,8 +64,6 @@ dependencies {
     implementation "com.android.support:appcompat-v7:28.0.0"
     implementation 'com.google.android.material:material:1.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    implementation fileTree(include: '*.aar', dir: 'commonlib/')
-//    implementation fileTree(include: '*.aar', dir: 'mobilertc/')
     implementation project(":commonlib")
     implementation project(":mobilertc")
 }
