@@ -5,4 +5,9 @@ class Agenda {
   int min;
 
   Agenda({@required this.title, @required this.min});
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'duration': min * 60,
+      };
 }

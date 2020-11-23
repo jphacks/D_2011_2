@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aika_flutter/supportingFile/zoomSdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +13,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import '../models/agenda.dart';
 import 'sharePage.dart';
+import '../supportingFile/apiManager.dart';
 
 class CreateMeetingPage extends StatefulWidget {
   @override
@@ -260,7 +263,18 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                           if (result != null) {
                             print(result.id);
                             print(result.password);
-                            // TODO: API呼ぶ
+                            final unixTime =
+                                meetingDate.toUtc().millisecondsSinceEpoch ~/
+                                    1000;
+                            final params = CreateMeetingParams(
+                              title: meetingTitle,
+                              startTime: unixTime,
+                              zoomId: result.id,
+                              pass: result.password,
+                              agendas: agendas,
+                            );
+                            final response =
+                                await ApiManager.createZoomMeeting(params);
                             setState(() {
                               isLoading = false;
                             });
@@ -270,9 +284,9 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                 builder: (context) => SharePage(
                                   title: meetingTitle,
                                   date: formattedDate.toString(),
-                                  imageUrl:
-                                      "https://1.bp.blogspot.com/-Pv3mvk2SLkU/Xy4ebH3CfvI/AAAAAAABaf0/ITFVxS62kvcKgvKHufxAmSCjhhbB_cTSACNcBGAsYHQ/s400/eto_ushi_kamifubuki.png",
-                                  url: "google.com",
+                                  imageUrl: ApiManager.baseUrl +
+                                      "/api/meeting/${response.id}/ogp.png",
+                                  url: response.url,
                                 ),
                               ),
                             );

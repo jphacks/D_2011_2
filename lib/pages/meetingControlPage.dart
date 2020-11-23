@@ -218,8 +218,8 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                               desc: 'ミーティングを終了してよろしいですか？',
                               btnCancelOnPress: () {},
                               btnOkOnPress: () {
-                                Navigator.pop(context);
-                                //TODO: 終了処理
+                                // TODO: 終了リクエストを送る
+                                Navigator.of(context).pop();
                               },
                             )..show();
                           },
