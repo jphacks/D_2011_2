@@ -38,7 +38,7 @@ class ApiManager {
   }
 
   static String agendaImageUrl(String id) {
-    return _baseUrl + "/api/meeting/$id/ogp.png";
+    return _baseUrl + "/api/meeting/$id/agenda/list.png";
   }
 
   // TODO: 次のトピックの内容と時間欲しい
@@ -86,7 +86,7 @@ class CreateMeetingResponse {
 
   factory CreateMeetingResponse.fromJson(Map<String, dynamic> json) {
     return CreateMeetingResponse(
-      json["data"]["uel"].toString(),
+      json["data"]["url"].toString(),
       json["data"]["id"].toString(),
     );
   }
