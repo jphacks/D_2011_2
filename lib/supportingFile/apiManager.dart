@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import '../models/agenda.dart';
+import '../models/meeting.dart';
 
 class ApiManager {
   static const String _baseUrl = "https://aika.lit-kansai-mentors.com";
 
-  // TODO: ユーザーのメアドも送る
   static Future<CreateMeetingResponse> createZoomMeeting(
       CreateMeetingParams params) async {
     final response = await http.post(
@@ -15,6 +15,9 @@ class ApiManager {
       body: jsonEncode(params),
       headers: {"Content-Type": "application/json"},
     );
+
+    print(params.email);
+    print(response.body);
 
     if (response.statusCode == 200) {
       return CreateMeetingResponse.fromJson(json.decode(response.body));
@@ -44,7 +47,34 @@ class ApiManager {
     return response.statusCode == 200;
   }
 
-  // TODO: Meeting List取得
+  static Future<List<Meeting>> meetingList(String email) async {
+    var params = {'email': email};
+    final response = await http.post(
+      _baseUrl + "/api/meeting/find",
+      body: jsonEncode(params),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> rawData = jsonDecode(response.body)["data"];
+      List<Meeting> meetings = [];
+
+      for (int i = 0; i < rawData.length; i++) {
+        final date = new DateTime.fromMillisecondsSinceEpoch(
+            int.parse(rawData[i]["start_time"].toString()) * 1000);
+        final meeting = Meeting(
+            title: rawData[i]["title"].toString(),
+            date: date,
+            url:
+                "https://aika.lit-kansai-mentors.com/agenda/${rawData[i]["meeting_id"].toString()}");
+        meetings.add(meeting);
+      }
+      return meetings;
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
   // TODO: 議題の時間変更API
 }
 
@@ -67,6 +97,7 @@ class CreateMeetingParams {
   final int startTime;
   final String zoomId;
   final String pass;
+  final String email;
   final List<Agenda> agendas;
 
   CreateMeetingParams({
@@ -74,6 +105,7 @@ class CreateMeetingParams {
     @required this.startTime,
     @required this.zoomId,
     @required this.pass,
+    @required this.email,
     @required this.agendas,
   });
 
@@ -82,6 +114,7 @@ class CreateMeetingParams {
         'start_time': startTime,
         'zoom_id': zoomId,
         'zoom_pass': pass,
+        'email': email,
         'agendas': agendas,
       };
 }

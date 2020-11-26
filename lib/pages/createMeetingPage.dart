@@ -16,6 +16,10 @@ import 'sharePage.dart';
 import '../supportingFile/apiManager.dart';
 
 class CreateMeetingPage extends StatefulWidget {
+  final userEmail;
+
+  CreateMeetingPage(this.userEmail);
+
   @override
   _CreateMeetingPageState createState() => _CreateMeetingPageState();
 }
@@ -271,6 +275,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                               startTime: unixTime,
                               zoomId: result.id,
                               pass: result.password,
+                              email: widget.userEmail,
                               agendas: agendas,
                             );
                             final response =

@@ -42,6 +42,8 @@ import MobileCoreServices
                 self.sharedAuthRTC?.logoutRTC()
             } else if call.method == "userName" {
                 result(self.sharedAuthRTC?.getAccountInfo()?.getUserName())
+            } else if call.method == "userEmail" {
+                result(self.sharedAuthRTC?.getAccountInfo()?.getEmailAddress())
             } else if call.method == "createMtg" {
                 self.preMeetingService = MobileRTC.shared().getPreMeetingService()
                 self.preMeetingService?.delegate = self

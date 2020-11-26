@@ -65,6 +65,11 @@ class FlutterZoomSdk {
     final String result = await _channel.invokeMethod('userName');
     return result;
   }
+
+  static Future<String> userEmail() async {
+    final String result = await _channel.invokeMethod('userEmail');
+    return result;
+  }
 }
 
 class ZoomMeeting {

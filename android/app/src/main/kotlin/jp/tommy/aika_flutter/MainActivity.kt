@@ -37,6 +37,9 @@ class MainActivity: FlutterActivity(), ZoomSDKInitializeListener, ZoomSDKAuthent
                 "userName" -> {
                     result.success(sharedSDK.accountService?.accountName)
                 }
+                "userEmail" -> {
+                    result.success(sharedSDK.accountService?.accountEmail)
+                }
                 "createMtg" -> {
                     val title = call.argument<String>("title")
                     val date = call.argument<Int>("date")

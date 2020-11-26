@@ -5,16 +5,35 @@ import '../widget/customButton.dart';
 import 'createMeetingPage.dart';
 import 'onBoardingPage.dart';
 import 'meetingListPage.dart';
-import '../models/meeting.dart';
+import '../supportingFile/zoomSdk.dart';
+import '../supportingFile/apiManager.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   final String userName;
 
   WelcomePage(this.userName);
 
   @override
+  _WelcomePageState createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
+  String userEmail = "";
+
+  void getUserEmail() async {
+    userEmail = await FlutterZoomSdk.userEmail();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserEmail();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -72,7 +91,7 @@ class WelcomePage extends StatelessWidget {
             ),
             Center(
               child: Text(
-                "$userName さん",
+                "${widget.userName} さん",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -93,7 +112,7 @@ class WelcomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CreateMeetingPage(),
+                      builder: (context) => CreateMeetingPage(userEmail),
                     ),
                   );
                 },
@@ -105,20 +124,12 @@ class WelcomePage extends StatelessWidget {
               height: size.width * 0.125,
               child: CustomButton(
                 title: "ミーティング一覧",
-                onPressed: () {
-                  // TODO: APIでミーティングリストを取得
+                onPressed: () async {
+                  final meetings = await ApiManager.meetingList(userEmail);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MeetingListPage(
-                        [
-                          Meeting(
-                            title: "Test",
-                            date: DateTime.now(),
-                            url: "Test",
-                          ),
-                        ],
-                      ),
+                      builder: (context) => MeetingListPage(meetings),
                     ),
                   );
                 },
