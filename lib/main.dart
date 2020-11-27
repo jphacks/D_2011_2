@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.white,
         brightness: Brightness.light,
         cardColor: Colors.white,
+        textSelectionColor: Color(0xff548aff),
         appBarTheme: AppBarTheme(
           color: Colors.white,
           brightness: Brightness.light,
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         backgroundColor: Colors.grey[600],
         cardColor: Colors.grey[800],
+        textSelectionColor: Color(0xff548aff),
         appBarTheme: AppBarTheme(
           color: Colors.grey[800],
           brightness: Brightness.dark,
