@@ -1,5 +1,6 @@
 import 'package:aika_flutter/supportingFile/zoomSdk.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'loginPage.dart';
 import '../widget/customButton.dart';
 import 'createMeetingPage.dart';
@@ -24,10 +25,25 @@ class _WelcomePageState extends State<WelcomePage> {
     userEmail = await FlutterZoomSdk.userEmail();
   }
 
+  void showOnBoard() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool firstLaunch = !(prefs.getBool("isFirst") ?? false);
+    if (firstLaunch) {
+      prefs.setBool("isFirst", true);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OnBoardingPage(),
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     getUserEmail();
+    showOnBoard();
   }
 
   @override

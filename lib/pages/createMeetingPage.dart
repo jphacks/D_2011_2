@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:aika_flutter/supportingFile/zoomSdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +15,6 @@ import '../supportingFile/apiManager.dart';
 
 class CreateMeetingPage extends StatefulWidget {
   final userEmail;
-
   CreateMeetingPage(this.userEmail);
 
   @override
@@ -415,12 +412,16 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                     children: [
                       Text("ホストより前の入室を許可する"),
                       Switch(
-                          value: beforeHost,
-                          onChanged: (val) {
-                            setState(() {
-                              beforeHost = val;
-                            });
-                          }),
+                        value: beforeHost,
+                        onChanged: (val) {
+                          setState(() {
+                            beforeHost = val;
+                            if (beforeHost && waitingRoom) {
+                              waitingRoom = false;
+                            }
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -437,12 +438,16 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                     children: [
                       Text("待機室を有効にする"),
                       Switch(
-                          value: waitingRoom,
-                          onChanged: (val) {
-                            setState(() {
-                              waitingRoom = val;
-                            });
-                          }),
+                        value: waitingRoom,
+                        onChanged: (val) {
+                          setState(() {
+                            waitingRoom = val;
+                            if (beforeHost && waitingRoom) {
+                              beforeHost = false;
+                            }
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -469,7 +474,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                             color: Colors.blueAccent,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

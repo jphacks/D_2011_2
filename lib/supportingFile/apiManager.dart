@@ -38,7 +38,7 @@ class ApiManager {
   }
 
   static String agendaImageUrl(String id) {
-    return _baseUrl + "/api/meeting/$id/agenda/list.png";
+    return _baseUrl + "/api/meeting/$id/ogp.png";
   }
 
   // TODO: 次のトピックの内容と時間欲しい
