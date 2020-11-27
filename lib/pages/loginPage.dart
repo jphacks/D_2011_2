@@ -56,6 +56,7 @@ class _LoginpageState extends State<Loginpage> {
                           labelText: "Email", hintText: "example@example.com"),
                       autocorrect: false,
                       keyboardType: TextInputType.emailAddress,
+                      autofillHints: [AutofillHints.email],
                       onChanged: (text) {
                         email = text;
                       },
@@ -64,6 +65,7 @@ class _LoginpageState extends State<Loginpage> {
                       decoration: InputDecoration(labelText: "Password"),
                       obscureText: true,
                       autocorrect: false,
+                      autofillHints: [AutofillHints.password],
                       onChanged: (text) {
                         pass = text;
                       },
