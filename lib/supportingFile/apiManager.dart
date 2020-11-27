@@ -40,9 +40,16 @@ class ApiManager {
     }
   }
 
+  static Future<bool> joinMeeting(String id) async {
+    final response = await http.post(_baseUrl + "/api/meeting/$id/join");
+    print(response.body);
+    return response.statusCode == 200;
+  }
+
   // TODO: 最初のトピックの内容と時間欲しい
   static Future<bool> startMeeting(String id) async {
     final response = await http.post(_baseUrl + "/api/meeting/$id/start");
+    print(response.body);
     return response.statusCode == 200;
   }
 
@@ -52,7 +59,7 @@ class ApiManager {
   }
 
   static String agendaImageUrl(String id) {
-    return _baseUrl + "/api/meeting/$id/ogp.png";
+    return _baseUrl + "/api/meeting/$id/agenda/list.png";
   }
 
   // TODO: 次のトピックの内容と時間欲しい
@@ -77,6 +84,7 @@ class ApiManager {
         final date = new DateTime.fromMillisecondsSinceEpoch(
             int.parse(rawData[i]["start_time"].toString()) * 1000);
         final meeting = Meeting(
+            id: rawData[i]["meeting_id"].toString(),
             title: rawData[i]["title"].toString(),
             date: date,
             url:
@@ -90,6 +98,10 @@ class ApiManager {
   }
 
   // TODO: 議題の時間変更API
+  static Future<bool> meetingStatus(String id) async {
+    final response = await http.post(_baseUrl + "/api/meeting/$id/agenda/next");
+    return response.statusCode == 200;
+  }
 }
 
 class Suggestion {

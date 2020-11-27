@@ -6,8 +6,10 @@ class Meeting {
   final String title;
   final DateTime date;
   final String url;
+  final String id;
 
   Meeting({
+    @required this.id,
     @required this.title,
     @required this.date,
     @required this.url,
