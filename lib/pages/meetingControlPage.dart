@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:quiver/async.dart';
 import '../models/meeting.dart';
 import '../supportingFile/apiManager.dart';
 
@@ -17,6 +18,28 @@ class MeetingControlPage extends StatefulWidget {
 class _MeetingControlPageState extends State<MeetingControlPage> {
   bool isEntered = false;
   bool isAsyncCall = false;
+
+  int _start = 5;
+  int _current = 5;
+
+  void startTimer() {
+    CountdownTimer countDownTimer = new CountdownTimer(
+      new Duration(seconds: _start), //初期値
+      new Duration(seconds: 1), // 減らす幅
+    );
+
+    var sub = countDownTimer.listen(null);
+    sub.onData((duration) {
+      setState(() {
+        _current = _start - duration.elapsed.inSeconds; //毎秒減らしていく
+      });
+    });
+
+    sub.onDone(() {
+      sub.cancel();
+      _current = 0;
+    });
+  }
 
   void showTimeControlSheet(bool isPositive) {
     TextEditingController _textFieldController = TextEditingController();
@@ -118,8 +141,6 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -186,7 +207,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                                   ),
                                   SizedBox(width: 30),
                                   Text(
-                                    "10:00",
+                                    "${_current ~/ 60}:${(_current % 60).toString().padLeft(2, "0")}",
                                     style: TextStyle(
                                       fontSize: 35,
                                       fontWeight: FontWeight.bold,
@@ -297,6 +318,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                         onPressed: () async {
                           final success =
                               await ApiManager.startMeeting(widget.meeting.id);
+                          startTimer();
                           setState(() {
                             isEntered = true;
                           });
