@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-// import 'package:quiver/async.dart';
 import '../models/meeting.dart';
 import '../supportingFile/apiManager.dart';
 
@@ -19,46 +18,9 @@ class MeetingControlPage extends StatefulWidget {
 class _MeetingControlPageState extends State<MeetingControlPage> {
   bool isEntered = false;
   bool isAsyncCall = false;
-
-  // int _start = 5;
   int _current = 5;
-
   String agendaTitle = "";
-
   Timer timer;
-
-  // StreamSubscription<CountdownTimer> sub;
-
-  // void startTimer() {
-  //   CountdownTimer countDownTimer = CountdownTimer(
-  //     Duration(seconds: _start),
-  //     Duration(seconds: 1),
-  //   );
-  //
-  //   sub = countDownTimer.listen(null);
-  //   sub.onData((duration) {
-  //     setState(() {
-  //       _current = _start - duration.elapsed.inSeconds;
-  //     });
-  //   });
-  //
-  //   sub.onDone(() async {
-  //     sub.cancel();
-  //     _current = 0;
-  //     setState(() {
-  //       isAsyncCall = true;
-  //     });
-  //     final result = await ApiManager.nextTopic(widget.meeting.id);
-  //     setState(() {
-  //       _current = result.duration;
-  //       _start = result.duration;
-  //       agendaTitle = result.title;
-  //     });
-  //     setState(() {
-  //       isAsyncCall = false;
-  //     });
-  //   });
-  // }
 
   void showTimeControlSheet(bool isPositive) {
     TextEditingController _textFieldController = TextEditingController();
@@ -76,7 +38,6 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                       widget.meeting.id, isPositive ? 5 : -5);
                   setState(() {
                     _current = result.duration;
-                    // _start = result.duration;
                     agendaTitle = result.title;
                   });
                   Navigator.pop(context);
@@ -89,7 +50,6 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                       widget.meeting.id, isPositive ? 1 : -1);
                   setState(() {
                     _current = result.duration;
-                    // _start = result.duration;
                     agendaTitle = result.title;
                   });
                   Navigator.pop(context);
@@ -130,7 +90,6 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                                   widget.meeting.id, dif);
                               setState(() {
                                 _current = result.duration;
-                                // _start = result.duration;
                                 agendaTitle = result.title;
                               });
                               Navigator.of(context).pop();
@@ -182,17 +141,8 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
           isAsyncCall = false;
           isEntered = true;
           _current = status.duration;
-          // _start = status.duration;
           agendaTitle = status.title;
         });
-        // if (_current <= 0) {
-        //   final result = await ApiManager.nextTopic(widget.meeting.id);
-        //   setState(() {
-        //     _current = result.duration;
-        //     _start = result.duration;
-        //     agendaTitle = result.title;
-        //   });
-        // }
       }
     } catch (e) {
       print(e);
@@ -210,7 +160,6 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
   @override
   void dispose() {
     timer.cancel();
-    // sub.cancel();
     super.dispose();
   }
 
@@ -338,7 +287,6 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                                         widget.meeting.id);
                                     setState(() {
                                       _current = result.duration;
-                                      // _start = result.duration;
                                       agendaTitle = result.title;
                                     });
                                     setState(() {
@@ -398,10 +346,8 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                               await ApiManager.startMeeting(widget.meeting.id);
                           setState(() {
                             _current = result.duration;
-                            // _start = result.duration;
                             agendaTitle = result.title;
                           });
-                          // startTimer();
                           setState(() {
                             isEntered = true;
                           });
