@@ -57,15 +57,27 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
             children: <Widget>[
               ListTile(
                 title: Text((isPositive ? "+" : "-") + '5分'),
-                onTap: () {
-                  // TODO: 時間変更処理
+                onTap: () async {
+                  final result = await ApiManager.changeTime(
+                      widget.meeting.id, isPositive ? 300 : -300);
+                  setState(() {
+                    _current = result.duration;
+                    _start = result.duration;
+                    agendaTitle = result.title;
+                  });
                   Navigator.pop(context);
                 },
               ),
               ListTile(
                 title: Text((isPositive ? "+" : "-") + '1分'),
-                onTap: () {
-                  // TODO: 時間変更処理
+                onTap: () async {
+                  final result = await ApiManager.changeTime(
+                      widget.meeting.id, isPositive ? 60 : -60);
+                  setState(() {
+                    _current = result.duration;
+                    _start = result.duration;
+                    agendaTitle = result.title;
+                  });
                   Navigator.pop(context);
                 },
               ),
@@ -95,10 +107,19 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                         actions: <Widget>[
                           FlatButton(
                             child: Text('OK'),
-                            onPressed: () {
-                              // TODO: 時間変更処理
+                            onPressed: () async {
+                              int dif = isPositive
+                                  ? int.parse(_textFieldController.value.text)
+                                  : -(int.parse(
+                                      _textFieldController.value.text));
+                              final result = await ApiManager.changeTime(
+                                  widget.meeting.id, dif);
+                              setState(() {
+                                _current = result.duration;
+                                _start = result.duration;
+                                agendaTitle = result.title;
+                              });
                               Navigator.of(context).pop();
-                              print(_textFieldController.value.text);
                             },
                           )
                         ],

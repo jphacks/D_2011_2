@@ -105,7 +105,22 @@ class ApiManager {
       throw null;
     }
   }
-  // TODO: 議題の時間変更API
+
+  static Future<OnGoingAgenda> changeTime(String id, int dif) async {
+    final Map<String, dynamic> params = {"dif": dif * 60};
+    final response = await http.post(
+      _baseUrl + "/api/meeting/$id/reschedule",
+      body: jsonEncode(params),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      return OnGoingAgenda.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)));
+    } else {
+      throw null;
+    }
+  }
 }
 
 class Suggestion {
