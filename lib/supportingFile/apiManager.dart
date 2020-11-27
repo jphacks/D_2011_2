@@ -43,7 +43,6 @@ class ApiManager {
 
   static Future<bool> joinMeeting(String id) async {
     final response = await http.post(_baseUrl + "/api/meeting/$id/join");
-    print(response.body);
     return response.statusCode == 200;
   }
 

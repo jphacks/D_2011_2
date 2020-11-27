@@ -293,8 +293,6 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                             duration: duration,
                           );
                           if (result != null) {
-                            print(result.id);
-                            print(result.password);
                             final unixTime =
                                 meetingDate.toUtc().millisecondsSinceEpoch ~/
                                     1000;
