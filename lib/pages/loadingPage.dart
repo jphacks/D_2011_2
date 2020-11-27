@@ -47,7 +47,9 @@ class _LoadingPageState extends State<LoadingPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/bannar-light.png',
+              Theme.of(context).backgroundColor == Colors.white
+                  ? 'assets/images/bannar-light.png'
+                  : 'assets/images/bannar-dark.png',
               width: size.width / 1.5,
             ),
             SizedBox(height: 200),

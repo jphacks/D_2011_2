@@ -59,7 +59,7 @@ class MeetingListPage extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-                              color: Colors.blueAccent,
+                              color: Theme.of(context).accentColor,
                             ),
                           ),
                           SizedBox(height: 20),
@@ -96,7 +96,7 @@ class MeetingListPage extends StatelessWidget {
               ),
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -115,14 +115,12 @@ class MeetingListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "ミーティング一覧",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
         ),
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        brightness: Theme.of(context).brightness,
         elevation: 0.0,
       ),
       body: SafeArea(
@@ -131,7 +129,7 @@ class MeetingListPage extends StatelessWidget {
                 padding: EdgeInsets.all(10.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Center(

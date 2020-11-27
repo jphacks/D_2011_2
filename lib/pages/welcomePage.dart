@@ -53,6 +53,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        brightness: Theme.of(context).brightness,
         elevation: 0.0,
         leading: OverflowBox(
           maxWidth: 200,
@@ -77,10 +78,7 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.info_outline,
-              color: Colors.black,
-            ),
+            icon: Icon(Icons.info_outline),
             onPressed: () {
               Navigator.push(
                 context,

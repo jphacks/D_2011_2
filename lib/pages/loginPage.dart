@@ -33,7 +33,9 @@ class _LoginpageState extends State<Loginpage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
-                  'assets/images/bannar-light.png',
+                  Theme.of(context).backgroundColor == Colors.white
+                      ? 'assets/images/bannar-light.png'
+                      : 'assets/images/bannar-dark.png',
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

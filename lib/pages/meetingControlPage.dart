@@ -163,7 +163,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              color: Colors.blueAccent,
+                              color: Theme.of(context).accentColor,
                               shape: CircleBorder(),
                               onPressed: () {
                                 showTimeControlSheet(true);
@@ -188,7 +188,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          color: Colors.blueAccent,
+                          color: Theme.of(context).accentColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),

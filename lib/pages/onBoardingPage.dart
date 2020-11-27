@@ -22,12 +22,15 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    const bodyStyle = TextStyle(fontSize: 16.0);
-    const pageDecoration = const PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w700),
-      bodyTextStyle: bodyStyle,
+    final pageDecoration = PageDecoration(
+      titleTextStyle: Theme.of(context).textTheme.subtitle1.copyWith(
+            fontSize: 20.0,
+            fontWeight: FontWeight.w700,
+          ),
+      bodyTextStyle:
+          Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16),
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: Colors.white,
+      pageColor: Theme.of(context).canvasColor,
       imagePadding: EdgeInsets.zero,
     );
 
@@ -41,7 +44,11 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           PageViewModel(
             title: "aikaへようこそ",
             body: "aikaはzoomでの会議をより円滑に進める\nお手伝いをします。",
-            image: _buildImage('bannar-light'),
+            image: _buildImage(
+              Theme.of(context).backgroundColor == Colors.white
+                  ? 'bannar-light'
+                  : 'bannar-dark',
+            ),
             decoration: pageDecoration,
           ),
           PageViewModel(
@@ -70,7 +77,12 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         nextFlex: 0,
         skip: Text('スキップ'),
         next: Icon(Icons.arrow_forward),
-        done: Text('さぁはじめよう', style: TextStyle(fontWeight: FontWeight.w600)),
+        done: Text(
+          'さぁはじめよう',
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+        ),
         dotsDecorator: const DotsDecorator(
           size: Size(10.0, 10.0),
           color: Color(0xFFBDBDBD),

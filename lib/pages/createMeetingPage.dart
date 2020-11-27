@@ -188,7 +188,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    color: Colors.blueAccent,
+                                    color: Theme.of(context).accentColor,
                                   ),
                                 ),
                               ],
@@ -204,7 +204,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                     ),
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
@@ -225,15 +225,16 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
     return ModalProgressHUD(
       inAsyncCall: isLoading,
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Theme.of(context).backgroundColor == Colors.white
+            ? Colors.grey[200]
+            : Theme.of(context).backgroundColor,
         appBar: AppBar(
           title: Text(
             "ミーティングを作成",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           actions: [
             FlatButton(
@@ -310,8 +311,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
               child: Text("Done"),
             ),
           ],
-          backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.black),
+          brightness: Theme.of(context).brightness,
           elevation: 0.0,
         ),
         body: SafeArea(
@@ -333,7 +333,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
               Container(
                 height: 50,
                 width: size.width,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                   child: Row(
@@ -370,6 +370,18 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                 onTap: () {
                   DatePicker.showDateTimePicker(
                     context,
+                    theme: DatePickerTheme(
+                      backgroundColor: Theme.of(context).backgroundColor,
+                      itemStyle: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          .copyWith(fontSize: 18),
+                      cancelStyle: Theme.of(context).textTheme.bodyText1,
+                      doneStyle: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: Theme.of(context).accentColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                     showTitleActions: true,
                     minTime: DateTime.now(),
                     onConfirm: (date) {
@@ -384,7 +396,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                 child: Container(
                   height: 50,
                   width: size.width,
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                     child: Row(
@@ -404,7 +416,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
               Container(
                 height: 50,
                 width: size.width,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                   child: Row(
@@ -430,7 +442,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
               Container(
                 height: 50,
                 width: size.width,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                   child: Row(
@@ -489,7 +501,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).cardColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
                             ),
