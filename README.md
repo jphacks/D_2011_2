@@ -30,7 +30,7 @@ android/app/src/main/kotlin/jp/tommy/aika_flutterにある`Credentials_Sample.kt
 #### SDK
 - ZoomSDK
 
-#### 外部ライブラリ
+#### 外部ライブラリ (Flutter純正ライブラリを除く)
 - modal_progress_hud
 - IntroductionScreen
 - Flutter Keyboard Visibility
