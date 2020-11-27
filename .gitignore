@@ -43,3 +43,4 @@ app.*.map.json
 #　Keys
 ios/Runner/keys.plist
 /android/app/src/main/kotlin/jp/tommy/aika_flutter/Credentials.kt
+/android/key.properties
