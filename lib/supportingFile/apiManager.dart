@@ -96,12 +96,12 @@ class ApiManager {
   }
 
   static Future<OnGoingAgenda> meetingStatus(String id) async {
-    final response = await http.post(_baseUrl + "/api/meeting/$id/status");
+    final response = await http.get(_baseUrl + "/api/meeting/$id/status");
     if (response.statusCode == 200) {
       return OnGoingAgenda.fromJson(
           json.decode(utf8.decode(response.bodyBytes)));
     } else {
-      throw null;
+      return null;
     }
   }
 

@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:quiver/async.dart';
+// import 'package:quiver/async.dart';
 import '../models/meeting.dart';
 import '../supportingFile/apiManager.dart';
 
@@ -20,31 +20,45 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
   bool isEntered = false;
   bool isAsyncCall = false;
 
-  int _start = 5;
+  // int _start = 5;
   int _current = 5;
 
   String agendaTitle = "";
 
   Timer timer;
 
-  void startTimer() {
-    CountdownTimer countDownTimer = new CountdownTimer(
-      new Duration(seconds: _start), //初期値
-      new Duration(seconds: 1), // 減らす幅
-    );
+  // StreamSubscription<CountdownTimer> sub;
 
-    var sub = countDownTimer.listen(null);
-    sub.onData((duration) {
-      setState(() {
-        _current = _start - duration.elapsed.inSeconds;
-      });
-    });
-
-    sub.onDone(() {
-      sub.cancel();
-      _current = 0;
-    });
-  }
+  // void startTimer() {
+  //   CountdownTimer countDownTimer = CountdownTimer(
+  //     Duration(seconds: _start),
+  //     Duration(seconds: 1),
+  //   );
+  //
+  //   sub = countDownTimer.listen(null);
+  //   sub.onData((duration) {
+  //     setState(() {
+  //       _current = _start - duration.elapsed.inSeconds;
+  //     });
+  //   });
+  //
+  //   sub.onDone(() async {
+  //     sub.cancel();
+  //     _current = 0;
+  //     setState(() {
+  //       isAsyncCall = true;
+  //     });
+  //     final result = await ApiManager.nextTopic(widget.meeting.id);
+  //     setState(() {
+  //       _current = result.duration;
+  //       _start = result.duration;
+  //       agendaTitle = result.title;
+  //     });
+  //     setState(() {
+  //       isAsyncCall = false;
+  //     });
+  //   });
+  // }
 
   void showTimeControlSheet(bool isPositive) {
     TextEditingController _textFieldController = TextEditingController();
@@ -59,10 +73,10 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                 title: Text((isPositive ? "+" : "-") + '5分'),
                 onTap: () async {
                   final result = await ApiManager.changeTime(
-                      widget.meeting.id, isPositive ? 300 : -300);
+                      widget.meeting.id, isPositive ? 5 : -5);
                   setState(() {
                     _current = result.duration;
-                    _start = result.duration;
+                    // _start = result.duration;
                     agendaTitle = result.title;
                   });
                   Navigator.pop(context);
@@ -72,10 +86,10 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                 title: Text((isPositive ? "+" : "-") + '1分'),
                 onTap: () async {
                   final result = await ApiManager.changeTime(
-                      widget.meeting.id, isPositive ? 60 : -60);
+                      widget.meeting.id, isPositive ? 1 : -1);
                   setState(() {
                     _current = result.duration;
-                    _start = result.duration;
+                    // _start = result.duration;
                     agendaTitle = result.title;
                   });
                   Navigator.pop(context);
@@ -116,7 +130,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                                   widget.meeting.id, dif);
                               setState(() {
                                 _current = result.duration;
-                                _start = result.duration;
+                                // _start = result.duration;
                                 agendaTitle = result.title;
                               });
                               Navigator.of(context).pop();
@@ -160,19 +174,29 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
     }
   }
 
-  void _onTimer(Timer timer) async {
+  void polling(Timer timer) async {
     try {
       final status = await ApiManager.meetingStatus(widget.meeting.id);
-      if (status != null) {
+      if (status.title != null && status.duration >= 0) {
         setState(() {
           isAsyncCall = false;
           isEntered = true;
           _current = status.duration;
-          _start = status.duration;
+          // _start = status.duration;
           agendaTitle = status.title;
         });
+        // if (_current <= 0) {
+        //   final result = await ApiManager.nextTopic(widget.meeting.id);
+        //   setState(() {
+        //     _current = result.duration;
+        //     _start = result.duration;
+        //     agendaTitle = result.title;
+        //   });
+        // }
       }
-    } catch (_) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -180,12 +204,13 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
     super.initState();
     joinAika();
 
-    timer = Timer.periodic(const Duration(seconds: 5), _onTimer);
+    timer = Timer.periodic(const Duration(seconds: 1), polling);
   }
 
   @override
   void dispose() {
     timer.cancel();
+    // sub.cancel();
     super.dispose();
   }
 
@@ -309,12 +334,11 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                                     setState(() {
                                       isAsyncCall = true;
                                     });
-                                    final result =
-                                        await ApiManager.startMeeting(
-                                            widget.meeting.id);
+                                    final result = await ApiManager.nextTopic(
+                                        widget.meeting.id);
                                     setState(() {
                                       _current = result.duration;
-                                      _start = result.duration;
+                                      // _start = result.duration;
                                       agendaTitle = result.title;
                                     });
                                     setState(() {
@@ -374,10 +398,10 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                               await ApiManager.startMeeting(widget.meeting.id);
                           setState(() {
                             _current = result.duration;
-                            _start = result.duration;
+                            // _start = result.duration;
                             agendaTitle = result.title;
                           });
-                          startTimer();
+                          // startTimer();
                           setState(() {
                             isEntered = true;
                           });
