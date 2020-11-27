@@ -32,6 +32,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   var _timeFocusNode = FocusNode();
 
   List<Agenda> agendas = [];
+  List<List<Agenda>> suggestion = [];
 
   bool isLoading = false;
 
@@ -358,6 +359,16 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                             setState(() {
                               meetingTitle = val;
                             });
+                          },
+                          onSubmitted: (val) async {
+                            // TODO: Suggestionを呼ぶ
+                            final suggestedAgendas =
+                                await ApiManager.suggestion(val);
+                            if (suggestedAgendas.length > 0) {
+                              setState(() {
+                                suggestion = suggestedAgendas;
+                              });
+                            }
                           },
                         ),
                       )

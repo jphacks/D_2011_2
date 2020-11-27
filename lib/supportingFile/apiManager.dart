@@ -26,6 +26,17 @@ class ApiManager {
     }
   }
 
+  // TODO: Suggestion受入
+  static Future<List<List<Agenda>>> suggestion(String keyword) async {
+    final response =
+        await http.get(_baseUrl + "/api/meeting/$keyword/agenda/next");
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
   // TODO: 最初のトピックの内容と時間欲しい
   static Future<bool> startMeeting(String id) async {
     final response = await http.post(_baseUrl + "/api/meeting/$id/start");
