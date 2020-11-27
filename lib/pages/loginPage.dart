@@ -1,6 +1,7 @@
 import 'package:aika_flutter/supportingFile/zoomSdk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'welcomePage.dart';
 import '../widget/customButton.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -124,7 +125,14 @@ class _LoginpageState extends State<Loginpage> {
                     ),
                     SizedBox(height: 10.0),
                     FlatButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        const url = 'https://zoom.us/signup';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
                       child: Text(
                         "アカウントをお持ちでない場合",
                         style: TextStyle(fontSize: 10.0),
