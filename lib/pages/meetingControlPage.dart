@@ -1,5 +1,6 @@
 import 'package:aika_flutter/widget/customButton.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -22,6 +23,8 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
   int _start = 5;
   int _current = 5;
 
+  String agendaTitle = "";
+
   void startTimer() {
     CountdownTimer countDownTimer = new CountdownTimer(
       new Duration(seconds: _start), //初期値
@@ -31,7 +34,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
     var sub = countDownTimer.listen(null);
     sub.onData((duration) {
       setState(() {
-        _current = _start - duration.elapsed.inSeconds; //毎秒減らしていく
+        _current = _start - duration.elapsed.inSeconds;
       });
     });
 
@@ -133,10 +136,26 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
     }
   }
 
+  void _onTimer(Timer timer) async {
+    final status = await ApiManager.meetingStatus(widget.meeting.id);
+
+    if (status != null) {
+      setState(() {
+        isAsyncCall = false;
+        isEntered = true;
+        _current = status.duration;
+        _start = status.duration;
+        agendaTitle = status.title;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     joinAika();
+
+    Timer.periodic(const Duration(seconds: 5), _onTimer);
   }
 
   @override
@@ -176,7 +195,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                               ),
                               SizedBox(height: 10),
                               Text(
-                                "Agenda Title",
+                                agendaTitle,
                                 style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -259,9 +278,14 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                                     setState(() {
                                       isAsyncCall = true;
                                     });
-                                    // TODO: 次の議題リクエスト
-                                    final success = await ApiManager.nextTopic(
-                                        widget.meeting.id);
+                                    final result =
+                                        await ApiManager.startMeeting(
+                                            widget.meeting.id);
+                                    setState(() {
+                                      _current = result.duration;
+                                      _start = result.duration;
+                                      agendaTitle = result.title;
+                                    });
                                     setState(() {
                                       isAsyncCall = false;
                                     });
@@ -294,7 +318,6 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                                       desc: 'ミーティングを終了してよろしいですか？',
                                       btnCancelOnPress: () {},
                                       btnOkOnPress: () {
-                                        // TODO: 終了リクエストを送る
                                         ApiManager.finishMeeting(
                                             widget.meeting.id);
                                         Navigator.of(context).pop();
@@ -316,8 +339,13 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
                       child: CustomButton(
                         title: "ミーティングを始める",
                         onPressed: () async {
-                          final success =
+                          final result =
                               await ApiManager.startMeeting(widget.meeting.id);
+                          setState(() {
+                            _current = result.duration;
+                            _start = result.duration;
+                            agendaTitle = result.title;
+                          });
                           startTimer();
                           setState(() {
                             isEntered = true;

@@ -46,11 +46,9 @@ class ApiManager {
     return response.statusCode == 200;
   }
 
-  // TODO: 最初のトピックの内容と時間欲しい
-  static Future<bool> startMeeting(String id) async {
+  static Future<OnGoingAgenda> startMeeting(String id) async {
     final response = await http.post(_baseUrl + "/api/meeting/$id/start");
-    print(response.body);
-    return response.statusCode == 200;
+    return OnGoingAgenda.fromJson(json.decode(response.body));
   }
 
   static Future<bool> finishMeeting(String id) async {
@@ -62,10 +60,9 @@ class ApiManager {
     return _baseUrl + "/api/meeting/$id/agenda/list.png";
   }
 
-  // TODO: 次のトピックの内容と時間欲しい
-  static Future<bool> nextTopic(String id) async {
+  static Future<OnGoingAgenda> nextTopic(String id) async {
     final response = await http.post(_baseUrl + "/api/meeting/$id/agenda/next");
-    return response.statusCode == 200;
+    return OnGoingAgenda.fromJson(json.decode(response.body));
   }
 
   static Future<List<Meeting>> meetingList(String email) async {
@@ -97,11 +94,15 @@ class ApiManager {
     }
   }
 
-  // TODO: 議題の時間変更API
-  static Future<bool> meetingStatus(String id) async {
-    final response = await http.post(_baseUrl + "/api/meeting/$id/agenda/next");
-    return response.statusCode == 200;
+  static Future<OnGoingAgenda> meetingStatus(String id) async {
+    final response = await http.post(_baseUrl + "/api/meeting/$id/status");
+    if (response.statusCode == 200) {
+      return OnGoingAgenda.fromJson(json.decode(response.body));
+    } else {
+      throw null;
+    }
   }
+  // TODO: 議題の時間変更API
 }
 
 class Suggestion {
@@ -125,6 +126,22 @@ class Suggestion {
     return Suggestion(
       json["title"].toString(),
       agendaList,
+    );
+  }
+}
+
+class OnGoingAgenda {
+  final String title;
+  final int duration;
+
+  OnGoingAgenda(this.title, this.duration);
+
+  factory OnGoingAgenda.fromJson(Map<String, dynamic> json) {
+    final date = new DateTime.fromMillisecondsSinceEpoch(
+        int.parse(json["data"]["duration"].toString()) * 1000);
+    return OnGoingAgenda(
+      json["data"]["title"].toString(),
+      date.difference(DateTime.now()).inSeconds,
     );
   }
 }
