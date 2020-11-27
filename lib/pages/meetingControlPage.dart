@@ -25,6 +25,8 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
 
   String agendaTitle = "";
 
+  Timer timer;
+
   void startTimer() {
     CountdownTimer countDownTimer = new CountdownTimer(
       new Duration(seconds: _start), //初期値
@@ -137,17 +139,18 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
   }
 
   void _onTimer(Timer timer) async {
-    final status = await ApiManager.meetingStatus(widget.meeting.id);
-
-    if (status != null) {
-      setState(() {
-        isAsyncCall = false;
-        isEntered = true;
-        _current = status.duration;
-        _start = status.duration;
-        agendaTitle = status.title;
-      });
-    }
+    try {
+      final status = await ApiManager.meetingStatus(widget.meeting.id);
+      if (status != null) {
+        setState(() {
+          isAsyncCall = false;
+          isEntered = true;
+          _current = status.duration;
+          _start = status.duration;
+          agendaTitle = status.title;
+        });
+      }
+    } catch (_) {}
   }
 
   @override
@@ -155,7 +158,13 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
     super.initState();
     joinAika();
 
-    Timer.periodic(const Duration(seconds: 5), _onTimer);
+    timer = Timer.periodic(const Duration(seconds: 5), _onTimer);
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
