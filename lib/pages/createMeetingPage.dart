@@ -32,7 +32,7 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
   var _timeFocusNode = FocusNode();
 
   List<Agenda> agendas = [];
-  List<List<Agenda>> suggestion = [];
+  List<Suggestion> suggestions = [];
 
   bool isLoading = false;
 
@@ -41,6 +41,35 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
     var formatter = new DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
     var formatted = formatter.format(meetingDate);
     return formatted;
+  }
+
+  List<Widget> _buildSuggestion() {
+    List<Widget> widget = [];
+    widget.add(
+      Padding(
+        padding: EdgeInsets.only(top: 15, bottom: 5),
+        child: Text(
+          "提案",
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+      ),
+    );
+
+    for (Suggestion suggestion in suggestions) {
+      final button = FlatButton(
+        onPressed: () {
+          setState(() {
+            agendas = suggestion.agendas;
+          });
+        },
+        child: Text(suggestion.title),
+      );
+      widget.add(button);
+    }
+    return widget;
   }
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
@@ -361,12 +390,11 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                             });
                           },
                           onSubmitted: (val) async {
-                            // TODO: Suggestionを呼ぶ
                             final suggestedAgendas =
                                 await ApiManager.suggestion(val);
                             if (suggestedAgendas.length > 0) {
                               setState(() {
-                                suggestion = suggestedAgendas;
+                                suggestions = suggestedAgendas;
                               });
                             }
                           },
@@ -532,6 +560,11 @@ class _CreateMeetingPageState extends State<CreateMeetingPage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                  suggestions.length > 0
+                                      ? Column(
+                                          children: _buildSuggestion(),
+                                        )
+                                      : Container(),
                                 ],
                               ),
                             ),

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'pages/loadingPage.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(AikaApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class AikaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

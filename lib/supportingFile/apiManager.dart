@@ -16,9 +16,6 @@ class ApiManager {
       headers: {"Content-Type": "application/json"},
     );
 
-    print(params.email);
-    print(response.body);
-
     if (response.statusCode == 200) {
       return CreateMeetingResponse.fromJson(json.decode(response.body));
     } else {
@@ -26,12 +23,18 @@ class ApiManager {
     }
   }
 
-  // TODO: Suggestion受入
-  static Future<List<List<Agenda>>> suggestion(String keyword) async {
+  static Future<List<Suggestion>> suggestion(String keyword) async {
     final response =
-        await http.get(_baseUrl + "/api/meeting/$keyword/agenda/next");
+        await http.get(_baseUrl + "/api/meeting/template/$keyword");
     if (response.statusCode == 200) {
-      return null;
+      final List<Suggestion> result = [];
+      final List<dynamic> rawData =
+          jsonDecode(response.body)["data"]["suggestion"];
+      for (Map<String, dynamic> json in rawData) {
+        final suggestion = Suggestion.fromJson(json);
+        result.add(suggestion);
+      }
+      return result;
     } else {
       throw Exception('Failed to load post');
     }
@@ -87,6 +90,31 @@ class ApiManager {
   }
 
   // TODO: 議題の時間変更API
+}
+
+class Suggestion {
+  final String title;
+  final List<Agenda> agendas;
+
+  Suggestion(this.title, this.agendas);
+
+  factory Suggestion.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> agendasRaw = json["agendas"];
+    final List<Agenda> agendaList = [];
+
+    for (Map<String, dynamic> rawJson in agendasRaw) {
+      final agenda = Agenda(
+        title: rawJson["content"].toString(),
+        min: int.parse(rawJson["duration"].toString()) ~/ 60,
+      );
+      agendaList.add(agenda);
+    }
+
+    return Suggestion(
+      json["title"].toString(),
+      agendaList,
+    );
+  }
 }
 
 class CreateMeetingResponse {
