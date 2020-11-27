@@ -17,7 +17,8 @@ class ApiManager {
     );
 
     if (response.statusCode == 200) {
-      return CreateMeetingResponse.fromJson(json.decode(response.body));
+      return CreateMeetingResponse.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to load post');
     }
@@ -29,7 +30,7 @@ class ApiManager {
     if (response.statusCode == 200) {
       final List<Suggestion> result = [];
       final List<dynamic> rawData =
-          jsonDecode(response.body)["data"]["suggestion"];
+          jsonDecode(utf8.decode(response.bodyBytes))["data"]["suggestion"];
       for (Map<String, dynamic> json in rawData) {
         final suggestion = Suggestion.fromJson(json);
         result.add(suggestion);
@@ -48,7 +49,7 @@ class ApiManager {
 
   static Future<OnGoingAgenda> startMeeting(String id) async {
     final response = await http.post(_baseUrl + "/api/meeting/$id/start");
-    return OnGoingAgenda.fromJson(json.decode(response.body));
+    return OnGoingAgenda.fromJson(json.decode(utf8.decode(response.bodyBytes)));
   }
 
   static Future<bool> finishMeeting(String id) async {
@@ -62,7 +63,7 @@ class ApiManager {
 
   static Future<OnGoingAgenda> nextTopic(String id) async {
     final response = await http.post(_baseUrl + "/api/meeting/$id/agenda/next");
-    return OnGoingAgenda.fromJson(json.decode(response.body));
+    return OnGoingAgenda.fromJson(json.decode(utf8.decode(response.bodyBytes)));
   }
 
   static Future<List<Meeting>> meetingList(String email) async {
@@ -74,7 +75,8 @@ class ApiManager {
     );
 
     if (response.statusCode == 200) {
-      final List<dynamic> rawData = jsonDecode(response.body)["data"];
+      final List<dynamic> rawData =
+          jsonDecode(utf8.decode(response.bodyBytes))["data"];
       List<Meeting> meetings = [];
 
       for (int i = 0; i < rawData.length; i++) {
@@ -97,7 +99,8 @@ class ApiManager {
   static Future<OnGoingAgenda> meetingStatus(String id) async {
     final response = await http.post(_baseUrl + "/api/meeting/$id/status");
     if (response.statusCode == 200) {
-      return OnGoingAgenda.fromJson(json.decode(response.body));
+      return OnGoingAgenda.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw null;
     }

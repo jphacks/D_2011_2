@@ -131,6 +131,7 @@ class _MeetingControlPageState extends State<MeetingControlPage> {
         desc: 'Aikaがミーティングに参加できませんでした。',
         dismissOnTouchOutside: false,
         dismissOnBackKeyPress: false,
+        headerAnimationLoop: false,
         btnOkOnPress: () {
           Navigator.of(context).pop();
         },
